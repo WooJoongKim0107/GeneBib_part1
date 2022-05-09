@@ -30,7 +30,7 @@ def write(number):
 
 def main():
     with Pool(6) as p:
-        p.map(write, range(10))  #10033
+        p.map(write, range(10033))
 
 
 if __name__ == '__main__':
