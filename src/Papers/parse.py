@@ -1,6 +1,6 @@
 import re
 from xml.etree.ElementTree import Element
-from Papers.containers import ISSN, issn_factory, ISSNl
+from .containers import ISSN, issn_factory, ISSNl
 
 
 def parse_journal(pubmed_article_elt: Element):

@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Initial commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Patents/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/__main__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/parse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/pioneer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/pioneer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Patents/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Patents/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/__main__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,30 +74,8 @@
       <recent name="C:\Users\lrlr9\PycharmProjects\GeneBib\src\Papers" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main (2)">
-    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="GeneBib" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/Papers" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/Papers/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main (2)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.__main__">
+    <configuration name="__main__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="GeneBib" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -105,7 +88,29 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/Patents/main.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\lrlr9\PycharmProjects\GeneBib\src\Patents\__main__.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="__main__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="GeneBib" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/Papers" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\lrlr9\PycharmProjects\GeneBib\src\Papers\__main__.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -204,9 +209,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main (2)" />
+        <item itemvalue="Python.__main__" />
         <item itemvalue="Python.pioneer (1)" />
-        <item itemvalue="Python.main (1)" />
+        <item itemvalue="Python.__main__" />
         <item itemvalue="Python.trial" />
         <item itemvalue="Python.pioneer" />
       </list>
@@ -248,7 +253,7 @@
       <workItem from="1651852190574" duration="529000" />
       <workItem from="1651898458758" duration="6305000" />
       <workItem from="1652007659731" duration="3599000" />
-      <workItem from="1652063351674" duration="6026000" />
+      <workItem from="1652063351674" duration="7481000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -264,7 +269,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652071602710</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Initial commit">
+      <created>1652072530961</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1652072530961</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

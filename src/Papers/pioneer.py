@@ -2,8 +2,8 @@ import gzip
 from xml.etree.ElementTree import Element, parse
 from multiprocessing import Pool
 from mypathlib import PathTemplate
-from Papers.containers import Journal
-from Papers.parse import parse_journal
+from .containers import Journal
+from .parse import parse_journal
 
 
 R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)

@@ -3,8 +3,8 @@ import pickle
 from multiprocessing import Pool
 from xml.etree.ElementTree import Element, parse
 from mypathlib import PathTemplate
-from Papers.containers import Article, Journal
-from Papers.parse import parse_article
+from .containers import Article, Journal
+from .parse import parse_article
 
 
 R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
