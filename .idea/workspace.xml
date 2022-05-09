@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Papers/download.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Papers/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Papers/parse.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Papers/pioneer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Patents/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Patents/containers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Patents/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Patents/parse.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mypathlib/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mypathlib/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Initial commit" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -257,8 +245,16 @@
       <workItem from="1651852190574" duration="529000" />
       <workItem from="1651898458758" duration="6305000" />
       <workItem from="1652007659731" duration="3599000" />
-      <workItem from="1652063351674" duration="4408000" />
+      <workItem from="1652063351674" duration="4939000" />
     </task>
+    <task id="LOCAL-00001" summary="Initial commit">
+      <created>1652071017726</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1652071017726</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,6 +271,10 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
