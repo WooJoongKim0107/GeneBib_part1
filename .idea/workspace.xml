@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Refactor: Package as package&#10;&#10;1. main.py (of package) -&gt; __main__.py&#10;2. from current_package.module import sth -&gt; from .module import sth&#10;    The former works fine if with Pycharm since Pycharm changes PYTHONPATH very nicely.&#10;    Without Pycharm, such importing strategy does not work.&#10;    Therefore, I decided to replace all absolute importing inside a package into relative imports.&#10;    This makes the codes not able to run in a console by copy-paste, run the module by themselves.&#10;    When the codes need to be executed in a console, use &quot;from sth import sth&quot; rather than copy-paste.&#10;    When the codes need to be executed alone, use &quot;python -m package.module&quot;">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Fixed Issue #1&#10;&#10;Changed __main__.py to main.py again.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Patents/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/__main__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/parse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/pioneer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/pioneer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,7 +252,7 @@
       <workItem from="1652007659731" duration="3599000" />
       <workItem from="1652063351674" duration="8039000" />
       <workItem from="1652076386038" duration="167000" />
-      <workItem from="1652077903277" duration="2380000" />
+      <workItem from="1652077903277" duration="5050000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -281,7 +282,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652076320851</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Fixed Issue #1&#10;&#10;Changed __main__.py to main.py again.">
+      <created>1652080405304</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1652080405304</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -302,7 +310,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit" />
     <MESSAGE value="Refactor: Package as package&#10;&#10;1. main.py (of package) -&gt; __main__.py&#10;2. from current_package.module import sth -&gt; from .module import sth&#10;    The former works fine if with Pycharm since Pycharm changes PYTHONPATH very nicely.&#10;    Without Pycharm, such importing strategy does not work.&#10;    Therefore, I decided to replace all absolute importing inside a package into relative imports.&#10;    This makes the codes not able to run in a console by copy-paste, run the module by themselves.&#10;    When the codes need to be executed in a console, use &quot;from sth import sth&quot; rather than copy-paste.&#10;    When the codes need to be executed alone, use &quot;python -m package.module&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor: Package as package&#10;&#10;1. main.py (of package) -&gt; __main__.py&#10;2. from current_package.module import sth -&gt; from .module import sth&#10;    The former works fine if with Pycharm since Pycharm changes PYTHONPATH very nicely.&#10;    Without Pycharm, such importing strategy does not work.&#10;    Therefore, I decided to replace all absolute importing inside a package into relative imports.&#10;    This makes the codes not able to run in a console by copy-paste, run the module by themselves.&#10;    When the codes need to be executed in a console, use &quot;from sth import sth&quot; rather than copy-paste.&#10;    When the codes need to be executed alone, use &quot;python -m package.module&quot;" />
+    <MESSAGE value="Fixed Issue #1&#10;&#10;Changed __main__.py to main.py again." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Issue #1&#10;&#10;Changed __main__.py to main.py again." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

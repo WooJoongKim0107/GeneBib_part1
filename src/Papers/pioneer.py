@@ -1,5 +1,6 @@
 import gzip
-from xml.etree.ElementTree import Element, parse
+from lxml.etree import _Element as Element
+from lxml.etree import parse
 from multiprocessing import Pool
 from mypathlib import PathTemplate
 from .containers import Journal

@@ -1,7 +1,8 @@
 import gzip
 import pickle
 from multiprocessing import Pool
-from xml.etree.ElementTree import Element, parse
+from lxml.etree import _Element as Element
+from lxml.etree import parse
 from mypathlib import PathTemplate
 from .containers import Article, Journal
 from .parse import parse_article

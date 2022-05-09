@@ -1,5 +1,5 @@
 import re
-from xml.etree.ElementTree import Element
+from lxml.etree import _Element as Element
 from .containers import ISSN, issn_factory, ISSNl
 
 
