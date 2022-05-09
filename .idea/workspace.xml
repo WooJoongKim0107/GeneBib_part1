@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Initial commit">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Refactor: Package as package&#10;&#10;1. main.py (of package) -&gt; __main__.py&#10;2. from current_package.module import sth -&gt; from .module import sth&#10;    The former works fine if with Pycharm since Pycharm changes PYTHONPATH very nicely.&#10;    Without Pycharm, such importing strategy does not work.&#10;    Therefore, I decided to replace all absolute importing inside a package into relative imports.&#10;    This makes the codes not able to run in a console by copy-paste, run the module by themselves.&#10;    When the codes need to be executed in a console, use &quot;from sth import sth&quot; rather than copy-paste.&#10;    When the codes need to be executed alone, use &quot;python -m package.module&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/parse.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/pioneer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/pioneer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Patents/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Patents/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/__main__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Patents/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/__main__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,29 +70,7 @@
       <recent name="C:\Users\lrlr9\PycharmProjects\GeneBib\src\Papers" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.__main__">
-    <configuration name="__main__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="GeneBib" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/Patents" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\lrlr9\PycharmProjects\GeneBib\src\Patents\__main__.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.pioneer (1)">
     <configuration name="__main__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="GeneBib" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -133,6 +107,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="GeneBib" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/Patents" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\lrlr9\PycharmProjects\GeneBib\src\Patents\main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -209,8 +205,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.__main__" />
         <item itemvalue="Python.pioneer (1)" />
+        <item itemvalue="Python.__main__" />
         <item itemvalue="Python.__main__" />
         <item itemvalue="Python.trial" />
         <item itemvalue="Python.pioneer" />
@@ -253,7 +249,9 @@
       <workItem from="1651852190574" duration="529000" />
       <workItem from="1651898458758" duration="6305000" />
       <workItem from="1652007659731" duration="3599000" />
-      <workItem from="1652063351674" duration="7481000" />
+      <workItem from="1652063351674" duration="8039000" />
+      <workItem from="1652076386038" duration="167000" />
+      <workItem from="1652077903277" duration="2380000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -276,7 +274,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652072530961</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Refactor: Package as package&#10;&#10;1. main.py (of package) -&gt; __main__.py&#10;2. from current_package.module import sth -&gt; from .module import sth&#10;    The former works fine if with Pycharm since Pycharm changes PYTHONPATH very nicely.&#10;    Without Pycharm, such importing strategy does not work.&#10;    Therefore, I decided to replace all absolute importing inside a package into relative imports.&#10;    This makes the codes not able to run in a console by copy-paste, run the module by themselves.&#10;    When the codes need to be executed in a console, use &quot;from sth import sth&quot; rather than copy-paste.&#10;    When the codes need to be executed alone, use &quot;python -m package.module&quot;">
+      <created>1652076320851</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1652076320851</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -296,7 +301,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial commit" />
+    <MESSAGE value="Refactor: Package as package&#10;&#10;1. main.py (of package) -&gt; __main__.py&#10;2. from current_package.module import sth -&gt; from .module import sth&#10;    The former works fine if with Pycharm since Pycharm changes PYTHONPATH very nicely.&#10;    Without Pycharm, such importing strategy does not work.&#10;    Therefore, I decided to replace all absolute importing inside a package into relative imports.&#10;    This makes the codes not able to run in a console by copy-paste, run the module by themselves.&#10;    When the codes need to be executed in a console, use &quot;from sth import sth&quot; rather than copy-paste.&#10;    When the codes need to be executed alone, use &quot;python -m package.module&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor: Package as package&#10;&#10;1. main.py (of package) -&gt; __main__.py&#10;2. from current_package.module import sth -&gt; from .module import sth&#10;    The former works fine if with Pycharm since Pycharm changes PYTHONPATH very nicely.&#10;    Without Pycharm, such importing strategy does not work.&#10;    Therefore, I decided to replace all absolute importing inside a package into relative imports.&#10;    This makes the codes not able to run in a console by copy-paste, run the module by themselves.&#10;    When the codes need to be executed in a console, use &quot;from sth import sth&quot; rather than copy-paste.&#10;    When the codes need to be executed alone, use &quot;python -m package.module&quot;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -313,6 +319,6 @@
     <SUITE FILE_PATH="coverage/GeneBib$trial.coverage" NAME="trial Coverage Results" MODIFIED="1651644695683" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/Papers" />
     <SUITE FILE_PATH="coverage/GeneBib$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1651651180592" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/Papers" />
     <SUITE FILE_PATH="coverage/GeneBib$main__2_.coverage" NAME="main (2) Coverage Results" MODIFIED="1652070489092" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/Patents" />
-    <SUITE FILE_PATH="coverage/GeneBib$pioneer__1_.coverage" NAME="pioneer (1) Coverage Results" MODIFIED="1651824795608" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/Papers" />
+    <SUITE FILE_PATH="coverage/GeneBib$pioneer__1_.coverage" NAME="pioneer (1) Coverage Results" MODIFIED="1652076405144" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/Papers" />
   </component>
 </project>

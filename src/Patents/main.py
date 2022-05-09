@@ -15,15 +15,15 @@ def get_patent(x):
     return patent.pub_number, patent
 
 
-def read(number):
+def select_US_patents(number):
     print(number)
     with gzip.open(R_FILE.substitute(number=number), 'rt', encoding='UTF-8') as file:
         q = [json.loads(line) for line in file]
-    return q
+    return [x for x in q if x['country_code'] == 'US']
 
 
 def write(number):
-    patents = dict(get_patent(x) for x in read(number))
+    patents = dict(get_patent(x) for x in select_US_patents(number))
     with gzip.open(W_FILE.substitute(number=number), 'wb') as file:
         pickle.dump(patents, file)
 
