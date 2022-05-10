@@ -2,7 +2,7 @@ import gzip
 import pickle
 from more_itertools import pairwise
 from mypathlib import PathTemplate
-from Patents.main import W_FILE as R_FILE
+from .main import W_FILE as R_FILE
 
 
 W_FILE = PathTemplate('$rsrc/pdata/patent/patent_$index.pkl')
@@ -20,7 +20,7 @@ def merge_patent(index, start, stop):
 
 
 def main_patent():
-    splits = [1, 223, 445, 667, 889, 1115]
+    splits = [i for i in range(0, 10033, 90)] + [10033]
     for index, (start, stop) in enumerate(pairwise(splits)):
         merge_patent(index, start, stop)
 

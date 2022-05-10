@@ -2,7 +2,7 @@ import gzip
 import pickle
 from more_itertools import pairwise
 from mypathlib import PathTemplate
-from Papers.main import W_FILE as R_FILE
+from .main import W_FILE as R_FILE
 
 
 W_FILE = PathTemplate('$rsrc/pdata/paper/article_$index.pkl')
@@ -20,7 +20,7 @@ def merge_paper(index, start, stop):
 
 
 def main_paper():
-    splits = [0, 2000, 4000, 6000, 8000, 10033]
+    splits = [i for i in range(1, 1115, 40)] + [1115]
     for index, (start, stop) in enumerate(pairwise(splits)):
         merge_paper(index, start, stop)
 
