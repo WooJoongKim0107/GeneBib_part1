@@ -36,6 +36,18 @@ class PathTemplate(Template):
         else:
             return PathTemplate(res)
 
+    def private_substitute(self, mapping=_sentinel_dict, /, key=None, **kwargs) -> Path:
+        subs_dict = self._get_subs_dict(mapping, key=key, **kwargs)
+        subs_dict.pop('rsrc', None)
+        subs_dict.pop('base', None)
+        return self.substitute(subs_dict)
+
+    def private_safe_substitute(self, mapping=_sentinel_dict, /, key=None, **kwargs):
+        subs_dict = self._get_subs_dict(mapping, key=key, **kwargs)
+        subs_dict.pop('rsrc', None)
+        subs_dict.pop('base', None)
+        return self.safe_substitute(subs_dict)
+
     def _get_subs_dict(self, mapping=_sentinel_dict, /, key=None, **kwargs):
         _key = self._chain(key)
         _mapping = self._merge(mapping, kwargs)

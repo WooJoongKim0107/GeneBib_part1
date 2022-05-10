@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Modify parsing function for publication date&#10;&#10;'Month': 'Jan'|'Feb'|...|'Dec' or '01'|'02'|...|'12'&#10;    -&gt; int(1)|int(2)|...|int(12)&#10;    &#10;'MedlineDate': str(year) -&gt; int(year)">
-      <change afterPath="$PROJECT_DIR$/src/myclass/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/myclass/cached_class.py" afterDir="false" />
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add Metaclass for cached class - myclass.cached_class.MetaCache">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Patents/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/containers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mypathlib/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mypathlib/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,7 +253,7 @@
       <workItem from="1652076386038" duration="167000" />
       <workItem from="1652077903277" duration="5255000" />
       <workItem from="1652084448739" duration="2168000" />
-      <workItem from="1652147203507" duration="6528000" />
+      <workItem from="1652147203507" duration="8536000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -303,7 +304,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652157177027</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Add Metaclass for cached class - myclass.cached_class.MetaCache">
+      <created>1652157275570</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1652157275570</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -327,7 +335,8 @@
     <MESSAGE value="Fixed Issue #1&#10;&#10;Changed __main__.py to main.py again." />
     <MESSAGE value="Adapt lxml.etree rather than xml.etree for performance" />
     <MESSAGE value="Modify parsing function for publication date&#10;&#10;'Month': 'Jan'|'Feb'|...|'Dec' or '01'|'02'|...|'12'&#10;    -&gt; int(1)|int(2)|...|int(12)&#10;    &#10;'MedlineDate': str(year) -&gt; int(year)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modify parsing function for publication date&#10;&#10;'Month': 'Jan'|'Feb'|...|'Dec' or '01'|'02'|...|'12'&#10;    -&gt; int(1)|int(2)|...|int(12)&#10;    &#10;'MedlineDate': str(year) -&gt; int(year)" />
+    <MESSAGE value="Add Metaclass for cached class - myclass.cached_class.MetaCache" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Metaclass for cached class - myclass.cached_class.MetaCache" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
