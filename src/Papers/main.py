@@ -12,8 +12,9 @@ R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.f
 W_FILE = PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format)
 
 
-def get_article(pubmed_article_elt: Element):
+def get_article(number, pubmed_article_elt: Element):
     article = Article.from_parse(*parse_article(pubmed_article_elt))
+    article.location = number
 
     medline_ta = pubmed_article_elt.findtext('./MedlineCitation/MedlineJournalInfo/MedlineTA')
     journal = Journal(medline_ta)
@@ -29,7 +30,7 @@ def find_eng_articles(number):
 
 
 def write(number):
-    res = dict(get_article(pubmed_article_elt) for pubmed_article_elt in find_eng_articles(number))
+    res = dict(get_article(number, pubmed_article_elt) for pubmed_article_elt in find_eng_articles(number))
     with gzip.open(W_FILE.substitute(number=number), 'wb') as file:
         pickle.dump(res, file)
 

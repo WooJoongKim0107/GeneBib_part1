@@ -226,6 +226,7 @@ class Article:
 
         self.article_title: str = ''
         self.abstract: str = ''
+        self.location: int = -1
 
     @classmethod
     def from_parse(cls,
@@ -246,6 +247,7 @@ class Article:
             Journal: {self.journal.medline_ta}
             PubDate: {self.pub_date}
             
+           Location: {self.location}
                PMID: {self.pmid}
               Title: {self.article_title}
            Abstract: {self.abstract}

@@ -10,8 +10,9 @@ R_FILE = PathTemplate('$rsrc/data/patent/patent_202111_$number.json.gz', key='{:
 W_FILE = PathTemplate('$rsrc/pdata/patent/patent_202111_$number.pkl.gz', key='{:0>12}'.format)
 
 
-def get_patent(x):
+def get_patent(number, x):
     patent = Patent.from_parse(*parse_patent(x))
+    patent.location = number
     return patent.pub_number, patent
 
 
@@ -23,7 +24,7 @@ def select_US_patents(number):
 
 
 def write(number):
-    patents = dict(get_patent(x) for x in select_US_patents(number))
+    patents = dict(get_patent(number, x) for x in select_US_patents(number))
     with gzip.open(W_FILE.substitute(number=number), 'wb') as file:
         pickle.dump(patents, file)
 

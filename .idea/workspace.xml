@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add private substitution methods of PathTemplate">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Modify private substitution methods of PathTemplate">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Patents/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/containers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mypathlib/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mypathlib/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Patents/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -253,7 +255,7 @@
       <workItem from="1652076386038" duration="167000" />
       <workItem from="1652077903277" duration="5255000" />
       <workItem from="1652084448739" duration="2168000" />
-      <workItem from="1652147203507" duration="9165000" />
+      <workItem from="1652147203507" duration="10439000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -318,7 +320,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652159618568</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Modify private substitution methods of PathTemplate">
+      <created>1652160478225</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1652160478225</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -344,7 +353,8 @@
     <MESSAGE value="Modify parsing function for publication date&#10;&#10;'Month': 'Jan'|'Feb'|...|'Dec' or '01'|'02'|...|'12'&#10;    -&gt; int(1)|int(2)|...|int(12)&#10;    &#10;'MedlineDate': str(year) -&gt; int(year)" />
     <MESSAGE value="Add Metaclass for cached class - myclass.cached_class.MetaCache" />
     <MESSAGE value="Add private substitution methods of PathTemplate" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add private substitution methods of PathTemplate" />
+    <MESSAGE value="Modify private substitution methods of PathTemplate" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modify private substitution methods of PathTemplate" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

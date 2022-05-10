@@ -15,6 +15,7 @@ class Patent:
 
         self.cpcs: set[str] = set()
         self.citations: set[str] = set()
+        self.location: int = -1
 
     @property
     def is_granted(self):
@@ -61,25 +62,18 @@ class Patent:
     def info(self):
         return dedent(f"""\
         {self}
-            Number
-                publication: {self.pub_number}
-                application: {self.app_number}
-                    granted: {'Yes' if self.is_granted else 'No'}
-
-            Date
+            Date:
                 application: {self.filing_date}
                 publication: {self.pub_date}
-                      grant: {self.grant_date}
+                      grant: {self.grant_date if self.is_granted else 'Not granted'}
                       
-            Citation
-                      count: {len(self.citations)}
-                      lists: {_print_set(self.citations)}
-                      
+            Citation: total {len(self.citations)}; {_print_set(self.citations)}
             CPC codes: {_print_set(self.cpcs)}
-                
-            Title: {self.title}
             
-            Abstract: {self.abstract}
+             Location: {self.location}
+               Number: publication={self.pub_number}, application={self.app_number}
+                Title: {self.title}
+             Abstract: {self.abstract}
         """)
 
     def __repr__(self):
