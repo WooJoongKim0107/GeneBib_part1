@@ -245,6 +245,7 @@ class Article:
         {self}
             Journal: {self.journal.medline_ta}
             PubDate: {self.pub_date}
+            
                PMID: {self.pmid}
               Title: {self.article_title}
            Abstract: {self.abstract}

@@ -41,9 +41,9 @@ def parse_pub_date(pub_date_elt: Element):
     match pub_date:
         # PubDate element exist
         case {'Year': year, 'Month': month, 'Day': day}:
-            return {'Year': int(year), 'Month': month, 'Day': int(day)}
+            return {'Year': int(year), 'Month': parse_month(month), 'Day': int(day)}
         case {'Year': year, 'Month': month}:
-            return {'Year': int(year), 'Month': month}
+            return {'Year': int(year), 'Month': parse_month(month)}
         case {'Year': year, 'Season': season}:
             return {'Year': int(year), 'Season': season}
         case {'Year': year}:
@@ -51,13 +51,21 @@ def parse_pub_date(pub_date_elt: Element):
 
         # MedlineData exist
         case {'MedlineDate': valid_string} if (year:=_medline_date_parser.match(valid_string)):
-            return {'MedlineDate': int(year.group())}
+            return {'Year': int(year.group())}
         case {'MedlineDate': _}:
             return pub_date
 
         # None of them exist: never happens
         case _:
             raise ValueError(f'Cannot parse {pub_date}')
+
+
+_month = {s: i for i, s in enumerate(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], start=1)}
+def parse_month(x):
+    if x in _month:
+        return _month[x]
+    else:
+        return int(x)
 
 
 def merge_abstract_texts(abstract_texts: list[Element]):
