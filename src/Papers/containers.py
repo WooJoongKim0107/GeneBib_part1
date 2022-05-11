@@ -224,7 +224,7 @@ class Article:
         self.journal: Journal = Journal('')
         self.pub_date: dict[str: str|int] = {}
 
-        self.article_title: str = ''
+        self.title: str = ''
         self.abstract: str = ''
         self.location: int = -1
 
@@ -232,12 +232,12 @@ class Article:
     def from_parse(cls,
                    pmid: int,
                    pub_date: dict[str: str|int],
-                   article_title: str,
+                   title: str,
                    abstract: str):
 
         new = cls(pmid)
         new.pub_date = pub_date
-        new.article_title = article_title
+        new.title = title
         new.abstract = abstract
         return new
 
@@ -249,7 +249,7 @@ class Article:
             
            Location: {self.location}
                PMID: {self.pmid}
-              Title: {self.article_title}
+              Title: {self.title}
            Abstract: {self.abstract}
         """)
 
