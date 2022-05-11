@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Rename Article.article_title attribute into Article.title">
-      <change afterPath="$PROJECT_DIR$/src/howdy.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/what.py" afterDir="false" />
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add modules to get statistical summary of Articles">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/what.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/what.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,7 +255,7 @@
       <workItem from="1652147203507" duration="16630000" />
       <workItem from="1652172467864" duration="625000" />
       <workItem from="1652227288787" duration="11733000" />
-      <workItem from="1652239557125" duration="8410000" />
+      <workItem from="1652239557125" duration="9480000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -370,7 +369,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652247489778</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Add modules to get statistical summary of Articles">
+      <created>1652251514452</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1652251514452</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -403,7 +409,8 @@
     <MESSAGE value="Fix parsing pattern for MedlineDate" />
     <MESSAGE value="Fix collection type of Articles and Patents from list to ChainMap" />
     <MESSAGE value="Rename Article.article_title attribute into Article.title" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rename Article.article_title attribute into Article.title" />
+    <MESSAGE value="Add modules to get statistical summary of Articles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add modules to get statistical summary of Articles" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

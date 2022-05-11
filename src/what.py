@@ -29,7 +29,7 @@ def counts(number):
     x = len(tree.getroot())
     y = len(engs)
     z = len(pmids)
-    return number, x, y, z, pmids
+    return number, x, y, z
 
 
 def main():
@@ -37,3 +37,7 @@ def main():
         res = p.map(counts, range(1, 1115))
     with gzip.open(W_FILE.substitute(), 'wb') as file:
         pickle.dump(res, file)
+
+
+if __name__ == '__main__':
+    main()
