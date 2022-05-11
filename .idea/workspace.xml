@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Fix collection type of Articles and Patents from list to ChainMap">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Rename Article.article_title attribute into Article.title">
       <change afterPath="$PROJECT_DIR$/src/howdy.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/what.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,7 +256,7 @@
       <workItem from="1652147203507" duration="16630000" />
       <workItem from="1652172467864" duration="625000" />
       <workItem from="1652227288787" duration="11733000" />
-      <workItem from="1652239557125" duration="4328000" />
+      <workItem from="1652239557125" duration="8410000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -363,7 +363,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652239511343</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Rename Article.article_title attribute into Article.title">
+      <created>1652247489778</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1652247489778</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -395,7 +402,8 @@
     <MESSAGE value="Fix module to merge pickled pdata .merge.py" />
     <MESSAGE value="Fix parsing pattern for MedlineDate" />
     <MESSAGE value="Fix collection type of Articles and Patents from list to ChainMap" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix collection type of Articles and Patents from list to ChainMap" />
+    <MESSAGE value="Rename Article.article_title attribute into Article.title" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rename Article.article_title attribute into Article.title" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
