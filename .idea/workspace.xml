@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Fix module to merge pickled pdata .merge.py">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Fix parsing pattern for MedlineDate">
       <change beforePath="$PROJECT_DIR$/src/Papers/merge.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/merge.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/parse.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Patents/merge.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/merge.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -256,7 +254,7 @@
       <workItem from="1652084448739" duration="2168000" />
       <workItem from="1652147203507" duration="16630000" />
       <workItem from="1652172467864" duration="625000" />
-      <workItem from="1652227288787" duration="11453000" />
+      <workItem from="1652227288787" duration="11590000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -349,7 +347,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652173084610</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Fix parsing pattern for MedlineDate">
+      <created>1652239320713</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1652239320713</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -379,7 +384,8 @@
     <MESSAGE value="Feat Article.location &amp; Patent.location&#10;&#10;.location gives hint about the location of resource file." />
     <MESSAGE value="Add module to merge pickled pdata .merge.py" />
     <MESSAGE value="Fix module to merge pickled pdata .merge.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix module to merge pickled pdata .merge.py" />
+    <MESSAGE value="Fix parsing pattern for MedlineDate" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix parsing pattern for MedlineDate" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
