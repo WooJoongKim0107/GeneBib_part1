@@ -35,7 +35,14 @@ def _as_issn_l(x: str|None):
         return None
 
 
-_medline_date_parser = re.compile('[12]\d{3}(?=\s)')
+# MedlineDate formats:
+# 1. '1998 Dec-1999 Jan'
+# 2. '1997-1998'
+# 3. '2010-2011 ' + str(Season|Month)
+# 4. '1990'    <- I don't understand why they exist. It contradicts 190101.dtd.
+# 5. 'Spring 2009'
+# 6. '2003 ' + str
+md_parser = re.compile(r'\b(19|20)\d{2}\b')  # r'(19|20)\d{2}(?=\s*)' on previous study
 def parse_pub_date(pub_date_elt: Element):
     pub_date = children_as_dict(pub_date_elt)
     match pub_date:
@@ -49,8 +56,9 @@ def parse_pub_date(pub_date_elt: Element):
         case {'Year': year}:
             return {'Year': int(year)}
 
+
         # MedlineData exist
-        case {'MedlineDate': valid_string} if (year:=_medline_date_parser.match(valid_string)):
+        case {'MedlineDate': valid_string} if (year:=md_parser.search(valid_string)):
             return {'Year': int(year.group())}
         case {'MedlineDate': _}:
             return pub_date
