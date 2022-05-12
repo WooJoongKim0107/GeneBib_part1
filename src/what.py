@@ -28,8 +28,7 @@ def counts(number):
 
     x = len(tree.getroot())
     y = len(engs)
-    z = len(pmids)
-    return number, x, y, z
+    return number, x, y, {pmid for pmid, count in pmids.items() if count > 1}
 
 
 def main():
