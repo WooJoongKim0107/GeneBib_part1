@@ -18,7 +18,7 @@ def read_articles(number):
 
 
 def read_articles_not_repeated(number):
-    return {x.pmid: x for x in read_articles(number) if x not in replicas}
+    return {x.pmid: x for x in read_articles(number) if x.pmid not in replicas}
 
 
 def merge_and_write(index, start, stop):
