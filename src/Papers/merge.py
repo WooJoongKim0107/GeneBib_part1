@@ -30,19 +30,19 @@ def merge_and_write(index, start, stop):
 
 
 def append_repeated(index):
-    with open(W_FILE.substitute(index=index)) as file:
+    with gzip.open(W_FILE.substitute(index=index)) as file:
         chain = pickle.load(file)
     chain.maps.append(dict(replicas))
-    with open(W_FILE.substitute(index=index), 'wb') as file:
+    with gzip.open(W_FILE.substitute(index=index), 'wb') as file:
         pickle.dump(chain, file)
 
 
 def main():
     splits = [i for i in range(1, 1115, 10)] + [1115]
-    args = [(index, start, stop) for index, (start, stop) in enumerate(pairwise(splits)) if not W_FILE.substitute(index=index).is_file()]
+    args = [(index, start, stop) for index, (start, stop) in enumerate(pairwise(splits))]
     with Pool(5) as p:
         p.starmap(merge_and_write, args)
-    append_repeated(len(args)-1)
+    append_repeated(len(splits)-2)
 
 
 if __name__ == '__main__':

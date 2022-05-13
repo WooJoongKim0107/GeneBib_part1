@@ -18,22 +18,22 @@ def read_patents(number):
 
 
 def read_patents_not_repeated(number):
-    return {x.pub_number: x for x in read_patents(number) if x not in replicas}
+    return {x.pmid: x for x in read_patents(number) if x.pmid not in replicas}
 
 
 def merge_and_write(index, start, stop):
     patents = iter(read_patents_not_repeated(number) for number in reversed(range(start, stop)))
     res = ChainMap(*patents)
-    assert len(res) == sum(len(x) for x in res.maps)
+    assert len(res) == sum(len(x) for x in res.maps), f'{index}: ({start}, {stop}) has duplicates'
     with gzip.open(W_FILE.substitute(index=index), 'wb') as file:
         pickle.dump(res, file)
 
 
 def append_repeated(index):
-    with open(W_FILE.substitute(index=index)) as file:
+    with gzip.open(W_FILE.substitute(index=index)) as file:
         chain = pickle.load(file)
     chain.maps.append(dict(replicas))
-    with open(W_FILE.substitute(index=index), 'wb') as file:
+    with gzip.open(W_FILE.substitute(index=index), 'wb') as file:
         pickle.dump(chain, file)
 
 
