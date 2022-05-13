@@ -19,7 +19,7 @@ def get_article(number, pubmed_article_elt: Element):
     medline_ta = pubmed_article_elt.findtext('./MedlineCitation/MedlineJournalInfo/MedlineTA')
     journal = Journal(medline_ta)
     article.journal = journal
-    return article.pmid, article
+    return article
 
 
 def find_eng_articles(number):
@@ -30,13 +30,13 @@ def find_eng_articles(number):
 
 
 def write(number):
-    res = dict(get_article(number, pubmed_article_elt) for pubmed_article_elt in find_eng_articles(number))
+    res = [get_article(number, pubmed_article_elt) for pubmed_article_elt in find_eng_articles(number)]
     with gzip.open(W_FILE.substitute(number=number), 'wb') as file:
         pickle.dump(res, file)
 
 
 def main():
-    with Pool(6) as p:
+    with Pool() as p:
         p.map(write, range(1, 1115))
 
 

@@ -246,7 +246,6 @@ class Article:
         {self}
             Journal: {self.journal.medline_ta}
             PubDate: {self.pub_date}
-            
            Location: {self.location}
                PMID: {self.pmid}
               Title: {self.title}
