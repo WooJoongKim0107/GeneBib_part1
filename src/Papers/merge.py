@@ -5,11 +5,11 @@ from more_itertools import pairwise
 from multiprocessing import Pool
 from mypathlib import PathTemplate
 from .main import W_FILE as R_FILE
-from .replicas import Replica
+from .replicas import PaperReplica
 
 
 W_FILE = PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz')
-replicas = Replica(load=True)
+replicas = PaperReplica(load=True)
 
 
 def read_articles(number):

@@ -13,12 +13,13 @@ W_FILES = {'replica': PathTemplate('$rsrc/pdata/paper/paper_replicas.pkl'),
 
 class Replica(dict):
     """
-    Replica: dict[pmid, list[Article]]
+    Replica: dict[pmid, list[Article]] for paper, dict[pub_number, list[Patents]] for patent
     """
-    R_FILE = R_FILE
-    W_FILE = W_FILES['replica']
-    START = 1
-    STOP = 1115
+    R_FILE = PathTemplate('')
+    W_FILE = PathTemplate('')
+    START = 0
+    STOP = 0
+    ID_ATTR = ''
 
     def __init__(self, load=True):
         if load:
@@ -35,7 +36,7 @@ class Replica(dict):
 
     @classmethod
     def _collect_keys(cls, number):
-        return [x.pmid for x in cls.read(number)]
+        return [getattr(x, cls.ID_ATTR) for x in cls.read(number)]
 
     @classmethod
     def collect_keys(cls):
@@ -52,7 +53,7 @@ class Replica(dict):
     @classmethod
     def _get_replicas(cls, number, keys):
         container = cls.read(number)
-        return {x.pmid: x for x in container if x.pmid in keys}
+        return {id_: x for x in container if (id_ := getattr(x, cls.ID_ATTR)) in keys}
 
     @classmethod
     def get_replicas(cls, locations):
@@ -93,8 +94,16 @@ def _different(s0, s1):
     return _s0 != _s1
 
 
+class PaperReplica(Replica):
+    R_FILE = R_FILE
+    W_FILE = W_FILES['replica']
+    START = 1
+    STOP = 1115
+    ID_ATTR = 'pmid'
+
+
 if __name__ == '__main__':
-    q = Replica(load=False)
+    q = PaperReplica(load=False)
     q.dump()
     with open(W_FILES['prints'].substitute(), 'w', encoding='UTF-8') as file:
         file.write(q.full_comparison())
