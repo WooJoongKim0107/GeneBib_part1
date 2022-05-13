@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Modify save the duplicated PMIDs rather than len of total PMIDs">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Modify data type of Article container changed from dict to list&#10;&#10;Both paper and patent raw data acquired from PubMed and GCP suffer from replicas.&#10;There are 2,834 articles which have more than one replica among 28,629,656 english articles. (total 33,405,863 articles)&#10;Even though their PMIDs are unique for each article, each article may appear multiple times in the raw data.&#10;Unfortunately, those replicas sometimes appear within a single raw file - dict[pmid -&gt; Article instance] is not valid structure for Article instances. &#10;&#10;Therefore, I change the data type of Article container from dict[pmid -&gt; Article] to list[Article].&#10;&#10;It will also be applied for Patent container later.">
       <change afterPath="$PROJECT_DIR$/src/Papers/duplicates.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Papers/replicas.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/merge.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/merge.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/howdy.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/howdy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/what.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/what.py" afterDir="false" />
     </list>
@@ -262,7 +261,7 @@
       <workItem from="1652227288787" duration="11733000" />
       <workItem from="1652239557125" duration="12967000" />
       <workItem from="1652321474625" duration="28044000" />
-      <workItem from="1652401135733" duration="5134000" />
+      <workItem from="1652401135733" duration="13327000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -397,7 +396,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652341905454</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Modify data type of Article container changed from dict to list&#10;&#10;Both paper and patent raw data acquired from PubMed and GCP suffer from replicas.&#10;There are 2,834 articles which have more than one replica among 28,629,656 english articles. (total 33,405,863 articles)&#10;Even though their PMIDs are unique for each article, each article may appear multiple times in the raw data.&#10;Unfortunately, those replicas sometimes appear within a single raw file - dict[pmid -&gt; Article instance] is not valid structure for Article instances. &#10;&#10;Therefore, I change the data type of Article container from dict[pmid -&gt; Article] to list[Article].&#10;&#10;It will also be applied for Patent container later.">
+      <created>1652406875058</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1652406875058</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -433,7 +439,8 @@
     <MESSAGE value="Add modules to get statistical summary of Articles" />
     <MESSAGE value="Add modules to get statistical summary of Articles; 2" />
     <MESSAGE value="Modify save the duplicated PMIDs rather than len of total PMIDs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modify save the duplicated PMIDs rather than len of total PMIDs" />
+    <MESSAGE value="Modify data type of Article container changed from dict to list&#10;&#10;Both paper and patent raw data acquired from PubMed and GCP suffer from replicas.&#10;There are 2,834 articles which have more than one replica among 28,629,656 english articles. (total 33,405,863 articles)&#10;Even though their PMIDs are unique for each article, each article may appear multiple times in the raw data.&#10;Unfortunately, those replicas sometimes appear within a single raw file - dict[pmid -&gt; Article instance] is not valid structure for Article instances. &#10;&#10;Therefore, I change the data type of Article container from dict[pmid -&gt; Article] to list[Article].&#10;&#10;It will also be applied for Patent container later." />
+    <option name="LAST_COMMIT_MESSAGE" value="Modify data type of Article container changed from dict to list&#10;&#10;Both paper and patent raw data acquired from PubMed and GCP suffer from replicas.&#10;There are 2,834 articles which have more than one replica among 28,629,656 english articles. (total 33,405,863 articles)&#10;Even though their PMIDs are unique for each article, each article may appear multiple times in the raw data.&#10;Unfortunately, those replicas sometimes appear within a single raw file - dict[pmid -&gt; Article instance] is not valid structure for Article instances. &#10;&#10;Therefore, I change the data type of Article container from dict[pmid -&gt; Article] to list[Article].&#10;&#10;It will also be applied for Patent container later." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
