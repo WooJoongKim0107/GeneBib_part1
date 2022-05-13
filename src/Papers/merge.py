@@ -24,7 +24,7 @@ def read_articles_not_repeated(number):
 def merge_and_write(index, start, stop):
     papers = iter(read_articles_not_repeated(number) for number in reversed(range(start, stop)))
     res = ChainMap(*papers)
-    assert len(res) == sum(len(x) for x in res.maps)
+    assert len(res) == sum(len(x) for x in res.maps), f'{index}: ({start}, {stop}) has duplicates'
     with gzip.open(W_FILE.substitute(index=index), 'wb') as file:
         pickle.dump(res, file)
 
@@ -39,7 +39,7 @@ def append_repeated(index):
 
 def main():
     splits = [i for i in range(1, 1115, 10)] + [1115]
-    args = [(index, start, stop) for index, (start, stop) in enumerate(pairwise(splits))]
+    args = [(index, start, stop) for index, (start, stop) in enumerate(pairwise(splits)) if not W_FILE.substitute(index=index).is_file()]
     with Pool(5) as p:
         p.starmap(merge_and_write, args)
     append_repeated(len(args)-1)
