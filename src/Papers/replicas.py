@@ -46,9 +46,9 @@ class Replica(dict):
     @classmethod
     def find_locations(cls, collected_keys):
         counts = Counter(key for keys in collected_keys for key in keys)
-        repeated_keys = [key for key, count in counts.items() if count > 1]
+        repeated_keys = {key for key, count in counts.items() if count > 1}
         return {i: itsc for i, keys in enumerate(collected_keys, start=cls.START)
-                if (itsc := keys.intersection(repeated_keys))}
+                if (itsc := repeated_keys.intersection(keys))}
 
     @classmethod
     def _get_replicas(cls, number, keys):
