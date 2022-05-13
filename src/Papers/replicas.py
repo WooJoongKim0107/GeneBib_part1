@@ -1,0 +1,100 @@
+import gzip
+import pickle
+from textwrap import dedent, indent
+from collections import Counter
+from multiprocessing import Pool
+from mypathlib import PathTemplate
+from .main import W_FILE as R_FILE
+
+
+W_FILES = {'replica': PathTemplate('$rsrc/pdata/paper/paper_replicas.pkl'),
+           'prints': PathTemplate('$rsrc/pdata/paper/paper_replicas.txt')}
+
+
+class Replica(dict):
+    """
+    Replica: dict[pmid, list[Article]]
+    """
+    R_FILE = R_FILE
+    W_FILE = W_FILES['replica']
+    START = 1
+    STOP = 1115
+
+    def __init__(self, load=True):
+        if load:
+            super().__init__(self.load())
+        else:
+            collected_keys = self.collect_keys()
+            self.locations = self.find_locations(collected_keys)
+            super().__init__(self.get_replicas(self.locations))
+
+    @classmethod
+    def read(cls, number):
+        with gzip.open(cls.R_FILE.substitute(number=number)) as file:
+            return pickle.load(file)
+
+    @classmethod
+    def _collect_keys(cls, number):
+        return [x.pmid for x in cls.read(number)]
+
+    @classmethod
+    def collect_keys(cls):
+        with Pool() as p:
+            return p.map(cls._collect_keys, range(cls.START, cls.STOP))
+
+    @classmethod
+    def find_locations(cls, collected_keys):
+        counts = Counter(key for keys in collected_keys for key in keys)
+        repeated_keys = [key for key, count in counts.items() if count > 1]
+        return {i: itsc for i, keys in enumerate(collected_keys, start=cls.START)
+                if (itsc := keys.intersection(repeated_keys))}
+
+    @classmethod
+    def _get_replicas(cls, number, keys):
+        container = cls.read(number)
+        return {x.pmid: x for x in container if x.pmid in keys}
+
+    @classmethod
+    def get_replicas(cls, locations):
+        with Pool() as p:
+            lst_replicas = p.starmap(cls._get_replicas, locations.items())
+        return {k: [v for dct in lst_replicas if (v:=dct.get(k))] for k in set().union(*lst_replicas)}
+
+    def load(self):
+        with open(self.W_FILE.substitute(), 'rb') as file:
+            return pickle.load(file)
+
+    def dump(self):
+        with open(self.W_FILE.substitute(), 'wb') as file:
+            pickle.dump(dict(self), file)
+
+    def compare(self):
+        for k, containers in self.items():
+            title = containers[0].title
+            abstract = containers[0].abstract
+            if any(_different(c.title, title) or _different(c.abstract, abstract) for c in containers):
+                yield '\n'.join(c.info() for c in containers)
+
+    def full_comparison(self):
+        x = [f'Case {i}:\n{indent(s, "    ")}' for i, s in enumerate(self.compare())]
+        initial = dedent(f"""\
+        {len(self):,} containers have one or more replicas.
+        {len(x):,} have different title/abstract compared to their replicas.
+        Below are the full list of .info() of those {len(x):,} cases:""")
+        return '\n\n'.join([initial]+x)
+
+    def selected(self):
+        return {k: v[-1] for k, v in self.items()}
+
+
+def _different(s0, s1):
+    _s0 = ''.join(s0.lower().split())
+    _s1 = ''.join(s1.lower().split())
+    return _s0 != _s1
+
+
+if __name__ == '__main__':
+    q = Replica(load=False)
+    q.dump()
+    with open(W_FILES['prints'].substitute(), 'w', encoding='UTF-8') as file:
+        file.write(q.full_comparison())
