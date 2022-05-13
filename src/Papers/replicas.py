@@ -19,7 +19,7 @@ class Replica(dict):
     W_FILE = PathTemplate('')
     START = 0
     STOP = 0
-    ID_ATTR = ''
+    KEY_ATTR = ''
 
     def __init__(self, load=True):
         if load:
@@ -36,7 +36,7 @@ class Replica(dict):
 
     @classmethod
     def _collect_keys(cls, number):
-        return [getattr(x, cls.ID_ATTR) for x in cls.read(number)]
+        return [getattr(c, cls.KEY_ATTR) for c in cls.read(number)]
 
     @classmethod
     def collect_keys(cls):
@@ -52,14 +52,24 @@ class Replica(dict):
 
     @classmethod
     def _get_replicas(cls, number, keys):
-        container = cls.read(number)
-        return {id_: x for x in container if (id_ := getattr(x, cls.ID_ATTR)) in keys}
+        containers = cls.read(number)
+
+        replicas = {}
+        for c in containers:
+            if (key:=getattr(c, cls.KEY_ATTR)) in keys:
+                replicas.setdefault(key, []).append(c)
+        return replicas
 
     @classmethod
     def get_replicas(cls, locations):
         with Pool() as p:
             lst_replicas = p.starmap(cls._get_replicas, locations.items())
-        return {k: [v for dct in lst_replicas if (v:=dct.get(k))] for k in set().union(*lst_replicas)}
+
+        res = {}
+        for replicas in lst_replicas:
+            for key, x in replicas.items():
+                res.setdefault(key, []).extend(x)
+        return res
 
     def load(self):
         with open(self.W_FILE.substitute(), 'rb') as file:
@@ -99,7 +109,7 @@ class PaperReplica(Replica):
     W_FILE = W_FILES['replica']
     START = 1
     STOP = 1115
-    ID_ATTR = 'pmid'
+    KEY_ATTR = 'pmid'
 
 
 if __name__ == '__main__':
