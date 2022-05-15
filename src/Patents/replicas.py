@@ -12,7 +12,7 @@ class PatentReplica(Replica):
     Replica.W_FILE = W_FILES['replica']
     Replica.START = 0
     Replica.STOP = 10033
-    Replica.ID_ATTR = 'pub_number'
+    Replica.KEY_ATTR = 'pub_number'
 
 
 if __name__ == '__main__':
