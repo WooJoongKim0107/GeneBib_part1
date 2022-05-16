@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Fix Papers.merge.py open zipped file unzipped">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Fix Patents.main - container type from dict to list">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Patents/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Patents/replicas.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/replicas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Patents/merge.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/merge.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/howdy.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/howdy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/what.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/what.py" afterDir="false" />
     </list>
@@ -261,7 +260,8 @@
       <workItem from="1652239557125" duration="12967000" />
       <workItem from="1652321474625" duration="28044000" />
       <workItem from="1652401135733" duration="21506000" />
-      <workItem from="1652630288687" duration="655000" />
+      <workItem from="1652630288687" duration="846000" />
+      <workItem from="1652659559015" duration="598000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -459,7 +459,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652429488520</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Fix Patents.main - container type from dict to list">
+      <created>1652630986168</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1652630986168</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -501,7 +508,8 @@
     <MESSAGE value="Fix Papers.merge.py does not detect in-file duplicates" />
     <MESSAGE value="Fix Papers.merge.py does not detect any... duplicates" />
     <MESSAGE value="Fix Papers.merge.py open zipped file unzipped" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Papers.merge.py open zipped file unzipped" />
+    <MESSAGE value="Fix Patents.main - container type from dict to list" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix Patents.main - container type from dict to list" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

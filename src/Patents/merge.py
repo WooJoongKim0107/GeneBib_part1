@@ -18,7 +18,7 @@ def read_patents(number):
 
 
 def read_patents_not_repeated(number):
-    return {x.pmid: x for x in read_patents(number) if x.pmid not in replicas}
+    return {x.pub_number: x for x in read_patents(number) if x.pub_number not in replicas}
 
 
 def merge_and_write(index, start, stop):
