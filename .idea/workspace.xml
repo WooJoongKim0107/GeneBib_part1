@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Fix Patents.merge - read_patents_not_repeated() now finds .pub_number instead of .pmid">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add print changes_only option for eyes_on()">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/howdy.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/memory_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/memory_check.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/what.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -262,7 +260,8 @@
       <workItem from="1652401135733" duration="21506000" />
       <workItem from="1652630288687" duration="846000" />
       <workItem from="1652659559015" duration="3676000" />
-      <workItem from="1652664612148" duration="286000" />
+      <workItem from="1652664612148" duration="3178000" />
+      <workItem from="1652684587061" duration="4238000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -474,7 +473,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652660690860</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Add print changes_only option for eyes_on()">
+      <created>1652664949188</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1652664949188</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -493,7 +499,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Initial commit" />
     <MESSAGE value="Refactor: Package as package&#10;&#10;1. main.py (of package) -&gt; __main__.py&#10;2. from current_package.module import sth -&gt; from .module import sth&#10;    The former works fine if with Pycharm since Pycharm changes PYTHONPATH very nicely.&#10;    Without Pycharm, such importing strategy does not work.&#10;    Therefore, I decided to replace all absolute importing inside a package into relative imports.&#10;    This makes the codes not able to run in a console by copy-paste, run the module by themselves.&#10;    When the codes need to be executed in a console, use &quot;from sth import sth&quot; rather than copy-paste.&#10;    When the codes need to be executed alone, use &quot;python -m package.module&quot;" />
     <MESSAGE value="Fixed Issue #1&#10;&#10;Changed __main__.py to main.py again." />
     <MESSAGE value="Adapt lxml.etree rather than xml.etree for performance" />
@@ -518,7 +523,8 @@
     <MESSAGE value="Fix Papers.merge.py open zipped file unzipped" />
     <MESSAGE value="Fix Patents.main - container type from dict to list" />
     <MESSAGE value="Fix Patents.merge - read_patents_not_repeated() now finds .pub_number instead of .pmid" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Patents.merge - read_patents_not_repeated() now finds .pub_number instead of .pmid" />
+    <MESSAGE value="Add print changes_only option for eyes_on()" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add print changes_only option for eyes_on()" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

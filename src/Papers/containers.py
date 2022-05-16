@@ -89,6 +89,9 @@ class Journal:
         self.full_titles: set[str] = set()  # len==0: Null, len==1: 대부분, len>1: 141
         self.iso_abbreviations: set[str] = set()  # len==0: 6개, len==1: 나머지
 
+        # 7개의 issn_p가 15개의 Journal instance에 중복 등장 -> 확인결과 동일한 것들임
+        # 2개의 issn_e가 4개의 Journal instance에 중복 등장 -> 확인결과 동일한 것들임
+        # 49개의 issn_l가 102개의 Journal instance에 중복 등장
         self.issn_ps: set[ISSNp] = set()  # len==0: 7475, len>1: 83
         self.issn_es: set[ISSNe] = set()  # len==0: 25683, len>1: 1
         self.issn_ls: set[ISSNl] = set()  # len==0: 5200, len>1: 85
