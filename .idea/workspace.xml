@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Fix Patents.main - container type from dict to list">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Fix Patents.merge - read_patents_not_repeated() now finds .pub_number instead of .pmid">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Patents/merge.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/merge.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/howdy.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/howdy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/what.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/what.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/howdy.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/memory_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/memory_check.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/what.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -261,7 +261,8 @@
       <workItem from="1652321474625" duration="28044000" />
       <workItem from="1652401135733" duration="21506000" />
       <workItem from="1652630288687" duration="846000" />
-      <workItem from="1652659559015" duration="598000" />
+      <workItem from="1652659559015" duration="3676000" />
+      <workItem from="1652664612148" duration="286000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -466,7 +467,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652630986168</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Fix Patents.merge - read_patents_not_repeated() now finds .pub_number instead of .pmid">
+      <created>1652660690860</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1652660690860</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -509,7 +517,8 @@
     <MESSAGE value="Fix Papers.merge.py does not detect any... duplicates" />
     <MESSAGE value="Fix Papers.merge.py open zipped file unzipped" />
     <MESSAGE value="Fix Patents.main - container type from dict to list" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Patents.main - container type from dict to list" />
+    <MESSAGE value="Fix Patents.merge - read_patents_not_repeated() now finds .pub_number instead of .pmid" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix Patents.merge - read_patents_not_repeated() now finds .pub_number instead of .pmid" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

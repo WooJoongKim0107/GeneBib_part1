@@ -1,6 +1,8 @@
 import os
 import psutil
 from contextlib import contextmanager
+from string import Template
+from textwrap import dedent
 
 
 def check_memory_pct():
@@ -16,10 +18,29 @@ def check_memory_abs():
     return current_process_memory_usage_as_MB
 
 
+_SUM_TEMP = Template(dedent("""\
+            Enter:
+                memory_usage_percent: ${old_pct} %
+                Current memory MB   : ${old_abs} MB
+             Exit:
+                memory_usage_percent: ${new_pct} %
+                Current memory MB   : ${new_abs} MB
+          Changes:
+                ${del_pct} %
+                ${del_abs} MB"""))
+
 @contextmanager
-def eyes_on():
-    print(f"Enter: memory_usage_percent: {check_memory_pct()}%")
-    print(f"Enter: Current memory MB   : {check_memory_abs():.3f} MB")
+def eyes_on(change_only=True):
+    old_pct = check_memory_pct()
+    old_abs = check_memory_abs()
     yield
-    print(f" Exit: memory_usage_percent: {check_memory_pct()}%")
-    print(f" Exit: Current memory MB   : {check_memory_abs():.3f} MB")
+    new_pct = check_memory_pct()
+    new_abs = check_memory_abs()
+    del_pct = new_pct - old_pct
+    del_abs = new_abs - old_abs
+    dct = {k: f'{v:.2f}' for k, v in locals().items()}
+    summary = _SUM_TEMP.substitute(dct)
+    if change_only:
+        print('\n'.join(summary.splitlines()[-3:]))
+    else:
+        print(summary)
