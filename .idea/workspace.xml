@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add print changes_only option for eyes_on()">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Comment added to Papers.containers.py">
+      <change afterPath="$PROJECT_DIR$/src/Papers/merge_journals.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/pioneer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/pioneer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +71,7 @@
       <recent name="C:\Users\lrlr9\PycharmProjects\GeneBib\src\Papers" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.pioneer (1)">
+  <component name="RunManager" selected="Python.check">
     <configuration name="__main__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="GeneBib" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -84,6 +86,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="C:\Users\lrlr9\PycharmProjects\GeneBib\src\Papers\__main__.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="check" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="GeneBib" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/check.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -204,11 +228,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.check" />
         <item itemvalue="Python.pioneer (1)" />
         <item itemvalue="Python.__main__" />
         <item itemvalue="Python.__main__" />
         <item itemvalue="Python.trial" />
-        <item itemvalue="Python.pioneer" />
       </list>
     </recent_temporary>
   </component>
@@ -261,7 +285,15 @@
       <workItem from="1652630288687" duration="846000" />
       <workItem from="1652659559015" duration="3676000" />
       <workItem from="1652664612148" duration="3178000" />
-      <workItem from="1652684587061" duration="4238000" />
+      <workItem from="1652684587061" duration="6604000" />
+      <workItem from="1652750313058" duration="3851000" />
+      <workItem from="1652756016551" duration="6188000" />
+      <workItem from="1652766718062" duration="9951000" />
+      <workItem from="1652778480161" duration="666000" />
+      <workItem from="1652841650960" duration="3592000" />
+      <workItem from="1652848493810" duration="333000" />
+      <workItem from="1652850311992" duration="9225000" />
+      <workItem from="1652869609396" duration="638000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -480,7 +512,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652664949188</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Comment added to Papers.containers.py">
+      <created>1652688884565</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1652688884565</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -499,7 +538,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Refactor: Package as package&#10;&#10;1. main.py (of package) -&gt; __main__.py&#10;2. from current_package.module import sth -&gt; from .module import sth&#10;    The former works fine if with Pycharm since Pycharm changes PYTHONPATH very nicely.&#10;    Without Pycharm, such importing strategy does not work.&#10;    Therefore, I decided to replace all absolute importing inside a package into relative imports.&#10;    This makes the codes not able to run in a console by copy-paste, run the module by themselves.&#10;    When the codes need to be executed in a console, use &quot;from sth import sth&quot; rather than copy-paste.&#10;    When the codes need to be executed alone, use &quot;python -m package.module&quot;" />
     <MESSAGE value="Fixed Issue #1&#10;&#10;Changed __main__.py to main.py again." />
     <MESSAGE value="Adapt lxml.etree rather than xml.etree for performance" />
     <MESSAGE value="Modify parsing function for publication date&#10;&#10;'Month': 'Jan'|'Feb'|...|'Dec' or '01'|'02'|...|'12'&#10;    -&gt; int(1)|int(2)|...|int(12)&#10;    &#10;'MedlineDate': str(year) -&gt; int(year)" />
@@ -524,7 +562,8 @@
     <MESSAGE value="Fix Patents.main - container type from dict to list" />
     <MESSAGE value="Fix Patents.merge - read_patents_not_repeated() now finds .pub_number instead of .pmid" />
     <MESSAGE value="Add print changes_only option for eyes_on()" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add print changes_only option for eyes_on()" />
+    <MESSAGE value="Comment added to Papers.containers.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="Comment added to Papers.containers.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -538,6 +577,7 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/GeneBib$check.coverage" NAME="check Coverage Results" MODIFIED="1652767948187" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/GeneBib$trial.coverage" NAME="trial Coverage Results" MODIFIED="1651644695683" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/Papers" />
     <SUITE FILE_PATH="coverage/GeneBib$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1651651180592" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/Papers" />
     <SUITE FILE_PATH="coverage/GeneBib$main__2_.coverage" NAME="main (2) Coverage Results" MODIFIED="1652070489092" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/Patents" />

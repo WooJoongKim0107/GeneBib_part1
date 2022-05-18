@@ -5,6 +5,7 @@ from multiprocessing import Pool
 from mypathlib import PathTemplate
 from .containers import Journal
 from .parse import parse_journal
+from .merge_journals import merge
 
 
 R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
@@ -28,6 +29,7 @@ def main():
     with Pool(6) as p:
         caches = p.map(read_and_explore, range(1, 1115))
     Journal._CACHE = Journal.merge_caches(*caches)
+    Journal._CACHE = merge(Journal._CACHE)
     Journal.export_cache()
 
 
