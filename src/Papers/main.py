@@ -16,8 +16,7 @@ def get_article(number, pubmed_article_elt: Element):
     article = Article.from_parse(*parse_article(pubmed_article_elt))
     article.location = number
 
-    medline_ta = pubmed_article_elt.findtext('./MedlineCitation/MedlineJournalInfo/MedlineTA')
-    journal = Journal(medline_ta)
+    journal = find_journal(number, pubmed_article_elt, article.pmid)
     article.journal = journal
     return article
 
@@ -27,6 +26,22 @@ def find_eng_articles(number):
     with gzip.open(R_FILE.substitute(number=number)) as file:
         tree = parse(file)
     return tree.getroot().findall("./PubmedArticle/MedlineCitation/Article/Language[.='eng']/../../..")
+
+
+def find_journal(number, pubmed_article_elt: Element, pmid):
+    medline_ta: str = pubmed_article_elt.findtext('./MedlineCitation/MedlineJournalInfo/MedlineTA')
+    if medline_ta in Journal._CACHE:
+        return Journal(medline_ta)
+
+    iso_abbreviation: str | None = pubmed_article_elt.findtext('./MedlineCitation/Article/Journal/ISOAbbreviation')
+    if iso_abbreviation in Journal._CACHE:
+        return Journal(iso_abbreviation)
+
+    title: str | None = pubmed_article_elt.findtext('./MedlineCitation/Article/Journal/Title')
+    if title in Journal._CACHE:
+        return Journal(title)
+    else:
+        raise KeyError(f'Cannot find appropriate Journal for {number}: {pmid}')
 
 
 def write(number):

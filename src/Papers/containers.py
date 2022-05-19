@@ -75,15 +75,17 @@ class Journal:
     _CACHE = {}
     _CACHE_PATH = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
 
-    def __new__(cls, medline_ta: str):
-        if medline_ta in cls._CACHE:
+    def __new__(cls, medline_ta: str, caching=True):
+        if caching and (medline_ta in cls._CACHE):
+            print(f'Why are you({medline_ta}) here')
             return cls._CACHE[medline_ta]
         return super().__new__(cls)
 
-    def __init__(self, medline_ta: str):
-        if medline_ta in self._CACHE:
+    def __init__(self, medline_ta: str, caching=True):
+        if caching and (medline_ta in self._CACHE):
             return
-        self._CACHE[medline_ta] = self
+        elif caching:
+            self._CACHE[medline_ta] = self
 
         self.medline_ta: str = medline_ta
         self.full_titles: set[str] = set()  # len==0: Null, len==1: 대부분, len>1: 141
@@ -147,12 +149,15 @@ class Journal:
         self.issns[issn_type].add(issn)
 
     @classmethod
-    def export_cache(cls, path=_CACHE_PATH):
+    def export_cache(cls, path=None):
+        path = path if path else cls._CACHE_PATH
         with gzip.open(path, 'wb') as file:
             pickle.dump(cls._CACHE, file)
 
     @classmethod
-    def import_cache(cls, path=_CACHE_PATH):
+    def import_cache(cls, path=None):
+        path = path if path else cls._CACHE_PATH
+        print('Import Journal cache from:', path)
         with gzip.open(path, 'rb') as file:
             cls._CACHE = pickle.load(file)
 
@@ -190,7 +195,6 @@ class Journal:
             if k1 not in intersections:
                 c0[k1] = j1
 
-
     def merge_journals(self, j):
         self.full_titles.update(j.full_titles)
         self.iso_abbreviations.update(j.iso_abbreviations)
@@ -203,10 +207,16 @@ class Journal:
         return f"{type(self).__name__}({self.medline_ta})"
 
     def __getnewargs__(self):
-        return self.medline_ta,
+        return self.medline_ta, False
 
     def __bool__(self):
         return self.medline_ta
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
+    def __hash__(self):
+        return hash(self.medline_ta)
 
 if Journal._CACHE_PATH.is_file():
     Journal.import_cache()
