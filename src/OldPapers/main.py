@@ -4,8 +4,8 @@ from lxml.etree import _Element as Element
 from lxml.etree import parse
 from mypathlib import PathTemplate
 from . import START, STOP
+from .parse import parse_article
 from .containers import Article, Journal
-from Papers.parse import parse_article
 
 
 R_FILE = PathTemplate('$rsrc/data/pubmed20n_gz/pubmed20n$number.xml.gz', key='{:0>4}'.format)

@@ -1,15 +1,22 @@
 import gzip
+from lxml.etree import _Element as Element
+from lxml.etree import parse
 from multiprocessing import Pool
 from mypathlib import PathTemplate
-from Papers.pioneer import parse, explore
-from Papers.merge_journals import merge
 from . import START, STOP
+from .parse import parse_journal
 from .containers import Journal
+from .merge_journals import merge
 
 
 R_FILE = PathTemplate('$rsrc/data/pubmed20n_gz/pubmed20n$number.xml.gz', key='{:0>4}'.format)
 _W_FILE = PathTemplate('$rsrc/pdata/pubmed20n_gz/journal_cache.pkl.gz')
 assert _W_FILE.substitute() == Journal._CACHE_PATH
+
+
+def explore(root: Element):
+    for pubmed_article_elt in root:
+        Journal.from_parse(*parse_journal(pubmed_article_elt))
 
 
 def read_and_explore(number):
