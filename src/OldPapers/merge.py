@@ -3,7 +3,6 @@ from collections import ChainMap
 from more_itertools import pairwise
 from multiprocessing import Pool
 from mypathlib import PathTemplate
-from Papers.merge import read_articles_not_repeated
 from . import START, STOP
 from .main import W_FILE as R_FILE
 from .replicas import PaperReplica
@@ -16,6 +15,10 @@ replicas = PaperReplica(load=True)
 def read_articles(number):
     with gzip.open(R_FILE.substitute(number=number), 'rb') as file:
         return pickle.load(file)
+
+
+def read_articles_not_repeated(number):
+    return {x.pmid: x for x in read_articles(number) if x.pmid not in replicas}
 
 
 def merge_and_write(index, start, stop):

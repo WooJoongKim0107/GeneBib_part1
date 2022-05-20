@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add OldPapers package to deal with pubmed 2020 version data">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/OldPapers/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPapers/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OldPapers/merge.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPapers/merge.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -296,7 +294,7 @@
       <workItem from="1652919602028" duration="24745000" />
       <workItem from="1652949716043" duration="3593000" />
       <workItem from="1653019386936" duration="6984000" />
-      <workItem from="1653031139853" duration="439000" />
+      <workItem from="1653031139853" duration="528000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -571,7 +569,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653030336158</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Add OldPapers package to deal with pubmed 2020 version data">
+      <created>1653031616308</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1653031616308</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
