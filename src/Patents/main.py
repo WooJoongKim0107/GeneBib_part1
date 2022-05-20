@@ -3,6 +3,7 @@ import json
 import pickle
 from multiprocessing import Pool
 from mypathlib import PathTemplate
+from . import START, STOP
 from .containers import Patent
 from .parse import parse_patent
 
@@ -31,7 +32,7 @@ def write(number):
 
 def main():
     with Pool() as p:
-        p.map(write, range(10033))
+        p.map(write, range(START, STOP))
 
 
 if __name__ == '__main__':

@@ -2,6 +2,7 @@ from string import Template
 from mypathlib import PathTemplate
 from multiprocessing import Pool
 from wget import download as wget_download
+from . import START, STOP
 
 
 R_FILE = Template('https://ftp.ncbi.nlm.nih.gov/pubmed/baseline/pubmed22n$number.xml.gz')
@@ -21,7 +22,7 @@ def download(n):
 
 def main():
     with Pool(6) as p:
-        p.map(download, list(range(1, 1115)))
+        p.map(download, list(range(START, STOP)))
 
 
 if __name__ == '__main__':

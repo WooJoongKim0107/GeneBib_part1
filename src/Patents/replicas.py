@@ -1,4 +1,5 @@
 from mypathlib import PathTemplate
+from . import START, STOP
 from .main import W_FILE as R_FILE
 from Papers.replicas import Replica
 
@@ -8,11 +9,11 @@ W_FILES = {'replica': PathTemplate('$rsrc/pdata/patent/patent_replicas.pkl'),
 
 
 class PatentReplica(Replica):
-    Replica.R_FILE = R_FILE
-    Replica.W_FILE = W_FILES['replica']
-    Replica.START = 0
-    Replica.STOP = 10033
-    Replica.KEY_ATTR = 'pub_number'
+    R_FILE = R_FILE
+    W_FILE = W_FILES['replica']
+    START = START
+    STOP = STOP
+    KEY_ATTR = 'pub_number'
 
 
 if __name__ == '__main__':

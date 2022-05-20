@@ -4,6 +4,7 @@ from collections import ChainMap
 from more_itertools import pairwise
 from multiprocessing import Pool
 from mypathlib import PathTemplate
+from . import START, STOP
 from .main import W_FILE as R_FILE
 from .replicas import PatentReplica
 
@@ -38,11 +39,11 @@ def append_repeated(index):
 
 
 def main():
-    splits = [i for i in range(0, 10033, 90)] + [10033]
+    splits = [i for i in range(START, STOP, 90)] + [STOP]
     args = [(index, start, stop) for index, (start, stop) in enumerate(pairwise(splits))]
     with Pool(5) as p:
         p.starmap(merge_and_write, args)
-    append_repeated(len(args)-1)
+    append_repeated(args[-1][0])
 
 
 if __name__ == '__main__':

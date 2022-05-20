@@ -4,6 +4,7 @@ from collections import ChainMap
 from more_itertools import pairwise
 from multiprocessing import Pool
 from mypathlib import PathTemplate
+from . import START, STOP
 from .main import W_FILE as R_FILE
 from .replicas import PaperReplica
 
@@ -38,11 +39,11 @@ def append_repeated(index):
 
 
 def main():
-    splits = [i for i in range(1, 1115, 10)] + [1115]
+    splits = [i for i in range(START, STOP, 10)] + [STOP]
     args = [(index, start, stop) for index, (start, stop) in enumerate(pairwise(splits))]
     with Pool(5) as p:
         p.starmap(merge_and_write, args)
-    append_repeated(len(splits)-2)
+    append_repeated(args[-1][0])
 
 
 if __name__ == '__main__':

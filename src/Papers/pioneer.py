@@ -3,6 +3,7 @@ from lxml.etree import _Element as Element
 from lxml.etree import parse
 from multiprocessing import Pool
 from mypathlib import PathTemplate
+from . import START, STOP
 from .containers import Journal
 from .parse import parse_journal
 from .merge_journals import merge
@@ -27,7 +28,7 @@ def read_and_explore(number):
 
 def main():
     with Pool(6) as p:
-        caches = p.map(read_and_explore, range(1, 1115))
+        caches = p.map(read_and_explore, range(START, STOP))
     Journal._CACHE = Journal.merge_caches(*caches)
     Journal._CACHE = merge(Journal._CACHE)
     Journal.export_cache()

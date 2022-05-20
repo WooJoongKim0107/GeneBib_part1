@@ -4,6 +4,7 @@ from textwrap import dedent, indent
 from collections import Counter
 from multiprocessing import Pool
 from mypathlib import PathTemplate
+from . import START, STOP
 from .main import W_FILE as R_FILE
 
 
@@ -107,8 +108,8 @@ def _different(s0, s1):
 class PaperReplica(Replica):
     R_FILE = R_FILE
     W_FILE = W_FILES['replica']
-    START = 1
-    STOP = 1115
+    START = START
+    STOP = STOP
     KEY_ATTR = 'pmid'
 
 

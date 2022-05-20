@@ -4,6 +4,7 @@ from multiprocessing import Pool
 from lxml.etree import _Element as Element
 from lxml.etree import parse
 from mypathlib import PathTemplate
+from . import START, STOP
 from .containers import Article, Journal
 from .parse import parse_article
 
@@ -52,7 +53,7 @@ def write(number):
 
 def main():
     with Pool() as p:
-        p.map(write, range(1, 1115))
+        p.map(write, range(START, STOP))
 
 
 if __name__ == '__main__':
