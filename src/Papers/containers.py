@@ -77,7 +77,6 @@ class Journal:
 
     def __new__(cls, medline_ta: str, caching=True):
         if caching and (medline_ta in cls._CACHE):
-            print(f'Why are you({medline_ta}) here')
             return cls._CACHE[medline_ta]
         return super().__new__(cls)
 
