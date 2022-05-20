@@ -11,6 +11,7 @@ from .parse import parse_article
 
 R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
 W_FILE = PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format)
+MSG = PathTemplate('$rsrc/pdata/paper/article22n$number.txt', key='{:0>4}'.format)
 
 
 def get_article(number, pubmed_article_elt: Element):
@@ -42,7 +43,9 @@ def find_journal(number, pubmed_article_elt: Element, pmid):
     if title in Journal._CACHE:
         return Journal(title)
     else:
-        raise KeyError(f'Cannot find appropriate Journal for {number}: {pmid}')
+        with open(MSG.substitute(number), 'a') as file:
+            file.write(f'Cannot find appropriate Journal for {number}: {pmid}\n')
+        return Journal('')
 
 
 def write(number):

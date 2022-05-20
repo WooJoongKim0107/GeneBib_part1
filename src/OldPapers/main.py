@@ -1,12 +1,25 @@
 import gzip, pickle
 from multiprocessing import Pool
+from lxml.etree import _Element as Element
+from lxml.etree import parse
 from mypathlib import PathTemplate
-from Papers.main import get_article, parse
 from . import START, STOP
+from .containers import Article, Journal
+from Papers.parse import parse_article
 
 
 R_FILE = PathTemplate('$rsrc/data/pubmed20n_gz/pubmed20n$number.xml.gz', key='{:0>4}'.format)
 W_FILE = PathTemplate('$rsrc/pdata/pubmed20n_gz/article20n$number.pkl.gz', key='{:0>4}'.format)
+MSG = PathTemplate('$rsrc/pdata/pubmed20n_gz/article20n$number.txt', key='{:0>4}'.format)
+
+
+def get_article(number, pubmed_article_elt: Element):
+    article = Article.from_parse(*parse_article(pubmed_article_elt))
+    article.location = number
+
+    journal = find_journal(number, pubmed_article_elt, article.pmid)
+    article.journal = journal
+    return article
 
 
 def find_eng_articles(number):
@@ -14,6 +27,24 @@ def find_eng_articles(number):
     with gzip.open(R_FILE.substitute(number=number)) as file:
         tree = parse(file)
     return tree.getroot().findall("./PubmedArticle/MedlineCitation/Article/Language[.='eng']/../../..")
+
+
+def find_journal(number, pubmed_article_elt: Element, pmid):
+    medline_ta: str = pubmed_article_elt.findtext('./MedlineCitation/MedlineJournalInfo/MedlineTA')
+    if medline_ta in Journal._CACHE:
+        return Journal(medline_ta)
+
+    iso_abbreviation: str | None = pubmed_article_elt.findtext('./MedlineCitation/Article/Journal/ISOAbbreviation')
+    if iso_abbreviation in Journal._CACHE:
+        return Journal(iso_abbreviation)
+
+    title: str | None = pubmed_article_elt.findtext('./MedlineCitation/Article/Journal/Title')
+    if title in Journal._CACHE:
+        return Journal(title)
+    else:
+        with open(MSG.substitute(number), 'a') as file:
+            file.write(f'Cannot find appropriate Journal for {number}: {pmid}\n')
+        return Journal('')
 
 
 def write(number):
