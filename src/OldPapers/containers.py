@@ -1,5 +1,4 @@
-from mypathlib import PathTemplate
-from Papers.containers import Journal
+from Papers.containers import *
 
 
 Journal._CACHE = {}

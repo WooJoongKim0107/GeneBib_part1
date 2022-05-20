@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Refactor Papers &amp; Patents packages to have START STOP index on __init__.py">
-      <change afterPath="$PROJECT_DIR$/src/OldPapers/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/OldPapers/containers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/OldPapers/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/OldPapers/merge.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/OldPapers/pioneer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/OldPapers/replicas.py" afterDir="false" />
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add OldPapers package to deal with pubmed 2020 version data">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OldPapers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPapers/containers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OldPapers/pioneer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPapers/pioneer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -299,7 +295,7 @@
       <workItem from="1652869609396" duration="4990000" />
       <workItem from="1652919602028" duration="24745000" />
       <workItem from="1652949716043" duration="3593000" />
-      <workItem from="1653019386936" duration="6109000" />
+      <workItem from="1653019386936" duration="6954000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -560,7 +556,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653027038574</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Add OldPapers package to deal with pubmed 2020 version data">
+      <created>1653029538674</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1653029538674</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -579,7 +582,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Modify private substitution methods of PathTemplate" />
     <MESSAGE value="Feat Article.location &amp; Patent.location&#10;&#10;.location gives hint about the location of resource file." />
     <MESSAGE value="Add module to merge pickled pdata .merge.py" />
     <MESSAGE value="Fix module to merge pickled pdata .merge.py" />
@@ -604,7 +606,8 @@
     <MESSAGE value="Modified Journal._CACHE not to be spoiled by unpickling other Journal instances" />
     <MESSAGE value="Add Teste package for any kind of small tests" />
     <MESSAGE value="Refactor Papers &amp; Patents packages to have START STOP index on __init__.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor Papers &amp; Patents packages to have START STOP index on __init__.py" />
+    <MESSAGE value="Add OldPapers package to deal with pubmed 2020 version data" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add OldPapers package to deal with pubmed 2020 version data" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

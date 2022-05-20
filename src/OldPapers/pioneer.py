@@ -9,7 +9,7 @@ from .containers import Journal
 
 R_FILE = PathTemplate('$rsrc/data/pubmed20n_gz/pubmed20n$number.xml.gz', key='{:0>4}'.format)
 _W_FILE = PathTemplate('$rsrc/pdata/pubmed20n_gz/journal_cache.pkl.gz')
-assert _W_FILE == Journal._CACHE_PATH
+assert _W_FILE.substitute() == Journal._CACHE_PATH
 
 
 def read_and_explore(number):
