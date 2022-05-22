@@ -32,7 +32,7 @@ def merge_and_write(index, start, stop):
 def append_repeated(index):
     with gzip.open(W_FILE.substitute(index=index)) as file:
         chain = pickle.load(file)
-    chain.maps.append(dict(replicas))
+    chain.maps.append(replicas.selected())
     with gzip.open(W_FILE.substitute(index=index), 'wb') as file:
         pickle.dump(chain, file)
 
