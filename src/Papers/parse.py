@@ -42,7 +42,8 @@ def _as_issn_l(x: str|None):
 # 4. '1990'    <- I don't understand why they exist. It contradicts 190101.dtd.
 # 5. 'Spring 2009'
 # 6. '2003 ' + str
-md_parser = re.compile(r'\b(19|20)\d{2}\b')  # r'(19|20)\d{2}(?=\s*)' on previous study
+# TODO 2022-05-23 change did not applied
+md_parser = re.compile(r'\b[12]\d{3}\b')  # r'(19|20)\d{2}(?=\s*)' on previous study
 def parse_pub_date(pub_date_elt: Element):
     pub_date = children_as_dict(pub_date_elt)
     match pub_date:

@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add RawFinder for Papers &amp; OldPapers">
-      <change beforePath="$PROJECT_DIR$/src/Patents/check_raw.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/check_raw.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/parse.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -297,7 +298,9 @@
       <workItem from="1653031139853" duration="1186000" />
       <workItem from="1653215151219" duration="6516000" />
       <workItem from="1653223701693" duration="1041000" />
-      <workItem from="1653270800907" duration="5573000" />
+      <workItem from="1653270800907" duration="5588000" />
+      <workItem from="1653278352998" duration="5934000" />
+      <workItem from="1653288189898" duration="362000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -628,7 +631,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653276390897</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="Add RawFinder for Papers &amp; OldPapers">
+      <created>1653276410510</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1653276410510</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
