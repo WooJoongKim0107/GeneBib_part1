@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Modify data structure of the last merged file from {pmid -&gt; list[Articles]} to {pmid -&gt; Articles}">
-      <change afterPath="$PROJECT_DIR$/src/OldPapers/check_raw.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Papers/check_raw.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Patents/check_raw.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add RawFinder for Papers &amp; OldPapers">
+      <change beforePath="$PROJECT_DIR$/src/Patents/check_raw.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/check_raw.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -300,7 +297,7 @@
       <workItem from="1653031139853" duration="1186000" />
       <workItem from="1653215151219" duration="6516000" />
       <workItem from="1653223701693" duration="1041000" />
-      <workItem from="1653270800907" duration="5492000" />
+      <workItem from="1653270800907" duration="5573000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -624,7 +621,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653222841412</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Add RawFinder for Papers &amp; OldPapers">
+      <created>1653276390897</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1653276390897</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -643,7 +647,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix module to merge pickled pdata .merge.py" />
     <MESSAGE value="Fix parsing pattern for MedlineDate" />
     <MESSAGE value="Fix collection type of Articles and Patents from list to ChainMap" />
     <MESSAGE value="Rename Article.article_title attribute into Article.title" />
@@ -668,7 +671,8 @@
     <MESSAGE value="Add OldPapers package to deal with pubmed 2020 version data" />
     <MESSAGE value="Remove print statement on Journal.__new__" />
     <MESSAGE value="Modify data structure of the last merged file from {pmid -&gt; list[Articles]} to {pmid -&gt; Articles}" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modify data structure of the last merged file from {pmid -&gt; list[Articles]} to {pmid -&gt; Articles}" />
+    <MESSAGE value="Add RawFinder for Papers &amp; OldPapers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add RawFinder for Papers &amp; OldPapers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
