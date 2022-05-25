@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add RawFinder for Papers &amp; OldPapers">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Modify valid range of year for parsing: from 19xx-20xx to 1xxx-2xxx">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/parse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -300,7 +300,8 @@
       <workItem from="1653223701693" duration="1041000" />
       <workItem from="1653270800907" duration="5588000" />
       <workItem from="1653278352998" duration="5934000" />
-      <workItem from="1653288189898" duration="362000" />
+      <workItem from="1653288189898" duration="727000" />
+      <workItem from="1653381499406" duration="1726000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1652071017726</created>
@@ -638,7 +639,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653276410510</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Modify valid range of year for parsing: from 19xx-20xx to 1xxx-2xxx">
+      <created>1653288882846</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1653288882846</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -657,7 +665,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix parsing pattern for MedlineDate" />
     <MESSAGE value="Fix collection type of Articles and Patents from list to ChainMap" />
     <MESSAGE value="Rename Article.article_title attribute into Article.title" />
     <MESSAGE value="Add modules to get statistical summary of Articles" />
@@ -682,7 +689,8 @@
     <MESSAGE value="Remove print statement on Journal.__new__" />
     <MESSAGE value="Modify data structure of the last merged file from {pmid -&gt; list[Articles]} to {pmid -&gt; Articles}" />
     <MESSAGE value="Add RawFinder for Papers &amp; OldPapers" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add RawFinder for Papers &amp; OldPapers" />
+    <MESSAGE value="Modify valid range of year for parsing: from 19xx-20xx to 1xxx-2xxx" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modify valid range of year for parsing: from 19xx-20xx to 1xxx-2xxx" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

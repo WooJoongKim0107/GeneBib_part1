@@ -202,6 +202,21 @@ class Journal:
         self.issn_ls.update(j.issn_ls)
         self.nlm_unique_id.update(j.nlm_unique_id)
 
+    @classmethod
+    def findall(cls, val):
+        for v in cls._CACHE.values():
+            if str(val) in v.info():
+                yield v
+
+    @classmethod
+    def find_issn(cls, val):
+        issn_p = ISSNp(val)
+        issn_e = ISSNe(val)
+        issn_l = ISSNl(val)
+        for v in cls._CACHE.values():
+            if (issn_p in v.issn_ps) or (issn_e in v.issn_es) or (issn_l in v.issn_ls):
+                yield v
+
     def __repr__(self):
         return f"{type(self).__name__}({self.medline_ta})"
 
