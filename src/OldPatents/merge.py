@@ -7,7 +7,6 @@ from mypathlib import PathTemplate
 from . import START, STOP
 from .main import W_FILE as R_FILE
 from .replicas import PatentReplica
-from Patents.merge import read_patents_not_repeated
 
 
 W_FILE = PathTemplate('$rsrc/pdata/full_raw_200920/patent_$index.pkl.gz')
@@ -17,6 +16,10 @@ replicas = PatentReplica(load=True)
 def read_patents(number):
     with gzip.open(R_FILE.substitute(number=number), 'rb') as file:
         return pickle.load(file)
+
+
+def read_patents_not_repeated(number):
+    return {x.pub_number: x for x in read_patents(number) if x.pub_number not in replicas}
 
 
 def merge_and_write(index, start, stop):

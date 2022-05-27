@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add Journal finding methods - findall &amp; find_issn" />
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Added OldPatents package to deal with patent 2019 version">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OldPatents/merge.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPatents/merge.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,7 +49,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../MapleStory" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -300,13 +304,13 @@
       <workItem from="1653288189898" duration="727000" />
       <workItem from="1653381499406" duration="1726000" />
       <workItem from="1653437534449" duration="632000" />
-    </task>
-    <task id="LOCAL-00002" summary="Initial commit">
-      <created>1652071602710</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1652071602710</updated>
+      <workItem from="1653441773806" duration="194000" />
+      <workItem from="1653455010207" duration="502000" />
+      <workItem from="1653457071991" duration="1636000" />
+      <workItem from="1653460703129" duration="5664000" />
+      <workItem from="1653467759840" duration="165000" />
+      <workItem from="1653546307095" duration="11000" />
+      <workItem from="1653653979833" duration="1255000" />
     </task>
     <task id="LOCAL-00003" summary="Initial commit">
       <created>1652072530961</created>
@@ -644,7 +648,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653437562264</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Added OldPatents package to deal with patent 2019 version">
+      <created>1653441868343</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1653441868343</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -663,7 +674,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Rename Article.article_title attribute into Article.title" />
     <MESSAGE value="Add modules to get statistical summary of Articles" />
     <MESSAGE value="Add modules to get statistical summary of Articles; 2" />
     <MESSAGE value="Modify save the duplicated PMIDs rather than len of total PMIDs" />
@@ -688,7 +698,8 @@
     <MESSAGE value="Add RawFinder for Papers &amp; OldPapers" />
     <MESSAGE value="Modify valid range of year for parsing: from 19xx-20xx to 1xxx-2xxx" />
     <MESSAGE value="Add Journal finding methods - findall &amp; find_issn" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Journal finding methods - findall &amp; find_issn" />
+    <MESSAGE value="Added OldPatents package to deal with patent 2019 version" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added OldPatents package to deal with patent 2019 version" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
