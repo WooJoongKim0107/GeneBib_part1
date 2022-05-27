@@ -204,8 +204,16 @@ class Journal:
 
     @classmethod
     def findall(cls, val):
+        target = str(val).lower()
         for v in cls._CACHE.values():
-            if str(val) in v.info():
+            if target in v.info().lower():
+                yield v
+
+    @classmethod
+    def find_title(cls, val):
+        target = str(val).lower()
+        for v in cls._CACHE.values():
+            if (target in v.medline_ta) or (target in v.full_titles) or (target in v.iso_abbreviations):
                 yield v
 
     @classmethod
@@ -215,6 +223,12 @@ class Journal:
         issn_l = ISSNl(val)
         for v in cls._CACHE.values():
             if (issn_p in v.issn_ps) or (issn_e in v.issn_es) or (issn_l in v.issn_ls):
+                yield v
+
+    @classmethod
+    def find_nlm_id(cls, val):
+        for v in cls._CACHE.values():
+            if val in v.nlm_unique_id:
                 yield v
 
     def __repr__(self):
