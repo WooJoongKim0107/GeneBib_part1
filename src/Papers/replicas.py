@@ -61,14 +61,14 @@ class Replica(dict):
             title = containers[0].title
             abstract = containers[0].abstract
             if any(_different(c.title, title) or _different(c.abstract, abstract) for c in containers):
-                yield '\n'.join(c.info() for c in containers)
+                yield '\n'.join(c.info for c in containers)
 
     def full_comparison(self):
         x = [f'Case {i}:\n{indent(s, "    ")}' for i, s in enumerate(self.compare())]
         initial = dedent(f"""\
         {len(self):,} containers have one or more replicas.
         {len(x):,} have different title/abstract compared to their replicas.
-        Below are the full list of .info() of those {len(x):,} cases:""")
+        Below are the full list of .info of those {len(x):,} cases:""")
         return '\n\n'.join([initial]+x)
 
     def load(self):
