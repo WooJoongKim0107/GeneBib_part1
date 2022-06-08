@@ -97,6 +97,18 @@ class Journal(metaclass=MetaCacheExt):
         self.nlm_unique_id.update(j.nlm_unique_id)
         self.counts += j.counts
 
+    @classmethod
+    def unique_keys(cls):
+        return [k for k, v in cls.items() if k == v.medline_ta]
+
+    @classmethod
+    def unique_values(cls):
+        return [v for k, v in cls.items() if k == v.medline_ta]
+
+    @classmethod
+    def unique_items(cls):
+        return [(k, v) for k, v in cls.items() if k == v.medline_ta]
+
     @property
     def issns(self):
         return set.union(self.issn_ps, self.issn_es, self.issn_ls)

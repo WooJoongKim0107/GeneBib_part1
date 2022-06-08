@@ -8,6 +8,7 @@
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Papers/article_finder.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/article_finder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -315,14 +316,7 @@
       <workItem from="1654564341223" duration="20154000" />
       <workItem from="1654589338123" duration="745000" />
       <workItem from="1654590111345" duration="2977000" />
-      <workItem from="1654648011187" duration="27181000" />
-    </task>
-    <task id="LOCAL-00012" summary="Add module to merge pickled pdata .merge.py">
-      <created>1652168417736</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1652168417736</updated>
+      <workItem from="1654648011187" duration="29239000" />
     </task>
     <task id="LOCAL-00013" summary="Fix module to merge pickled pdata .merge.py">
       <created>1652173084610</created>
@@ -660,7 +654,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654686410657</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="Add ArticleFiner &amp; RawFinder">
+      <created>1654687425503</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1654687425503</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

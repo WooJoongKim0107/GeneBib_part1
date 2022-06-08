@@ -94,11 +94,12 @@ class JnlToArt:
 
         with open(cls.W_FILE.substitute(index=''), 'w') as f:
             files = [open(cls.W_FILE.substitute(index=i), 'r') for i in range(cls.STOP)]
-            for j in Journal:
+            for j, v in Journal.items():
                 iarts = iter(cls.revert(file.readline()[:-1]) for file in files)
                 arts = sorted(sum(iarts, []))
                 f.write(cls.convert(j, arts))
                 f.write('\n')
+                v.counts = len(arts)
             for file in files:
                 file.close()
 
@@ -112,7 +113,11 @@ class JnlToArt:
 
         j2a = {}
         for art in chain.values():
+            key0 = art._journal_title
             j2a.setdefault(art._journal_title, []).append(art.pmid)
+            if key0 not in Journal.unique_keys():
+                key1 = art.journal.medline_ta
+                j2a.setdefault(key1, []).append(art.pmid)
 
         for arts in j2a.values():
             arts.sort()
@@ -185,6 +190,7 @@ class ArticleFinder:
 def main():
     PmidToIdx(False).dump()
     JnlToArt.write()
+    Journal.export_cache()
 
 
 if __name__ == '__main__':
