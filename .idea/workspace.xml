@@ -7,7 +7,6 @@
     <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Modify Some attributes of Journal and Article &amp; beyond&#10;&#10;&lt;Attr changes&gt;&#10;    1. Journal.titles &amp; Journal.issns: {dtype -&gt; set(values)} -&gt; set(values of all dtypes)&#10;    2. Journal.counts: Total number of distinct Articles each Journal contains&#10;    3. Journal.extra_attrs: Any extra attributes to reside without breaking backward compatibility&#10;    4. Journal.info: Method -&gt; @property&#10;    5. Article.journal: Removed and replaced with @property&#10;    6. Article._journal_title: Journal.medline_ta of its journal&#10;&lt;MetaCache&gt;&#10;&lt;Refactoring&gt;">
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/replicas.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/replicas.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -315,14 +314,7 @@
       <workItem from="1654564341223" duration="20154000" />
       <workItem from="1654589338123" duration="745000" />
       <workItem from="1654590111345" duration="2977000" />
-      <workItem from="1654648011187" duration="25083000" />
-    </task>
-    <task id="LOCAL-00010" summary="Modify private substitution methods of PathTemplate">
-      <created>1652160478225</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1652160478225</updated>
+      <workItem from="1654648011187" duration="26184000" />
     </task>
     <task id="LOCAL-00011" summary="Feat Article.location &amp; Patent.location&#10;&#10;.location gives hint about the location of resource file.">
       <created>1652161587524</created>
@@ -660,7 +652,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654684944399</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="Modify Some attributes of Journal and Article &amp; beyond&#10;&#10;&lt;Attr changes&gt;&#10;    1. Journal.titles &amp; Journal.issns: {dtype -&gt; set(values)} -&gt; set(values of all dtypes)&#10;    2. Journal.counts: Total number of distinct Articles each Journal contains&#10;    3. Journal.extra_attrs: Any extra attributes to reside without breaking backward compatibility&#10;    4. Journal.info: Method -&gt; @property&#10;    5. Article.journal: Removed and replaced with @property&#10;    6. Article._journal_title: Journal.medline_ta of its journal&#10;&lt;MetaCache&gt;&#10;&lt;Refactoring&gt;">
+      <created>1654685218358</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1654685218358</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
