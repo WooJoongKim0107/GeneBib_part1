@@ -1,5 +1,4 @@
 from textwrap import dedent
-from Papers.containers import _print_set
 
 
 class Patent:
@@ -67,7 +66,7 @@ class Patent:
                 publication: {self.pub_date}
                       grant: {self.grant_date if self.is_granted else 'Not granted'}
                       
-            Citation: total {len(self.citations)}; {_print_set(self.citations)}
+             Citation: total {len(self.citations)}; {_print_set(self.citations)}
             CPC codes: {_print_set(self.cpcs)}
             
              Location: {self.location}
@@ -78,3 +77,12 @@ class Patent:
 
     def __repr__(self):
         return f"Patent({self.pub_number})"
+
+
+def _print_set(s: set):
+    if len(s) == 1:
+        return str(next(iter(s)))
+    elif s:
+        return s
+    else:
+        return ''

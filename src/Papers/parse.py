@@ -1,16 +1,24 @@
 import re
 from lxml.etree import _Element as Element
-from .containers import ISSN, issn_factory, ISSNl
+from .containers import ISSN, choose_title
 
 
 def parse_journal(pubmed_article_elt: Element):
     medline_ta: str = pubmed_article_elt.findtext('./MedlineCitation/MedlineJournalInfo/MedlineTA')
     nlm_unique_id: str|None = pubmed_article_elt.findtext('./MedlineCitation/MedlineJournalInfo/NlmUniqueID')
-    issn: ISSN|None = parse_issn(pubmed_article_elt.find('./MedlineCitation/Article/Journal/ISSN'))
-    issn_l: ISSNl|None = _as_issn_l(pubmed_article_elt.findtext('./MedlineCitation/MedlineJournalInfo/ISSNLinking'))
+    issn: tuple[ISSN|None, str] = parse_issn(pubmed_article_elt.find('./MedlineCitation/Article/Journal/ISSN'))
+    issn_l: tuple[ISSN|None, str] = _as_issn_l(pubmed_article_elt.findtext('./MedlineCitation/MedlineJournalInfo/ISSNLinking'))
     title: str|None = pubmed_article_elt.findtext('./MedlineCitation/Article/Journal/Title')
     iso_abbreviation: str|None = pubmed_article_elt.findtext('./MedlineCitation/Article/Journal/ISOAbbreviation')
     return medline_ta, nlm_unique_id, issn, issn_l, title, iso_abbreviation
+
+
+def find_journal_key(pubmed_article_elt: Element):
+    medline_ta: str = pubmed_article_elt.findtext('./MedlineCitation/MedlineJournalInfo/MedlineTA')
+    iso_abbreviation: str | None = pubmed_article_elt.findtext('./MedlineCitation/Article/Journal/ISOAbbreviation')
+    title: str | None = pubmed_article_elt.findtext('./MedlineCitation/Article/Journal/Title')
+    key = choose_title(medline_ta, iso_abbreviation, title)
+    return key
 
 
 def parse_article(pubmed_article_elt: Element):
@@ -23,16 +31,14 @@ def parse_article(pubmed_article_elt: Element):
 
 def parse_issn(issn_elt: Element|None):
     if issn_elt is None:
-        return None
-    issn_val, issn_type = issn_elt.text, issn_elt.get('IssnType')
-    return issn_factory(issn_val, issn_type)
+        return None, ''
+    return ISSN(issn_elt.text), issn_elt.get('IssnType')
 
 
 def _as_issn_l(x: str|None):
-    if x:
-        return ISSNl(x)
-    else:
-        return None
+    if x is None:
+        return None, ''
+    return ISSN(x), 'Linking'
 
 
 # MedlineDate formats:
@@ -42,7 +48,6 @@ def _as_issn_l(x: str|None):
 # 4. '1990'    <- I don't understand why they exist. It contradicts 190101.dtd.
 # 5. 'Spring 2009'
 # 6. '2003 ' + str
-# TODO 2022-05-23 change did not applied
 md_parser = re.compile(r'\b[12]\d{3}\b')  # r'(19|20)\d{2}(?=\s*)' on previous study
 def parse_pub_date(pub_date_elt: Element):
     pub_date = children_as_dict(pub_date_elt)

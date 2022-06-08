@@ -6,7 +6,7 @@ from lxml.etree import parse
 from mypathlib import PathTemplate
 from . import START, STOP
 from .containers import Article, Journal
-from .parse import parse_article
+from .parse import parse_article, find_journal_key
 
 
 R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
@@ -14,49 +14,49 @@ W_FILE = PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'
 MSG = PathTemplate('$rsrc/pdata/paper/article22n$number.txt', key='{:0>4}'.format)
 
 
-def get_article(number, pubmed_article_elt: Element):
-    article = Article.from_parse(*parse_article(pubmed_article_elt))
-    article.location = number
+class Refine:
+    R_FILE = R_FILE
+    W_FILE = W_FILE
+    MSG = MSG
+    START = START
+    STOP = STOP
 
-    journal = find_journal(number, pubmed_article_elt, article.pmid)
-    article.journal = journal
-    return article
+    @classmethod
+    def read_eng_articles(cls, number):
+        with gzip.open(cls.R_FILE.substitute(number=number)) as file:
+            tree = parse(file)
+        return tree.getroot().findall("./PubmedArticle/MedlineCitation/Article/Language[.='eng']/../../..")
+
+    @classmethod
+    def refine_article(cls, number, pubmed_article_elt: Element):
+        article = Article.from_parse(*parse_article(pubmed_article_elt))
+        article.location = number
+        article._journal_title = cls.report_journal(number, pubmed_article_elt, article.pmid)
+        return article
+
+    @classmethod
+    def write(cls, number):
+        eng_arts = cls.read_eng_articles(number)
+        res = [cls.refine_article(number, pubmed_article_elt) for pubmed_article_elt in eng_arts]
+        with gzip.open(cls.W_FILE.substitute(number=number), 'wb') as file:
+            pickle.dump(res, file)
+        print(number)
+
+    @classmethod
+    def main(cls):
+        with Pool(6) as p:
+            p.map(cls.write, range(cls.START, cls.STOP))
+
+    @classmethod
+    def report_journal(cls, number, pubmed_article_elt: Element, pmid):
+        key = find_journal_key(pubmed_article_elt)
+        if key not in Journal:
+            with open(cls.MSG.substitute(number), 'a') as file:
+                file.write(f'Cannot find appropriate Journal for {number}: {pmid}\n')
+        return key
 
 
-def find_eng_articles(number):
-    print(number)
-    with gzip.open(R_FILE.substitute(number=number)) as file:
-        tree = parse(file)
-    return tree.getroot().findall("./PubmedArticle/MedlineCitation/Article/Language[.='eng']/../../..")
-
-
-def find_journal(number, pubmed_article_elt: Element, pmid):
-    medline_ta: str = pubmed_article_elt.findtext('./MedlineCitation/MedlineJournalInfo/MedlineTA')
-    if medline_ta in Journal._CACHE:
-        return Journal(medline_ta)
-
-    iso_abbreviation: str | None = pubmed_article_elt.findtext('./MedlineCitation/Article/Journal/ISOAbbreviation')
-    if iso_abbreviation in Journal._CACHE:
-        return Journal(iso_abbreviation)
-
-    title: str | None = pubmed_article_elt.findtext('./MedlineCitation/Article/Journal/Title')
-    if title in Journal._CACHE:
-        return Journal(title)
-    else:
-        with open(MSG.substitute(number), 'a') as file:
-            file.write(f'Cannot find appropriate Journal for {number}: {pmid}\n')
-        return Journal('')
-
-
-def write(number):
-    res = [get_article(number, pubmed_article_elt) for pubmed_article_elt in find_eng_articles(number)]
-    with gzip.open(W_FILE.substitute(number=number), 'wb') as file:
-        pickle.dump(res, file)
-
-
-def main():
-    with Pool() as p:
-        p.map(write, range(START, STOP))
+main = Refine.main
 
 
 if __name__ == '__main__':

@@ -31,15 +31,6 @@ class Replica(dict):
             super().__init__(self.get_replicas(self.locations))
 
     @classmethod
-    def read(cls, number):
-        with gzip.open(cls.R_FILE.substitute(number=number)) as file:
-            return pickle.load(file)
-
-    @classmethod
-    def _collect_keys(cls, number):
-        return [getattr(c, cls.KEY_ATTR) for c in cls.read(number)]
-
-    @classmethod
     def collect_keys(cls):
         with Pool() as p:
             return p.map(cls._collect_keys, range(cls.START, cls.STOP))
@@ -52,16 +43,6 @@ class Replica(dict):
                 if (itsc := repeated_keys.intersection(keys))}
 
     @classmethod
-    def _get_replicas(cls, number, keys):
-        containers = cls.read(number)
-
-        replicas = {}
-        for c in containers:
-            if (key:=getattr(c, cls.KEY_ATTR)) in keys:
-                replicas.setdefault(key, []).append(c)
-        return replicas
-
-    @classmethod
     def get_replicas(cls, locations):
         with Pool() as p:
             lst_replicas = p.starmap(cls._get_replicas, locations.items())
@@ -72,13 +53,8 @@ class Replica(dict):
                 res.setdefault(key, []).extend(x)
         return res
 
-    def load(self):
-        with open(self.W_FILE.substitute(), 'rb') as file:
-            return pickle.load(file)
-
-    def dump(self):
-        with open(self.W_FILE.substitute(), 'wb') as file:
-            pickle.dump(dict(self), file)
+    def selected(self):
+        return {k: v[-1] for k, v in self.items()}
 
     def compare(self):
         for k, containers in self.items():
@@ -95,8 +71,32 @@ class Replica(dict):
         Below are the full list of .info() of those {len(x):,} cases:""")
         return '\n\n'.join([initial]+x)
 
-    def selected(self):
-        return {k: v[-1] for k, v in self.items()}
+    def load(self):
+        with open(self.W_FILE.substitute(), 'rb') as file:
+            return pickle.load(file)
+
+    def dump(self):
+        with open(self.W_FILE.substitute(), 'wb') as file:
+            pickle.dump(dict(self), file)
+
+    @classmethod
+    def read(cls, number):
+        with gzip.open(cls.R_FILE.substitute(number=number)) as file:
+            return pickle.load(file)
+
+    @classmethod
+    def _collect_keys(cls, number):
+        return [getattr(c, cls.KEY_ATTR) for c in cls.read(number)]
+
+    @classmethod
+    def _get_replicas(cls, number, keys):
+        containers = cls.read(number)
+
+        replicas = {}
+        for c in containers:
+            if (key:=getattr(c, cls.KEY_ATTR)) in keys:
+                replicas.setdefault(key, []).append(c)
+        return replicas
 
 
 def _different(s0, s1):
@@ -112,9 +112,15 @@ class PaperReplica(Replica):
     STOP = STOP
     KEY_ATTR = 'pmid'
 
+    @classmethod
+    def main(cls):
+        q = cls(load=False)
+        q.dump()
+        with open(W_FILES['prints'].substitute(), 'w', encoding='UTF-8') as file:
+            file.write(q.full_comparison())
+
+
+main = PaperReplica.main
 
 if __name__ == '__main__':
-    q = PaperReplica(load=False)
-    q.dump()
-    with open(W_FILES['prints'].substitute(), 'w', encoding='UTF-8') as file:
-        file.write(q.full_comparison())
+    main()

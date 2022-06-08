@@ -5,11 +5,9 @@ from collections import Counter
 def find_links(cache):
     counter = {}
     for j in cache.values():
-        for issns in j.issns.values():
-            for issn in issns:
-                counter.setdefault(str(issn), []).append(j)
-    else:
-        return {edge: neighbors for edge, neighbors in counter.items() if len(neighbors) > 1}
+        for issn in j.issns:
+            counter.setdefault(str(issn), []).append(j)
+    return {edge: neighbors for edge, neighbors in counter.items() if len(neighbors) > 1}
 
 
 def directly_linked(links):
@@ -28,15 +26,6 @@ def find_clusters(neighborhoods):
                 x = neighborhoods.pop(nb)
                 clusters.setdefault(j, set()).update(x)
     return clusters
-
-
-def merge_journals(base, new):
-    base.full_titles.update(new.full_titles)
-    base.iso_abbreviations.update(new.iso_abbreviations)
-    base.issn_ps.update(new.issn_ps)
-    base.issn_es.update(new.issn_es)
-    base.issn_ls.update(new.issn_ls)
-    base.nlm_unique_id.update(new.nlm_unique_id)
 
 
 def merge_all_equivalent_journals(cache, clusters):

@@ -1,2 +1,2 @@
-__all__ = ['MetaCache']
-from .cached_class import MetaCache
+__all__ = ['MetaCache', 'MetaCacheExt']
+from .cached_class import MetaCache, MetaCacheExt
