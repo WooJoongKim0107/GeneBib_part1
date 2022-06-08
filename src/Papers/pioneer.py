@@ -30,7 +30,7 @@ class Pioneer:
     def main(cls):
         with Pool(6) as p:
             caches = p.map(cls.read_and_explore, range(cls.START, cls.STOP))
-        Journal._CACHE = Journal.merge_caches(*caches)
+        Journal.merge_caches(*caches)
         Journal._CACHE = merge(Journal._CACHE)
         Journal.export_cache()
 
