@@ -241,9 +241,9 @@ def attach(self,
     if nlm_unique_id:
         self.nlm_unique_id.add(nlm_unique_id)
     if issn[0]:
-        self.attach_issn(issn)
+        attach_issn(self, issn)
     if issn_l[0]:
-        self.attach_issn(issn_l)
+        attach_issn(self, issn_l)
     if title:
         self.full_titles.add(title)
     if iso_abbreviation:
