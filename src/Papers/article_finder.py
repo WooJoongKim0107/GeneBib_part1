@@ -185,3 +185,7 @@ class ArticleFinder:
 def main():
     PmidToIdx(False).dump()
     JnlToArt.write()
+
+
+if __name__ == '__main__':
+    main()
