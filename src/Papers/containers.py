@@ -69,8 +69,6 @@ class Journal(metaclass=MetaCacheExt):
 
         self.nlm_unique_id: set[str] = set()  # len==0: Null, len>1: 157
 
-        self.titles = {self.medline_ta}.union(self.full_titles, self.iso_abbreviations)
-        self.issns = set.union(self.issn_ps, self.issn_es, self.issn_ls)
         self.extra_attrs = {}
         self.counts = 0
 
@@ -98,6 +96,14 @@ class Journal(metaclass=MetaCacheExt):
         self.issn_ls.update(j.issn_ls)
         self.nlm_unique_id.update(j.nlm_unique_id)
         self.counts += j.counts
+
+    @property
+    def issns(self):
+        return set.union(self.issn_ps, self.issn_es, self.issn_ls)
+
+    @property
+    def titles(self):
+        return {self.medline_ta}.union(self.full_titles, self.iso_abbreviations)
 
     @property
     def info(self):
@@ -140,7 +146,7 @@ class Journal(metaclass=MetaCacheExt):
     def findall(cls, val):
         target = str(val).lower()
         for v in cls.values():
-            if target in v.info().lower():
+            if target in v.info.lower():
                 yield v
 
     @classmethod

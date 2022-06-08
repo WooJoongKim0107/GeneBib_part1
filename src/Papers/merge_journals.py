@@ -33,7 +33,7 @@ def merge_all_equivalent_journals(cache, clusters):
     for k, x in clusters.items():
         for v in x:
             if v is not k:
-                k.merge_journals(v)
+                k.merge(v)
                 merged_cache[v.medline_ta] = k
     return merged_cache
 
