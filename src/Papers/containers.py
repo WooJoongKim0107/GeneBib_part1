@@ -1,4 +1,5 @@
 import re
+import tarfile, gzip, pickle
 from textwrap import dedent
 from functools import cache
 import webbrowser
@@ -50,6 +51,9 @@ class Journal(metaclass=MetaCacheExt):
         as assigned to the journal's catalog record by NLM.
     """
     _CACHE_PATH = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
+    _ARTICLE_PATH = PathTemplate('$rsrc/pdata/paper/sorted/$journal.pkl.gz')
+    _TAR_PATH = PathTemplate('$rsrc/pdata/paper/papers.tar').substitute()
+    _PATTERN = re.compile(r'[^a-zA-Z0-9_]+')
 
     def __new__(cls, medline_ta: str, caching=True):
         """__new__ method must not be skipped - Assertion of MetaCacheExt"""
@@ -126,6 +130,30 @@ class Journal(metaclass=MetaCacheExt):
     def url(self):
         url = '    '.join(f'https://ncbi.nlm.nih.gov/nlmcatalog/{nlm_id}/' for nlm_id in self.nlm_unique_id)
         return url
+
+    @property
+    def _simple_title(self):
+        return self._PATTERN.sub('_', self.medline_ta)
+
+    @property
+    def path(self):
+        return self._ARTICLE_PATH.substitute(journal=self._simple_title)
+
+    @property
+    def _tarname(self):
+        return self.path.as_posix().split(':/')[1]
+
+    @property
+    def articles(self):
+        with tarfile.open(self._TAR_PATH, 'r') as tf:
+            m = tf.getmember(self._tarname)
+            with gzip.open(tf.extractfile(m)) as f:
+                counts = pickle.load(f) - 1
+                key = pickle.load(f)
+                assert counts == self.counts
+                assert key == self.medline_ta
+                for _ in range(counts):
+                    yield pickle.load(f)
 
     @property
     def info(self):
