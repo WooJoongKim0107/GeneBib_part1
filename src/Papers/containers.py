@@ -1,6 +1,7 @@
 import re
 from textwrap import dedent
 from functools import cache
+import webbrowser
 from myclass import MetaCacheExt
 from mypathlib import PathTemplate
 
@@ -122,6 +123,11 @@ class Journal(metaclass=MetaCacheExt):
         return {self.medline_ta}.union(self.full_titles, self.iso_abbreviations)
 
     @property
+    def url(self):
+        url = '    '.join(f'https://ncbi.nlm.nih.gov/nlmcatalog/{nlm_id}/' for nlm_id in self.nlm_unique_id)
+        return url
+
+    @property
     def info(self):
         return dedent(f"""\
         {self}
@@ -135,11 +141,9 @@ class Journal(metaclass=MetaCacheExt):
                       Electronic: {_print_set(self.issn_es)}
                          Linking: {_print_set(self.issn_ls)}
 
-            NLM ID:
                      NlmUniqueID: {_print_set(self.nlm_unique_id)}
-
-            Counts:
-                           Total: {self.counts}
+                            URLs: {self.url}
+                          Counts: {self.counts}
         """)
 
     def __repr__(self):
@@ -225,9 +229,17 @@ class Article:
             PubDate: {self.pub_date}
            Location: {self.location}
                PMID: {self.pmid}
+                URL: {self.url}
               Title: {self.title}
            Abstract: {self.abstract}
         """)
+
+    @property
+    def url(self):
+        return f'https://pubmed.ncbi.nlm.nih.gov/{self.pmid}/'
+
+    def browse(self):
+        webbrowser.open(self.url)
 
     def __repr__(self):
         return f"Article({self.pmid})"

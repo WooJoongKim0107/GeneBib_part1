@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add ArticleFiner &amp; RawFinder">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Modify Journal.find_title">
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/article_finder.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/article_finder.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -317,14 +318,7 @@
       <workItem from="1654590111345" duration="2977000" />
       <workItem from="1654648011187" duration="29501000" />
       <workItem from="1654737531752" duration="870000" />
-      <workItem from="1654739755732" duration="10442000" />
-    </task>
-    <task id="LOCAL-00017" summary="Add modules to get statistical summary of Articles">
-      <created>1652251514452</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1652251514452</updated>
+      <workItem from="1654739755732" duration="12509000" />
     </task>
     <task id="LOCAL-00018" summary="Add modules to get statistical summary of Articles; 2">
       <created>1652253915665</created>
@@ -662,7 +656,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654753593455</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="Modify Journal.find_title">
+      <created>1654756089668</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1654756089668</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -681,7 +682,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Modify Papers.merge.py according to type change of Articles container &#10;&#10;Previously, .merge.py simply bound multiple (10 for paper, 90 for patent) containers into one ChainMap.&#10;From now on, .mergy.py merges multiple containers into one ChainMap while leaving articles that have any replica.&#10;Those replicas are merged into the last file." />
     <MESSAGE value="Fix Papers.merge.py list does not have 'intersection' method" />
     <MESSAGE value="Fix Papers.merge.py does not detect in-file duplicates" />
     <MESSAGE value="Fix Papers.merge.py does not detect any... duplicates" />
@@ -706,7 +706,8 @@
     <MESSAGE value="Add several Journal finding methods on Journal" />
     <MESSAGE value="Modify Some attributes of Journal and Article &amp; beyond&#10;&#10;&lt;Attr changes&gt;&#10;    1. Journal.titles &amp; Journal.issns: {dtype -&gt; set(values)} -&gt; set(values of all dtypes)&#10;    2. Journal.counts: Total number of distinct Articles each Journal contains&#10;    3. Journal.extra_attrs: Any extra attributes to reside without breaking backward compatibility&#10;    4. Journal.info: Method -&gt; @property&#10;    5. Article.journal: Removed and replaced with @property&#10;    6. Article._journal_title: Journal.medline_ta of its journal&#10;&lt;MetaCache&gt;&#10;&lt;Refactoring&gt;" />
     <MESSAGE value="Add ArticleFiner &amp; RawFinder" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add ArticleFiner &amp; RawFinder" />
+    <MESSAGE value="Modify Journal.find_title" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modify Journal.find_title" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

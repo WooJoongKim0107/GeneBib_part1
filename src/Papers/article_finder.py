@@ -64,9 +64,14 @@ class JnlToPmids(dict):
             data = self.gen()
         super().__init__(data)
 
+    def __getitem__(self, item):
+        if isinstance(item, Journal):
+            return self.__getitem__(item.medline_ta)
+        return super().__getitem__(item)
+
     @classmethod
     def load(cls):
-        with open(cls.W_FILE.substitute(index='', format='pkl'), 'wb') as file:
+        with open(cls.W_FILE.substitute(index='', format='pkl'), 'rb') as file:
             return pickle.load(file)
 
     def dump(self):
@@ -131,27 +136,18 @@ class ArticleFinder:
     J2A = None
 
     @classmethod
-    def from_pmid(cls, *pmids):
-        arts = []
+    def from_pmids(cls, *pmids):
         for idx, pmids in cls._quick_recipe(*pmids).items():
             with gzip.open(cls.R_FILE.substitute(index=idx), 'rb') as file:
                 chain = pickle.load(file)
             for pmid in pmids:
-                arts.append(chain[pmid])
-
-        if len(pmids) == 1:
-            return arts[0]
-        return arts
+                yield chain[pmid]
 
     @classmethod
-    def from_journal(cls, *js):
+    def from_journal(cls, j):
         if cls.J2A is None:
             cls.J2A = JnlToPmids(load=True)
-
-        res = {j: cls.J2A[j] for j in js}
-        if len(js) == 1:
-            return res[js[0]]
-        return res
+        return cls.from_pmids(*cls.J2A[j])
 
     @staticmethod
     def _quick_recipe(*pmids):
