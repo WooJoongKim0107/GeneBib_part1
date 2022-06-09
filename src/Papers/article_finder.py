@@ -99,7 +99,8 @@ class JnlToArt:
                 arts = sorted(sum(iarts, []))
                 f.write(cls.convert(j, arts))
                 f.write('\n')
-                v.counts = len(arts)
+                if j in Journal.unique_keys():
+                    v.counts = len(arts)
             for file in files:
                 file.close()
 

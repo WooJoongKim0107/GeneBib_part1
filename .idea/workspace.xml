@@ -8,7 +8,6 @@
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Papers/article_finder.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/article_finder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -318,14 +317,7 @@
       <workItem from="1654590111345" duration="2977000" />
       <workItem from="1654648011187" duration="29501000" />
       <workItem from="1654737531752" duration="870000" />
-      <workItem from="1654739755732" duration="1875000" />
-    </task>
-    <task id="LOCAL-00014" summary="Fix parsing pattern for MedlineDate">
-      <created>1652239320713</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1652239320713</updated>
+      <workItem from="1654739755732" duration="4795000" />
     </task>
     <task id="LOCAL-00015" summary="Fix collection type of Articles and Patents from list to ChainMap">
       <created>1652239511343</created>
@@ -663,7 +655,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654689564824</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="Add ArticleFiner &amp; RawFinder">
+      <created>1654741723997</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1654741723997</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
