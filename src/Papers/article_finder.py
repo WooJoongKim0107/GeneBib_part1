@@ -6,7 +6,7 @@ from .merge import W_FILE as R_FILE
 
 
 W_FILES = {'PmidToIdx': PathTemplate('$rsrc/pdata/paper/article_to_index.pkl').substitute(),
-           'JnlToArt': PathTemplate('$rsrc/pdata/paper/journal_to_article$index.txt')}
+           'JnlToPmids': PathTemplate('$rsrc/pdata/paper/journal_to_article$index.$format')}
 
 
 class PmidToIdx(dict):
@@ -51,61 +51,47 @@ class PmidToIdx(dict):
             pickle.dump(dict(self), file)
 
 
-class JnlToArt:
-    """{medline_ta -> pmid}"""
+class JnlToPmids(dict):
+    """{medline_ta -> *pmids}"""
     R_FILE = R_FILE
-    W_FILE = W_FILES['JnlToArt']
+    W_FILE = W_FILES['JnlToPmids']
     STOP = 112
 
-    @classmethod
-    def find_arts(cls, j):
-        pmid2idx = PmidToIdx()
-        idx2pmids = {}
-        for pmid in cls.find_pmids(j):
-            idx = pmid2idx[pmid]
-            idx2pmids.setdefault(idx, []).append(pmid)
-
-        arts = []
-        for idx, pmids in idx2pmids.items():
-            with gzip.open(cls.R_FILE.substitute(index=idx), 'rb') as file:
-                chain = pickle.load(file)
-            for pmid in pmids:
-                arts.append(chain[pmid])
-        return arts
-
-    @classmethod
-    def find_pmids(cls, j):
-        if isinstance(j, str):
-            key = j
-            n = cls._find_n(key)
-        elif isinstance(j, Journal):
-            key = j.medline_ta
-            n = cls._find_n(key)
-        elif isinstance(j, int):
-            n = j
+    def __init__(self, load=True):
+        if load:
+            data = self.load()
         else:
-            raise ValueError(f'Cannot recognize type({type(j)})')
-        return cls._read_n(n)
+            data = self.gen()
+        super().__init__(data)
 
     @classmethod
-    def write(cls):
+    def load(cls):
+        with open(cls.W_FILE.substitute(index='', format='pkl'), 'wb') as file:
+            return pickle.load(file)
+
+    def dump(self):
+        with open(self.W_FILE.substitute(index='', format='pkl'), 'wb') as f:
+            pickle.dump(dict(self), f)
+
+    @classmethod
+    def gen(cls):
         with Pool(5) as p:
             p.map(cls._write, range(cls.STOP))
 
-        with open(cls.W_FILE.substitute(index=''), 'w') as f:
-            files = [open(cls.W_FILE.substitute(index=i), 'r') for i in range(cls.STOP)]
-            for j, v in Journal.items():
-                iarts = iter(cls.revert(file.readline()[:-1]) for file in files)
-                arts = sorted(sum(iarts, []))
-                f.write(cls.convert(j, arts))
-                f.write('\n')
-                if j in Journal.unique_keys():
-                    v.counts = len(arts)
-            for file in files:
-                file.close()
+        files = [open(cls.W_FILE.substitute(index=i, format='txt'), 'r') for i in range(cls.STOP)]
 
+        res = {}
+        for j, v in Journal.items():
+            iarts = iter(cls._revert(file.readline()[:-1]) for file in files)
+            arts = sorted(sum(iarts, []))
+            res[j] = arts
+            v.counts = len(arts)
+
+        for file in files:
+            file.close()
         for i in range(cls.STOP):
-            cls.W_FILE.substitute(index=i).unlink()
+            cls.W_FILE.substitute(index=i, format='txt').unlink()
+        return res
 
     @classmethod
     def _write(cls, index):
@@ -113,42 +99,25 @@ class JnlToArt:
             chain = pickle.load(file)
 
         j2a = {}
+        for k, v in Journal.items():
+            j2a.setdefault(k, j2a.setdefault(v.medline_ta, []))
         for art in chain.values():
-            key0 = art._journal_title
-            j2a.setdefault(key0, []).append(art.pmid)
-            if key0 not in Journal.unique_keys():
-                key1 = art.journal.medline_ta
-                j2a.setdefault(key1, []).append(art.pmid)
-
+            j2a[art._journal_title].append(art.pmid)
         for arts in j2a.values():
             arts.sort()
 
-        with open(cls.W_FILE.substitute(index=index), 'w') as file:
+        with open(cls.W_FILE.substitute(index=index, format='txt'), 'w') as file:
             for j in Journal:
-                file.write(cls.convert(j, j2a.get(j, [])))
+                file.write(cls._convert(j, j2a.get(j, [])))
                 file.write('\n')
         print(index)
 
     @staticmethod
-    def _find_n(key):
-        for i, j in enumerate(Journal):
-            if j == key:
-                return i
-
-    @classmethod
-    def _read_n(cls, n):
-        with open(cls.W_FILE.substitute(index=''), 'r') as f:
-            for i in range(n-1):
-                f.readline()
-            s = f.readline()
-        return cls.revert(s)
-
-    @staticmethod
-    def convert(j, arts):
+    def _convert(j, arts):
         return j + '$:$' + ','.join(map(str, arts))
 
     @staticmethod
-    def revert(s):
+    def _revert(s):
         j0, x = s.split('$:$')
         if x:
             arts = list(map(int, x.split(',')))
@@ -159,17 +128,12 @@ class JnlToArt:
 
 class ArticleFinder:
     R_FILE = R_FILE
+    J2A = None
 
     @classmethod
     def from_pmid(cls, *pmids):
-        pmid2idx = PmidToIdx()
-        idx2pmids = {}
-        for pmid in pmids:
-            idx = pmid2idx[pmid]
-            idx2pmids.setdefault(idx, []).append(pmid)
-
         arts = []
-        for idx, pmids in idx2pmids.items():
+        for idx, pmids in cls._quick_recipe(*pmids).items():
             with gzip.open(cls.R_FILE.substitute(index=idx), 'rb') as file:
                 chain = pickle.load(file)
             for pmid in pmids:
@@ -177,20 +141,31 @@ class ArticleFinder:
 
         if len(pmids) == 1:
             return arts[0]
-        else:
-            return arts
+        return arts
 
     @classmethod
     def from_journal(cls, *js):
+        if cls.J2A is None:
+            cls.J2A = JnlToPmids(load=True)
+
+        res = {j: cls.J2A[j] for j in js}
         if len(js) == 1:
-            return JnlToArt.find_arts(js[0])
-        else:
-            return {j: JnlToArt.find_arts(j) for j in js}
+            return res[js[0]]
+        return res
+
+    @staticmethod
+    def _quick_recipe(*pmids):
+        pmid2idx = PmidToIdx()
+        idx2pmids = {}
+        for pmid in pmids:
+            idx = pmid2idx[pmid]
+            idx2pmids.setdefault(idx, []).append(pmid)
+        return idx2pmids
 
 
 def main():
-    PmidToIdx(False).dump()
-    JnlToArt.write()
+    PmidToIdx(load=False).dump()
+    JnlToPmids(load=False).dump()
     Journal.export_cache()
 
 
