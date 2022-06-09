@@ -114,7 +114,7 @@ class JnlToArt:
         j2a = {}
         for art in chain.values():
             key0 = art._journal_title
-            j2a.setdefault(art._journal_title, []).append(art.pmid)
+            j2a.setdefault(key0, []).append(art.pmid)
             if key0 not in Journal.unique_keys():
                 key1 = art.journal.medline_ta
                 j2a.setdefault(key1, []).append(art.pmid)
@@ -122,7 +122,7 @@ class JnlToArt:
         for arts in j2a.values():
             arts.sort()
 
-        with open(cls.W_FILE.substitute(index), 'w') as file:
+        with open(cls.W_FILE.substitute(index=index), 'w') as file:
             for j in Journal:
                 file.write(cls.convert(j, j2a.get(j, [])))
                 file.write('\n')

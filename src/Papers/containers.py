@@ -1,5 +1,6 @@
 import re
 from textwrap import dedent
+from functools import cache
 from myclass import MetaCacheExt
 from mypathlib import PathTemplate
 
@@ -98,14 +99,17 @@ class Journal(metaclass=MetaCacheExt):
         self.counts += j.counts
 
     @classmethod
+    @cache
     def unique_keys(cls):
         return [k for k, v in cls.items() if k == v.medline_ta]
 
     @classmethod
+    @cache
     def unique_values(cls):
         return [v for k, v in cls.items() if k == v.medline_ta]
 
     @classmethod
+    @cache
     def unique_items(cls):
         return [(k, v) for k, v in cls.items() if k == v.medline_ta]
 

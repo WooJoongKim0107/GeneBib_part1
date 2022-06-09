@@ -316,14 +316,9 @@
       <workItem from="1654564341223" duration="20154000" />
       <workItem from="1654589338123" duration="745000" />
       <workItem from="1654590111345" duration="2977000" />
-      <workItem from="1654648011187" duration="29239000" />
-    </task>
-    <task id="LOCAL-00013" summary="Fix module to merge pickled pdata .merge.py">
-      <created>1652173084610</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1652173084610</updated>
+      <workItem from="1654648011187" duration="29501000" />
+      <workItem from="1654737531752" duration="870000" />
+      <workItem from="1654739755732" duration="1875000" />
     </task>
     <task id="LOCAL-00014" summary="Fix parsing pattern for MedlineDate">
       <created>1652239320713</created>
@@ -661,7 +656,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654687425503</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="Add ArticleFiner &amp; RawFinder">
+      <created>1654689564824</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1654689564824</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
