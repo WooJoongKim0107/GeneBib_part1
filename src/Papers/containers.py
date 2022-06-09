@@ -169,7 +169,7 @@ class Journal(metaclass=MetaCacheExt):
     def find_title(cls, val):
         target = str(val).lower()
         for v in cls.values():
-            if target in v.titles:
+            if target in v.titles.lower():
                 yield v
 
     @classmethod

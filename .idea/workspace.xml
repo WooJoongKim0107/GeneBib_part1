@@ -7,7 +7,7 @@
     <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add ArticleFiner &amp; RawFinder">
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/article_finder.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/article_finder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -317,14 +317,7 @@
       <workItem from="1654590111345" duration="2977000" />
       <workItem from="1654648011187" duration="29501000" />
       <workItem from="1654737531752" duration="870000" />
-      <workItem from="1654739755732" duration="8756000" />
-    </task>
-    <task id="LOCAL-00016" summary="Rename Article.article_title attribute into Article.title">
-      <created>1652247489778</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1652247489778</updated>
+      <workItem from="1654739755732" duration="10442000" />
     </task>
     <task id="LOCAL-00017" summary="Add modules to get statistical summary of Articles">
       <created>1652251514452</created>
@@ -662,7 +655,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654749444869</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="Add ArticleFiner &amp; RawFinder">
+      <created>1654753593455</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1654753593455</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
