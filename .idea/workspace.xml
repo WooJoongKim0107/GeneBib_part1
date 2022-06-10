@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Modify Journal.info, Article.info &amp; ArtFinder">
-      <change afterPath="$PROJECT_DIR$/src/Papers/sort.py" afterDir="false" />
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add Sorted collection of Articles by Journal">
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/sort.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/sort.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -318,14 +317,8 @@
       <workItem from="1654590111345" duration="2977000" />
       <workItem from="1654648011187" duration="29501000" />
       <workItem from="1654737531752" duration="870000" />
-      <workItem from="1654739755732" duration="20132000" />
-    </task>
-    <task id="LOCAL-00019" summary="Modify save the duplicated PMIDs rather than len of total PMIDs">
-      <created>1652341905454</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1652341905454</updated>
+      <workItem from="1654739755732" duration="20181000" />
+      <workItem from="1654825304251" duration="1639000" />
     </task>
     <task id="LOCAL-00020" summary="Modify data type of Article container changed from dict to list&#10;&#10;Both paper and patent raw data acquired from PubMed and GCP suffer from replicas.&#10;There are 2,834 articles which have more than one replica among 28,629,656 english articles. (total 33,405,863 articles)&#10;Even though their PMIDs are unique for each article, each article may appear multiple times in the raw data.&#10;Unfortunately, those replicas sometimes appear within a single raw file - dict[pmid -&gt; Article instance] is not valid structure for Article instances. &#10;&#10;Therefore, I change the data type of Article container from dict[pmid -&gt; Article] to list[Article].&#10;&#10;It will also be applied for Patent container later.">
       <created>1652406875058</created>
@@ -663,7 +656,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654758176194</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="Add Sorted collection of Articles by Journal">
+      <created>1654766093793</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1654766093793</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -682,7 +682,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix Papers.merge.py does not detect in-file duplicates" />
     <MESSAGE value="Fix Papers.merge.py does not detect any... duplicates" />
     <MESSAGE value="Fix Papers.merge.py open zipped file unzipped" />
     <MESSAGE value="Fix Patents.main - container type from dict to list" />
@@ -707,7 +706,8 @@
     <MESSAGE value="Add ArticleFiner &amp; RawFinder" />
     <MESSAGE value="Modify Journal.find_title" />
     <MESSAGE value="Modify Journal.info, Article.info &amp; ArtFinder" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modify Journal.info, Article.info &amp; ArtFinder" />
+    <MESSAGE value="Add Sorted collection of Articles by Journal" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Sorted collection of Articles by Journal" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
