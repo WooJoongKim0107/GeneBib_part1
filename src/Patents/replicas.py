@@ -1,6 +1,6 @@
 from mypathlib import PathTemplate
 from . import START, STOP
-from .main import W_FILE as R_FILE
+from .refine import W_FILE as R_FILE
 from Papers.replicas import Replica
 
 
