@@ -1,4 +1,3 @@
-from .containers import Journal
 from collections import Counter
 
 
@@ -38,8 +37,7 @@ def merge_all_equivalent_journals(cache, clusters):
     return merged_cache
 
 
-def merge(cache=None):
-    cache = cache if cache else Journal._CACHE
+def merge(cache):
     clusters = find_clusters(directly_linked(find_links(cache)))
     counter = Counter(j for x in clusters.values() for j in x)
     assert sum(k for k, v in counter.items() if v > 1) == 0, 'Clustering failed'

@@ -18,21 +18,22 @@ class Pioneer:
     _W_FILE = _W_FILE
     START = START
     STOP = STOP
+    JNL = Journal
 
     @classmethod
     def read_and_explore(cls, number):
         root = cls.read(number)
         cls.explore(root)
         print(number)
-        return Journal._CACHE
+        return cls.JNL._CACHE
 
     @classmethod
     def main(cls):
         with Pool(6) as p:
             caches = p.map(cls.read_and_explore, range(cls.START, cls.STOP))
-        Journal.merge_caches(*caches)
-        Journal._CACHE = merge(Journal._CACHE)
-        Journal.export_cache()
+        cls.JNL.merge_caches(*caches)
+        cls.JNL._CACHE = merge(cls.JNL._CACHE)
+        cls.JNL.export_cache()
 
     @classmethod
     def read(cls, number):
@@ -43,7 +44,7 @@ class Pioneer:
     @classmethod
     def explore(cls, root: Element):
         for pubmed_article_elt in root:
-            Journal.from_parse(*parse_journal(pubmed_article_elt))
+            cls.JNL.from_parse(*parse_journal(pubmed_article_elt))
 
 
 main = Pioneer.main

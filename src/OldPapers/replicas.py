@@ -13,10 +13,8 @@ PaperReplica.W_FILE = W_FILES['replica']
 PaperReplica.START = START
 PaperReplica.STOP = STOP
 PaperReplica.KEY_ATTR = 'pmid'
+main = PaperReplica.main
 
 
 if __name__ == '__main__':
-    q = PaperReplica(load=False)
-    q.dump()
-    with open(W_FILES['prints'].substitute(), 'w', encoding='UTF-8') as file:
-        file.write(q.full_comparison())
+    main()

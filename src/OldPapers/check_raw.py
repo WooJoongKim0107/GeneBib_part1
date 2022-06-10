@@ -1,4 +1,4 @@
-from Papers.check_raw import RawFinder
+from Papers.raw_finder import RawFinder
 from . import START, STOP
 from .main import R_FILE
 

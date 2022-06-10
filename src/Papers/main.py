@@ -20,6 +20,7 @@ class Refine:
     MSG = MSG
     START = START
     STOP = STOP
+    JNL = Journal
 
     @classmethod
     def read_eng_articles(cls, number):
@@ -50,7 +51,7 @@ class Refine:
     @classmethod
     def report_journal(cls, number, pubmed_article_elt: Element, pmid):
         key = find_journal_key(pubmed_article_elt)
-        if key not in Journal:
+        if key not in cls.JNL:
             with open(cls.MSG.substitute(number), 'a') as file:
                 file.write(f'Cannot find appropriate Journal for {number}: {pmid}\n')
         return key

@@ -7,7 +7,17 @@
     <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Modify Sorting mechanism of Articles to reduce memory usage">
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/sort.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/sort.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OldPapers/check_raw.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPapers/check_raw.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OldPapers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPapers/containers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OldPapers/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPapers/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OldPapers/merge.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPapers/merge.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OldPapers/merge_journals.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPapers/merge_journals.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OldPapers/pioneer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPapers/pioneer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OldPapers/replicas.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPapers/replicas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/__main__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/merge_journals.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/merge_journals.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/pioneer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/pioneer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -318,14 +328,8 @@
       <workItem from="1654648011187" duration="29501000" />
       <workItem from="1654737531752" duration="870000" />
       <workItem from="1654739755732" duration="20181000" />
-      <workItem from="1654825304251" duration="3825000" />
-    </task>
-    <task id="LOCAL-00022" summary="Modify Papers.merge.py according to type change of Articles container &#10;&#10;Previously, .merge.py simply bound multiple (10 for paper, 90 for patent) containers into one ChainMap.&#10;From now on, .mergy.py merges multiple containers into one ChainMap while leaving articles that have any replica.&#10;Those replicas are merged into the last file.">
-      <created>1652421846157</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1652421846157</updated>
+      <workItem from="1654825304251" duration="3841000" />
+      <workItem from="1654835375496" duration="2179000" />
     </task>
     <task id="LOCAL-00023" summary="Modify Papers.merge.py according to type change of Articles container &#10;&#10;Previously, .merge.py simply bound multiple (10 for paper, 90 for patent) containers into one ChainMap.&#10;From now on, .mergy.py merges multiple containers into one ChainMap while leaving articles that have any replica.&#10;Those replicas are merged into the last file.">
       <created>1652424676669</created>
@@ -663,7 +667,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654827747180</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="Modify Sorting mechanism of Articles to reduce memory usage">
+      <created>1654830719447</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1654830719447</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
