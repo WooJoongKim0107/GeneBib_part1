@@ -1,7 +1,7 @@
 from mypathlib import PathTemplate
 from Papers.replicas import PaperReplica
 from . import START, STOP
-from .main import W_FILE as R_FILE
+from .refine import W_FILE as R_FILE
 
 
 W_FILES = {'replica': PathTemplate('$rsrc/pdata/pubmed20n_gz/paper_replicas.pkl'),

@@ -1,7 +1,7 @@
 from mypathlib import PathTemplate
 from Papers.merge import Merge
 from . import START, STOP
-from .main import W_FILE as R_FILE
+from .refine import W_FILE as R_FILE
 from .replicas import PaperReplica
 
 

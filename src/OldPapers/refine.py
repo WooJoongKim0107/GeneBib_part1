@@ -1,5 +1,5 @@
 from mypathlib import PathTemplate
-from Papers.main import Refine
+from Papers.refine import Refine
 from . import START, STOP
 from .containers import Journal
 

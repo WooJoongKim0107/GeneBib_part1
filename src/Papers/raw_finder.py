@@ -2,7 +2,7 @@ import gzip
 from multiprocessing import Pool
 from lxml.etree import tostring, parse
 from . import START, STOP
-from .main import R_FILE
+from .refine import R_FILE
 
 
 class RawFinder:
