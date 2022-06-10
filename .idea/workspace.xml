@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add Sorted collection of Articles by Journal">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Modify Sorting mechanism of Articles to reduce memory usage">
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/article_finder.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/article_finder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/sort.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/sort.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -318,14 +318,7 @@
       <workItem from="1654648011187" duration="29501000" />
       <workItem from="1654737531752" duration="870000" />
       <workItem from="1654739755732" duration="20181000" />
-      <workItem from="1654825304251" duration="2025000" />
-    </task>
-    <task id="LOCAL-00021" summary="Modify Papers.merge.py according to type change of Articles container &#10;&#10;Previously, .merge.py simply bound multiple (10 for paper, 90 for patent) containers into one ChainMap.&#10;From now on, .mergy.py merges multiple containers into one ChainMap while leaving articles that have any replica.&#10;Those replicas are merged into the last file.">
-      <created>1652420759610</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1652420759610</updated>
+      <workItem from="1654825304251" duration="3825000" />
     </task>
     <task id="LOCAL-00022" summary="Modify Papers.merge.py according to type change of Articles container &#10;&#10;Previously, .merge.py simply bound multiple (10 for paper, 90 for patent) containers into one ChainMap.&#10;From now on, .mergy.py merges multiple containers into one ChainMap while leaving articles that have any replica.&#10;Those replicas are merged into the last file.">
       <created>1652421846157</created>
@@ -663,7 +656,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654827341409</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="Modify Sorting mechanism of Articles to reduce memory usage">
+      <created>1654827747180</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1654827747180</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -682,7 +682,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix Papers.merge.py does not detect any... duplicates" />
     <MESSAGE value="Fix Papers.merge.py open zipped file unzipped" />
     <MESSAGE value="Fix Patents.main - container type from dict to list" />
     <MESSAGE value="Fix Patents.merge - read_patents_not_repeated() now finds .pub_number instead of .pmid" />
@@ -707,7 +706,8 @@
     <MESSAGE value="Modify Journal.find_title" />
     <MESSAGE value="Modify Journal.info, Article.info &amp; ArtFinder" />
     <MESSAGE value="Add Sorted collection of Articles by Journal" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Sorted collection of Articles by Journal" />
+    <MESSAGE value="Modify Sorting mechanism of Articles to reduce memory usage" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modify Sorting mechanism of Articles to reduce memory usage" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

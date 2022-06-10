@@ -22,7 +22,7 @@ def write(journal: Journal, pmids):
         pickle.dump(key, file)
         for article in ArticleFinder.from_pmids(*pmids):
             pickle.dump(article, file)
-    print(key)
+    print(journal._simpe_title)
 
 
 def tar():
@@ -40,3 +40,7 @@ def main():
     with Pool(5) as p:
         p.starmap(write, args)
     tar()
+
+
+if __name__ == '__main__':
+    main()
