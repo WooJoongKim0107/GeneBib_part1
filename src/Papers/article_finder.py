@@ -140,8 +140,11 @@ class ArticleFinder:
         for idx, pmids in cls._quick_recipe(*pmids).items():
             with gzip.open(cls.R_FILE.substitute(index=idx), 'rb') as file:
                 chain = pickle.load(file)
-            for pmid in pmids:
-                yield chain[pmid]
+            arts = [chain[pmid] for pmid in pmids]
+            del chain
+
+            for art in arts:
+                yield art
 
     @classmethod
     def from_journal(cls, j):
