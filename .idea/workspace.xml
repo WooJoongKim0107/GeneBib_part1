@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Refactor .main -&gt; .refine">
-      <change afterPath="$PROJECT_DIR$/src/Patents/__main__.py" afterDir="false" />
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Refactor Patents">
+      <change afterPath="$PROJECT_DIR$/src/OldPatents/__main__.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/OldPapers/replicas.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPapers/replicas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/replicas.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/replicas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Patents/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/containers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Patents/merge.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/merge.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Patents/refine.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/refine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Patents/replicas.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/replicas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OldPatents/merge.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPatents/merge.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OldPatents/refine.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPatents/refine.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OldPatents/replicas.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPatents/replicas.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -325,14 +322,7 @@
       <workItem from="1654737531752" duration="870000" />
       <workItem from="1654739755732" duration="20181000" />
       <workItem from="1654825304251" duration="3841000" />
-      <workItem from="1654835375496" duration="7239000" />
-    </task>
-    <task id="LOCAL-00026" summary="Fix Papers.merge.py does not detect in-file duplicates">
-      <created>1652427688267</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1652427688267</updated>
+      <workItem from="1654835375496" duration="7742000" />
     </task>
     <task id="LOCAL-00027" summary="Fix Papers.merge.py does not detect any... duplicates">
       <created>1652428330234</created>
@@ -670,7 +660,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654839231153</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Refactor Patents">
+      <created>1654844202042</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1654844202042</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -689,7 +686,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix Patents.merge - read_patents_not_repeated() now finds .pub_number instead of .pmid" />
     <MESSAGE value="Add print changes_only option for eyes_on()" />
     <MESSAGE value="Comment added to Papers.containers.py" />
     <MESSAGE value="Modified merged all equivalent journals&#10;&#10;기존 Journal instance는 medline_ta를 기준으로 그 identity가 정해졌다.&#10;이 기준을 따랐을 때,&#10;    1. full_title이  여러 개 혼용된 경우는 141건, 전혀 사용되지 않은 경우는 1건 (null instance)&#10;    141건 중 10% 무작위 추출 조사결과 1건을 제외하고는 모두 동일한 Journal이 이름 등을 수정하여 다시 출간된 경우였다.&#10;    &#10;    2. iso_abbreivation이 여러개 혼용된 경우는 0건, 전혀 사용되지 않은 경우는 6건 (null instance 포함)&#10;    null instance가 아닌 나머지 5건 중 4건은 CACHE 내의 다른 journal과 equivalent (후술)했음&#10;    &#10;    3. ISSN-p는 여러개 혼용된 경우는 83건, 하나도 사용되지 않은 경우는 7475건,&#10;    특이 사항은 7건의 ISSN-p는 15개의 Journal instance에 중복 등장하였다.&#10;    전수 조사결과 하나의 ISSN-p가 중복으로 등장한 경우 동일한 Journal이 이름 등을 수정하여 다시 출간된 경우였다.    &#10;    &#10;    4. ISSN-e는 여러개 혼용된 경우는 1건, 하나도 사용되지 않은 경우는 25683건,&#10;    특이 사항은 2건의 ISSN-e는 4개의 Journal instance에 중복 등장하였다.&#10;    전수 조사결과 하나의 ISSN-e가 중복으로 등장한 경우 동일한 Journal이 이름 등을 수정하여 다시 출간된 경우였다.&#10;    &#10;    5. ISSN-l는 여러개 혼용된 경우는 1건, 하나도 사용되지 않은 경우는 25683건,&#10;    특이 사항은 49건의 ISSN-l는 102개의 Journal instance에 중복 등장하였다.&#10;    10% 무작위 추출 조사결과 하나의 ISSN-l가 중복으로 등장한 경우 동일한 Journal이 이름 등을 수정하여 다시 출간된 경우였다.&#10;    &#10;즉, medline_ta가 동일할 경우 그들은 실제로 동일한 Journal이라고 봐도 무방하며,&#10;ISSN이 중복되는 경우에도 동일한 Journal이라고 봐도 무방했다.&#10;&#10;따라서, ISSN이 하나라도 중복되는 경우 (같은 type의 ISSN끼리만 비교한다) 동일한 Journal인 것으로 판단하여 병합하도록 한다.&#10;병합하여 사라지는 Journal instance의 경우, 그 key는 CACHE에 남겨두되 value는 병합된 대표 instance를 가리키도록 한다.&#10;즉, len(Journal._CACHE) - len(set(Journal._CACHE.values())) == 병합된 instance의 개수" />
@@ -714,7 +710,8 @@
     <MESSAGE value="Modify Sorting mechanism of Articles to reduce memory usage" />
     <MESSAGE value="Refactor Papers &amp; OldPapers" />
     <MESSAGE value="Refactor .main -&gt; .refine" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor .main -&gt; .refine" />
+    <MESSAGE value="Refactor Patents" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor Patents" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

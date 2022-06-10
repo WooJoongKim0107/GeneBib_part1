@@ -10,14 +10,14 @@ W_FILES = {'replica': PathTemplate('$rsrc/pdata/full_raw_200920/patent_replicas.
 
 class PatentReplica(Replica):
     R_FILE = R_FILE
-    W_FILE = W_FILES['replica']
+    W_FILES = W_FILES
     START = START
     STOP = STOP
     KEY_ATTR = 'pub_number'
 
 
+main = PatentReplica.main
+
+
 if __name__ == '__main__':
-    q = PatentReplica(load=False)
-    q.dump()
-    with open(W_FILES['prints'].substitute(), 'w', encoding='UTF-8') as file:
-        file.write(q.full_comparison())
+    main()
