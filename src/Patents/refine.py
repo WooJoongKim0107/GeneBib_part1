@@ -24,14 +24,14 @@ class Refine:
         return [x for x in q if x['country_code'] == 'US']
 
     @staticmethod
-    def get_patent(number, x):
+    def refine_patent(number, x):
         patent = Patent.from_parse(*parse_patent(x))
         patent.location = number
         return patent
 
     @classmethod
     def write(cls, number):
-        patents = [cls.get_patent(number, x) for x in cls.select_US_patents(number)]
+        patents = [cls.refine_patent(number, x) for x in cls.select_US_patents(number)]
         with gzip.open(cls.W_FILE.substitute(number=number), 'wb') as file:
             pickle.dump(patents, file)
         print(number)

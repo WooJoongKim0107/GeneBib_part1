@@ -4,18 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Refactor Papers &amp; OldPapers">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Refactor .main -&gt; .refine">
+      <change afterPath="$PROJECT_DIR$/src/Patents/__main__.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/OldPapers/check_raw.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPapers/check_raw.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/OldPapers/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPapers/refine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/OldPapers/merge.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPapers/merge.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/OldPapers/replicas.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/OldPapers/replicas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/refine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/raw_finder.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/raw_finder.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Papers/replicas.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/replicas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Patents/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Patents/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/containers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Patents/merge.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/merge.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Patents/refine.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/refine.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Patents/replicas.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/replicas.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -327,21 +325,7 @@
       <workItem from="1654737531752" duration="870000" />
       <workItem from="1654739755732" duration="20181000" />
       <workItem from="1654825304251" duration="3841000" />
-      <workItem from="1654835375496" duration="3593000" />
-    </task>
-    <task id="LOCAL-00024" summary="Fix Papers.merge.py list does not have 'intersection' method">
-      <created>1652425248623</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1652425248623</updated>
-    </task>
-    <task id="LOCAL-00025" summary="Fix Papers.merge.py does not detect in-file duplicates">
-      <created>1652426480394</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1652426480394</updated>
+      <workItem from="1654835375496" duration="7239000" />
     </task>
     <task id="LOCAL-00026" summary="Fix Papers.merge.py does not detect in-file duplicates">
       <created>1652427688267</created>
@@ -672,7 +656,21 @@
       <option name="project" value="LOCAL" />
       <updated>1654837866886</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="Refactor Papers &amp; OldPapers">
+      <created>1654839113274</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1654839113274</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Refactor .main -&gt; .refine">
+      <created>1654839231153</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1654839231153</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -691,7 +689,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix Patents.main - container type from dict to list" />
     <MESSAGE value="Fix Patents.merge - read_patents_not_repeated() now finds .pub_number instead of .pmid" />
     <MESSAGE value="Add print changes_only option for eyes_on()" />
     <MESSAGE value="Comment added to Papers.containers.py" />
@@ -716,7 +713,8 @@
     <MESSAGE value="Add Sorted collection of Articles by Journal" />
     <MESSAGE value="Modify Sorting mechanism of Articles to reduce memory usage" />
     <MESSAGE value="Refactor Papers &amp; OldPapers" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor Papers &amp; OldPapers" />
+    <MESSAGE value="Refactor .main -&gt; .refine" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor .main -&gt; .refine" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

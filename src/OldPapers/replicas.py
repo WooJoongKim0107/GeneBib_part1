@@ -9,7 +9,7 @@ W_FILES = {'replica': PathTemplate('$rsrc/pdata/pubmed20n_gz/paper_replicas.pkl'
 
 
 PaperReplica.R_FILE = R_FILE
-PaperReplica.W_FILE = W_FILES['replica']
+PaperReplica.W_FILES = W_FILES
 PaperReplica.START = START
 PaperReplica.STOP = STOP
 PaperReplica.KEY_ATTR = 'pmid'

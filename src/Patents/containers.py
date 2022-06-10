@@ -18,7 +18,7 @@ class Patent:
 
     @property
     def is_granted(self):
-        return self.grant_date == {'Year': 0, 'Month': 0, 'Date': 0}
+        return self.grant_date != {'Year': 0, 'Month': 0, 'Date': 0}
 
     @classmethod
     def from_parse(cls,

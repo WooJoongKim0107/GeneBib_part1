@@ -17,7 +17,7 @@ class Replica(dict):
     Replica: dict[pmid, list[Article]] for paper, dict[pub_number, list[Patents]] for patent
     """
     R_FILE = PathTemplate('')
-    W_FILE = PathTemplate('')
+    W_FILES = {'replica': PathTemplate(''), 'prints': PathTemplate('')}
     START = 0
     STOP = 0
     KEY_ATTR = ''
@@ -29,6 +29,13 @@ class Replica(dict):
             collected_keys = self.collect_keys()
             self.locations = self.find_locations(collected_keys)
             super().__init__(self.get_replicas(self.locations))
+
+    @classmethod
+    def main(cls):
+        q = cls(load=False)
+        q.dump()
+        with open(W_FILES['prints'].substitute(), 'w', encoding='UTF-8') as file:
+            file.write(q.full_comparison())
 
     @classmethod
     def collect_keys(cls):
@@ -72,11 +79,11 @@ class Replica(dict):
         return '\n\n'.join([initial]+x)
 
     def load(self):
-        with open(self.W_FILE.substitute(), 'rb') as file:
+        with open(self.W_FILES['replica'].substitute(), 'rb') as file:
             return pickle.load(file)
 
     def dump(self):
-        with open(self.W_FILE.substitute(), 'wb') as file:
+        with open(self.W_FILES['replica'].substitute(), 'wb') as file:
             pickle.dump(dict(self), file)
 
     @classmethod
@@ -107,17 +114,10 @@ def _different(s0, s1):
 
 class PaperReplica(Replica):
     R_FILE = R_FILE
-    W_FILE = W_FILES['replica']
+    W_FILES = W_FILES
     START = START
     STOP = STOP
     KEY_ATTR = 'pmid'
-
-    @classmethod
-    def main(cls):
-        q = cls(load=False)
-        q.dump()
-        with open(W_FILES['prints'].substitute(), 'w', encoding='UTF-8') as file:
-            file.write(q.full_comparison())
 
 
 main = PaperReplica.main
