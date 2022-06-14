@@ -1,7 +1,8 @@
-__all__ = ['PathTemplate']
+__all__ = ['PathTemplate', 'TempOpen']
 
 from string import Template
 from pathlib import Path
+from contextlib import contextmanager
 from collections import ChainMap
 from collections.abc import Callable, Mapping
 
@@ -88,3 +89,34 @@ class _DefaultDict(dict):
 
     def __missing__(self, key):
         return self.default
+
+
+def as_temp(path: Path):
+    x = path.as_posix().split('.')
+    x[1] = 'temp'
+    return Path('.'.join(x))
+
+
+class TempOpen:
+    def __init__(self, path, mode='w', key=None, **kwargs):
+        if 'w' not in mode:
+            raise ValueError('TempOpen only works for writing files.')
+
+        self.path = path if isinstance(path, Path) else Path(path)
+        self.mode = mode
+        self.kwargs = kwargs
+
+        self.temp = as_temp(self.path)
+        self.key = open if key is None else key
+        self.file = None
+
+    def __enter__(self):
+        self.file = self.key(self.temp, mode=self.mode, **self.kwargs)
+        return self.file
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.file.__exit__(exc_type, exc_val, exc_tb)
+        if (exc_type is None) and (exc_val is None) and (exc_tb is None):
+            self.temp.replace(self.path)
+        else:
+            print(f'Due to error occurred while writing "{self.path}", it remains as temp file "{self.temp}"')
