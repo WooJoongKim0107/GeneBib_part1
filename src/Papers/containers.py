@@ -104,14 +104,12 @@ class Journal(metaclass=MetaCacheExt):
         self.counts += j.counts
 
     @classmethod
-    @cache
     def unique_keys(cls):
-        return [k for k, v in cls.items() if k == v.medline_ta]
+        return [k for k, v in cls.unique_items()]
 
     @classmethod
-    @cache
     def unique_values(cls):
-        return [v for k, v in cls.items() if k == v.medline_ta]
+        return [v for k, v in cls.unique_items()]
 
     @classmethod
     @cache
@@ -140,20 +138,14 @@ class Journal(metaclass=MetaCacheExt):
         return self._ARTICLE_PATH.substitute(journal=self._simple_title)
 
     @property
-    def _tarname(self):
-        return self.path.as_posix().split(':/')[1]
-
-    @property
     def articles(self):
-        with tarfile.open(self._TAR_PATH, 'r') as tf:
-            m = tf.getmember(self._tarname)
-            with gzip.open(tf.extractfile(m)) as f:
-                counts = pickle.load(f) - 1
-                key = pickle.load(f)
-                assert counts == self.counts
-                assert key == self.medline_ta
-                for _ in range(counts):
-                    yield pickle.load(f)
+        with gzip.open(self.path) as f:
+            counts = pickle.load(f) - 1
+            key = pickle.load(f)
+            assert counts == self.counts
+            assert key == self.medline_ta
+            for _ in range(counts):
+                yield pickle.load(f)
 
     @property
     def info(self):

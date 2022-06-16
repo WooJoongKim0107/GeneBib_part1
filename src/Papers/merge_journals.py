@@ -6,6 +6,7 @@ def find_links(cache):
     for j in cache.values():
         for issn in j.issns:
             counter.setdefault(str(issn), []).append(j)
+        counter.setdefault(j.medline_ta.lower().strip(), []).append(j)
     return {edge: neighbors for edge, neighbors in counter.items() if len(neighbors) > 1}
 
 
