@@ -4,19 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Refactor string-matching codes by WC">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Refactor UniProt packages">
       <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/StringMatching/journal_selection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UniProt/parse.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/GeneBib.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GeneBib.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/refine.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/refine.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Papers/sort.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/sort.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StringMatching/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/base.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/StringMatching/match.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/match.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UniProt/gram_corpus.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniProt/gram_corpus.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UniProt/parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniProt/parse.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -370,21 +366,7 @@
       <workItem from="1659593759360" duration="598000" />
       <workItem from="1659653405148" duration="5476000" />
       <workItem from="1659680030101" duration="9572000" />
-      <workItem from="1659936214011" duration="1546000" />
-    </task>
-    <task id="LOCAL-00031" summary="Add print changes_only option for eyes_on()">
-      <created>1652664949188</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1652664949188</updated>
-    </task>
-    <task id="LOCAL-00032" summary="Comment added to Papers.containers.py">
-      <created>1652688884565</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1652688884565</updated>
+      <workItem from="1659936214011" duration="13444000" />
     </task>
     <task id="LOCAL-00033" summary="Modified merged all equivalent journals&#10;&#10;기존 Journal instance는 medline_ta를 기준으로 그 identity가 정해졌다.&#10;이 기준을 따랐을 때,&#10;    1. full_title이  여러 개 혼용된 경우는 141건, 전혀 사용되지 않은 경우는 1건 (null instance)&#10;    141건 중 10% 무작위 추출 조사결과 1건을 제외하고는 모두 동일한 Journal이 이름 등을 수정하여 다시 출간된 경우였다.&#10;    &#10;    2. iso_abbreivation이 여러개 혼용된 경우는 0건, 전혀 사용되지 않은 경우는 6건 (null instance 포함)&#10;    null instance가 아닌 나머지 5건 중 4건은 CACHE 내의 다른 journal과 equivalent (후술)했음&#10;    &#10;    3. ISSN-p는 여러개 혼용된 경우는 83건, 하나도 사용되지 않은 경우는 7475건,&#10;    특이 사항은 7건의 ISSN-p는 15개의 Journal instance에 중복 등장하였다.&#10;    전수 조사결과 하나의 ISSN-p가 중복으로 등장한 경우 동일한 Journal이 이름 등을 수정하여 다시 출간된 경우였다.    &#10;    &#10;    4. ISSN-e는 여러개 혼용된 경우는 1건, 하나도 사용되지 않은 경우는 25683건,&#10;    특이 사항은 2건의 ISSN-e는 4개의 Journal instance에 중복 등장하였다.&#10;    전수 조사결과 하나의 ISSN-e가 중복으로 등장한 경우 동일한 Journal이 이름 등을 수정하여 다시 출간된 경우였다.&#10;    &#10;    5. ISSN-l는 여러개 혼용된 경우는 1건, 하나도 사용되지 않은 경우는 25683건,&#10;    특이 사항은 49건의 ISSN-l는 102개의 Journal instance에 중복 등장하였다.&#10;    10% 무작위 추출 조사결과 하나의 ISSN-l가 중복으로 등장한 경우 동일한 Journal이 이름 등을 수정하여 다시 출간된 경우였다.&#10;    &#10;즉, medline_ta가 동일할 경우 그들은 실제로 동일한 Journal이라고 봐도 무방하며,&#10;ISSN이 중복되는 경우에도 동일한 Journal이라고 봐도 무방했다.&#10;&#10;따라서, ISSN이 하나라도 중복되는 경우 (같은 type의 ISSN끼리만 비교한다) 동일한 Journal인 것으로 판단하여 병합하도록 한다.&#10;병합하여 사라지는 Journal instance의 경우, 그 key는 CACHE에 남겨두되 value는 병합된 대표 instance를 가리키도록 한다.&#10;즉, len(Journal._CACHE) - len(set(Journal._CACHE.values())) == 병합된 instance의 개수">
       <created>1652871687930</created>
@@ -715,7 +697,21 @@
       <option name="project" value="LOCAL" />
       <updated>1657024336234</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="Fix bugs from get_ngram_list3, Journal.__bool__, Journal.find~&#10;&#10;    1. If get_ngram_list3() takes '   ', ValueError raised.&#10;      '   ' is not empty by itself, but nothing to be tokenized, which caused the error.&#10;      Therefore, str.strip() will be taken before check if empty.&#10;      &#10;    2. Journal.__bool__ returned string rather than boolean.&#10;    &#10;    3. Journal.find~~ method searched over CACHE.values() rather than .unique_values()">
+      <created>1659937952211</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1659937952212</updated>
+    </task>
+    <task id="LOCAL-00081" summary="Refactor UniProt packages">
+      <created>1659938052528</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1659938052529</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -734,8 +730,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Modified Journal._CACHE not to be spoiled by unpickling other Journal instances" />
-    <MESSAGE value="Add Teste package for any kind of small tests" />
     <MESSAGE value="Refactor Papers &amp; Patents packages to have START STOP index on __init__.py" />
     <MESSAGE value="Add OldPapers package to deal with pubmed 2020 version data" />
     <MESSAGE value="Remove print statement on Journal.__new__" />
@@ -759,7 +753,9 @@
     <MESSAGE value="Add Temporary writing feature on TempOpen" />
     <MESSAGE value="Removed compressing into .tar after sorting" />
     <MESSAGE value="Refactor string-matching codes by WC" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor string-matching codes by WC" />
+    <MESSAGE value="Fix bugs from get_ngram_list3, Journal.__bool__, Journal.find~&#10;&#10;    1. If get_ngram_list3() takes '   ', ValueError raised.&#10;      '   ' is not empty by itself, but nothing to be tokenized, which caused the error.&#10;      Therefore, str.strip() will be taken before check if empty.&#10;      &#10;    2. Journal.__bool__ returned string rather than boolean.&#10;    &#10;    3. Journal.find~~ method searched over CACHE.values() rather than .unique_values()" />
+    <MESSAGE value="Refactor UniProt packages" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor UniProt packages" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

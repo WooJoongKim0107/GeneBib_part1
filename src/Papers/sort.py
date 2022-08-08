@@ -1,4 +1,5 @@
-import gzip, pickle, tarfile
+import gzip
+import pickle
 from multiprocessing import Pool
 from mypathlib import PathTemplate
 from Papers import Journal

@@ -1,5 +1,6 @@
 import re
-import tarfile, gzip, pickle
+import gzip
+import pickle
 from textwrap import dedent
 from functools import cache
 from operator import eq, contains
@@ -139,8 +140,7 @@ class Journal(metaclass=MetaCacheExt):
     def path(self):
         return self._ARTICLE_PATH.substitute(journal=self._simple_title)
 
-    @property
-    def articles(self):
+    def get_articles(self):
         with gzip.open(self.path) as f:
             counts = pickle.load(f) - 1
             key = pickle.load(f)
