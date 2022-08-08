@@ -13,7 +13,7 @@ W_FILE = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
 
 
 def match_and_filter(target_text):
-    target_match_list = list(nested.strict_matches2(target_text))
+    target_match_list = list(nested.strict_matches(target_text))
     target_match_list.sort(key=_sort_key)
     filter_smaller(target_match_list)
     return target_match_list
