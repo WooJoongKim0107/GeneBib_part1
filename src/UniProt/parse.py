@@ -2,10 +2,14 @@ import gzip
 import pickle
 from xml.etree.ElementTree import Element
 from xml.etree.ElementTree import parse as etree_parse
+from mypathlib import PathTemplate
 from UniProt.containers import UniProtEntry
 
 HEADER = '{http://uniprot.org/uniprot}'
 LEN_HEADER = len(HEADER)
+R_FILE = PathTemplate('$base/uniprot_sprot.xml.gz')
+W_FILES = {'keywords': PathTemplate('$base/uniprot_keywords.pkl'),
+           'parsed': PathTemplate('$base/uniprot_keywords.pkl')}
 
 
 def parse_date(x):
@@ -62,7 +66,7 @@ def parse_ref(elt: Element):
                 title=cit_elt.findtext(f'{HEADER}title'),)
 
 
-def parse(entry_elt):
+def simple_parse(entry_elt):
     x = as_dict(entry_elt)
     return dict(created=parse_date(entry_elt.get('created')),  # YYYY-MM-DD
                 name=x['name'][0].text,  # one and only one in ['name']
@@ -72,32 +76,32 @@ def parse(entry_elt):
                 refs=[parse_ref(elt) for elt in x['reference']],)
 
 
-def refactor(parsed: Element):
+def parse_and_wrap(x: Element):
     refactored = {}
-    for elt in parsed:
-        entry = UniProtEntry(parse(elt))
+    for elt in x:
+        entry = UniProtEntry(simple_parse(elt))
         refactored[entry.key_acc] = entry
     return refactored
 
 
-def extract_keywords(refactored):
+def extract_keywords(parsed):
     keywords = {}
-    for key_acc, entry in refactored.items():
+    for key_acc, entry in parsed.items():
         for k in entry.keywords:
             keywords.setdefault(k, []).append(key_acc)
     return keywords
 
 
 def main():
-    with gzip.open('./uniprot_sprot.xml.gz', 'rb') as file:
+    with gzip.open(R_FILE.substitute(), 'rb') as file:
         root = etree_parse(file).getroot()[:-1]
 
-    refactored = refactor(root)
-    with gzip.open('./uniprot_sprot_parsed.pkl.gz', 'wb') as file:
-        pickle.dump(refactored, file)
+    parsed = parse_and_wrap(root)
+    with gzip.open(W_FILES['parsed'].substitute(), 'wb') as file:
+        pickle.dump(parsed, file)
 
-    keywords = extract_keywords(refactored)
-    with open('./uniprot_keywords.pkl', 'wb') as file:
+    keywords = extract_keywords(parsed)
+    with open(W_FILES['keywords'].substitute(), 'wb') as file:
         pickle.dump(keywords, file)
 
 
