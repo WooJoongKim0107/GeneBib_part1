@@ -2,6 +2,7 @@ import re
 import tarfile, gzip, pickle
 from textwrap import dedent
 from functools import cache
+from operator import eq, contains
 import webbrowser
 from myclass import MetaCacheExt
 from mypathlib import PathTemplate
@@ -54,6 +55,7 @@ class Journal(metaclass=MetaCacheExt):
     _ARTICLE_PATH = PathTemplate('$rsrc/pdata/paper/sorted/$journal.pkl.gz')
     _TAR_PATH = PathTemplate('$rsrc/pdata/paper/papers.tar').substitute()
     _PATTERN = re.compile(r'[^a-zA-Z0-9_]+')
+    _FINDER_PATTERN = re.compile(r'\W')
 
     def __new__(cls, medline_ta: str, caching=True):
         """__new__ method must not be skipped - Assertion of MetaCacheExt"""
@@ -174,7 +176,7 @@ class Journal(metaclass=MetaCacheExt):
         return self.medline_ta, False
 
     def __bool__(self):
-        return self.medline_ta
+        return bool(self.medline_ta)
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
@@ -183,29 +185,35 @@ class Journal(metaclass=MetaCacheExt):
         return hash(self.medline_ta)
 
     @classmethod
+    def _simplify_str(cls, s):
+        return cls._FINDER_PATTERN.sub('', s).lower()
+
+    @classmethod
     def findall(cls, val):
-        target = str(val).lower()
-        for v in cls.values():
-            if target in v.info.lower():
+        target = cls._simplify_str(str(val))
+        for v in cls.unique_values():
+            if target in cls._simplify_str(v.info):
                 yield v
 
     @classmethod
-    def find_title(cls, val):
-        target = str(val).lower()
-        for v in cls.values():
-            if target in v.titles.lower():
+    def find_title(cls, val, strict=False):
+        comp = eq if strict else contains
+        target = cls._simplify_str(str(val))
+        for v in cls.unique_values():
+            if any(comp(cls._simplify_str(title), target) for title in v.titles):
                 yield v
 
     @classmethod
     def find_issn(cls, val):
         val = ISSN(val)
-        for v in cls.values():
+        for v in cls.unique_values():
             if val in v.issns:
                 yield v
 
     @classmethod
     def find_nlm_id(cls, val):
-        for v in cls._CACHE.values():
+        val = str(val)
+        for v in cls.unique_values():
             if val in v.nlm_unique_id:
                 yield v
 

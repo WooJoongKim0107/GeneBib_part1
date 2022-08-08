@@ -4,14 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Removed compressing into .tar after sorting">
-      <change afterPath="$PROJECT_DIR$/src/StringMatching/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/StringMatching/base.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/StringMatching/match.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UniProt/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UniProt/gram_corpus.py" afterDir="false" />
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Refactor string-matching codes by WC">
+      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/StringMatching/journal_selection.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UniProt/parse.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/GeneBib.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GeneBib.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/sort.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/sort.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringMatching/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringMatching/match.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/match.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UniProt/gram_corpus.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniProt/gram_corpus.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +57,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -59,7 +65,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="run.code.analysis.last.selected.profile" value="aDefault" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.notifications" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -336,14 +342,35 @@
       <workItem from="1656393968918" duration="9004000" />
       <workItem from="1656912310378" duration="6741000" />
       <workItem from="1656985066146" duration="1000" />
-      <workItem from="1656996051300" duration="11979000" />
-    </task>
-    <task id="LOCAL-00030" summary="Fix Patents.merge - read_patents_not_repeated() now finds .pub_number instead of .pmid">
-      <created>1652660690860</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1652660690860</updated>
+      <workItem from="1656996051300" duration="12136000" />
+      <workItem from="1657073895323" duration="15437000" />
+      <workItem from="1657181552620" duration="2502000" />
+      <workItem from="1657243545873" duration="1951000" />
+      <workItem from="1657254958641" duration="6304000" />
+      <workItem from="1657500417921" duration="6033000" />
+      <workItem from="1657609466051" duration="4692000" />
+      <workItem from="1657660809423" duration="14696000" />
+      <workItem from="1657702388569" duration="37000" />
+      <workItem from="1657759423759" duration="1313000" />
+      <workItem from="1657774761868" duration="20741000" />
+      <workItem from="1657847897020" duration="10495000" />
+      <workItem from="1658109114101" duration="34703000" />
+      <workItem from="1658186558305" duration="4729000" />
+      <workItem from="1658197189661" duration="11972000" />
+      <workItem from="1658289848227" duration="9622000" />
+      <workItem from="1658379068387" duration="680000" />
+      <workItem from="1658389175230" duration="1000" />
+      <workItem from="1658811076900" duration="5379000" />
+      <workItem from="1658820812709" duration="1198000" />
+      <workItem from="1658881610067" duration="29000" />
+      <workItem from="1659404874289" duration="38354000" />
+      <workItem from="1659484192484" duration="4267000" />
+      <workItem from="1659491885954" duration="25955000" />
+      <workItem from="1659587388770" duration="1192000" />
+      <workItem from="1659593759360" duration="598000" />
+      <workItem from="1659653405148" duration="5476000" />
+      <workItem from="1659680030101" duration="9572000" />
+      <workItem from="1659936214011" duration="1546000" />
     </task>
     <task id="LOCAL-00031" summary="Add print changes_only option for eyes_on()">
       <created>1652664949188</created>
@@ -681,7 +708,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655350138801</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="Refactor string-matching codes by WC">
+      <created>1657024336233</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1657024336234</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -700,7 +734,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Modified merged all equivalent journals&#10;&#10;기존 Journal instance는 medline_ta를 기준으로 그 identity가 정해졌다.&#10;이 기준을 따랐을 때,&#10;    1. full_title이  여러 개 혼용된 경우는 141건, 전혀 사용되지 않은 경우는 1건 (null instance)&#10;    141건 중 10% 무작위 추출 조사결과 1건을 제외하고는 모두 동일한 Journal이 이름 등을 수정하여 다시 출간된 경우였다.&#10;    &#10;    2. iso_abbreivation이 여러개 혼용된 경우는 0건, 전혀 사용되지 않은 경우는 6건 (null instance 포함)&#10;    null instance가 아닌 나머지 5건 중 4건은 CACHE 내의 다른 journal과 equivalent (후술)했음&#10;    &#10;    3. ISSN-p는 여러개 혼용된 경우는 83건, 하나도 사용되지 않은 경우는 7475건,&#10;    특이 사항은 7건의 ISSN-p는 15개의 Journal instance에 중복 등장하였다.&#10;    전수 조사결과 하나의 ISSN-p가 중복으로 등장한 경우 동일한 Journal이 이름 등을 수정하여 다시 출간된 경우였다.    &#10;    &#10;    4. ISSN-e는 여러개 혼용된 경우는 1건, 하나도 사용되지 않은 경우는 25683건,&#10;    특이 사항은 2건의 ISSN-e는 4개의 Journal instance에 중복 등장하였다.&#10;    전수 조사결과 하나의 ISSN-e가 중복으로 등장한 경우 동일한 Journal이 이름 등을 수정하여 다시 출간된 경우였다.&#10;    &#10;    5. ISSN-l는 여러개 혼용된 경우는 1건, 하나도 사용되지 않은 경우는 25683건,&#10;    특이 사항은 49건의 ISSN-l는 102개의 Journal instance에 중복 등장하였다.&#10;    10% 무작위 추출 조사결과 하나의 ISSN-l가 중복으로 등장한 경우 동일한 Journal이 이름 등을 수정하여 다시 출간된 경우였다.&#10;    &#10;즉, medline_ta가 동일할 경우 그들은 실제로 동일한 Journal이라고 봐도 무방하며,&#10;ISSN이 중복되는 경우에도 동일한 Journal이라고 봐도 무방했다.&#10;&#10;따라서, ISSN이 하나라도 중복되는 경우 (type과 무관하게 모든 ISSN끼리 비교한다) 동일한 Journal인 것으로 판단하여 병합하도록 한다.&#10;병합하여 사라지는 Journal instance의 경우, 그 key는 CACHE에 남겨두되 value는 병합된 대표 instance를 가리키도록 한다.&#10;즉, len(Journal._CACHE) - len(set(Journal._CACHE.values())) == 병합된 instance의 개수" />
     <MESSAGE value="Modified Journal._CACHE not to be spoiled by unpickling other Journal instances" />
     <MESSAGE value="Add Teste package for any kind of small tests" />
     <MESSAGE value="Refactor Papers &amp; Patents packages to have START STOP index on __init__.py" />
@@ -725,7 +758,8 @@
     <MESSAGE value="Refactor OldPatents" />
     <MESSAGE value="Add Temporary writing feature on TempOpen" />
     <MESSAGE value="Removed compressing into .tar after sorting" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed compressing into .tar after sorting" />
+    <MESSAGE value="Refactor string-matching codes by WC" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor string-matching codes by WC" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -78,9 +78,9 @@ def plural_keyw(text=''):
 
 
 def get_ngram_list3(fullPhrase):
-    if not fullPhrase:
+    if not fullPhrase.strip():  # strip() only used to check if empty
         return (), ()
     finditer = ngram_pattern.finditer(fullPhrase)
     start_phrase = iter([match.start(), match.group()] for match in finditer)
-    gramStartList, phraseList = zip(*start_phrase)
-    return phraseList, gramStartList
+    indices, tokens = zip(*start_phrase)
+    return indices, tokens

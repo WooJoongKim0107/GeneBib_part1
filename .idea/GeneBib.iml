@@ -5,7 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/rsrc" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.10 (Python310)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Remote Python 3.10.4 (sftp://wjkim@bellman.unist.ac.kr:17771/home/wjkim/ENTER/envs/Python310/bin/python)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
