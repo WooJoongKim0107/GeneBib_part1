@@ -1,5 +1,11 @@
-from StringMatching.base import uniform_match, get_ngram_list3
-from UniProt.gram_corpus import unip, unif, nested
+import pickle
+from mypathlib import PathTemplate
+
+with open(PathTemplate('$base/nested.pkl').substitute(), 'rb') as file:
+    nested = pickle.load(file)
+
+R_FILE = PathTemplate('$base/journals_selected.pkl')
+W_FILE = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
 
 
 def gram_based_match2(target_text, target_code):
@@ -11,45 +17,53 @@ def gram_based_match2(target_text, target_code):
 
 def bar(target_text, target_code):
     target_match_list = []
-    ngrams, indices = get_ngram_list3(target_text)
-    codes = tuple(unip.get(ngram.lower()) for ngram in ngrams)
-    for i, idx in enumerate(indices):  # i=ngram index, idx=location on target_text
-        for matched_gram_tuple in poo(codes[i:]):
-            candid_keyw_set = unif[matched_gram_tuple]
-            unif_gram_concat = uniform_match(''.join(ngrams[i:i + len(matched_gram_tuple)]))
-            if unif_gram_concat in candid_keyw_set:
-                end = indices[i + len(matched_gram_tuple) - 1] + len(ngrams[i + len(matched_gram_tuple) - 1])
-                target_Keyw = target_text[idx:end]  # 마지막 index 확인
-                match = (target_code, idx, target_Keyw, matched_gram_tuple)
-                target_match_list.append(match)
+    for x in nested.strict_matches2(target_text):  # x == (start, end), matched_text, match
+        target_match_list.append((target_code, *x))
     return target_match_list
 
 
-def poo(codes):
-    """return True if match exist, False otherwise"""
-    i = 0
-    level = nested
-    while i < len(codes) and (code := codes[i]) in level:
-        i += 1
-        level = level[code]
-        if -1 in level:
-            yield codes[:i]
-
-
 def _sort_key(match):
-    return match[1], -len(match[2])
-
-
-def location(match):
-    return match[1], match[1] + len(match[2])
+    start, end = match[1]
+    return start, start-end  # No typo here
 
 
 def filter_smaller(matches):
     initial, final, i = 0, -1, 0
     while i < len(matches):
-        ini, fin = location(matches[i])
+        ini, fin = matches[i][1]
         if (initial <= ini) and (fin <= final):
             matches.pop(i)
         else:
             initial, final = ini, fin
             i += 1
+
+
+if __name__ == '__main__':
+    import gzip
+    from Papers import Journal
+    from multiprocessing import Pool
+
+    # with open(R_FILE.substitute(), 'rb') as file:
+    #     selected = pickle.load(file)
+    with open(PathTemplate('$base/match_log.txt').substitute(), 'r') as file:
+        already = file.read().splitlines()
+    todo = [k for k in Journal.unique_keys() if k not in already]
+
+    def match(medline_ta):
+        res = {}
+        journal = Journal[medline_ta]
+        try:
+            for art in journal.get_articles():
+                title = gram_based_match2(art.title, 'title')
+                abstract = gram_based_match2(art.abstract, 'abstract')
+                if title or abstract:
+                    res[art.pmid] = title, abstract
+        except ValueError:
+            raise ValueError(f'!!!ValueError: {medline_ta}-{art.pmid}')
+
+        with gzip.open(W_FILE.substitute(journal=journal._simple_title), 'wb') as file:
+            pickle.dump(res, file)
+        print(medline_ta)
+
+    with Pool(50) as p:
+        p.map(match, todo)
