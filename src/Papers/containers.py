@@ -54,6 +54,7 @@ class Journal(metaclass=MetaCacheExt):
     """
     _CACHE_PATH = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
     _ARTICLE_PATH = PathTemplate('$rsrc/pdata/paper/sorted/$journal.pkl.gz')
+    _MATCH_PATH = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
     _TAR_PATH = PathTemplate('$rsrc/pdata/paper/papers.tar').substitute()
     _PATTERN = re.compile(r'[^a-zA-Z0-9_]+')
     _FINDER_PATTERN = re.compile(r'\W')
@@ -137,17 +138,25 @@ class Journal(metaclass=MetaCacheExt):
         return self._PATTERN.sub('_', self.medline_ta)
 
     @property
-    def path(self):
+    def art_path(self):
         return self._ARTICLE_PATH.substitute(journal=self._simple_title)
 
     def get_articles(self):
-        with gzip.open(self.path) as f:
+        with gzip.open(self.art_path) as f:
             counts = pickle.load(f) - 1
             key = pickle.load(f)
             assert counts == self.counts
             assert key == self.medline_ta
             for _ in range(counts):
                 yield pickle.load(f)
+
+    @property
+    def match_path(self):
+        return self._MATCH_PATH.substitute(journal=self._simple_title)
+
+    def get_matches(self):
+        with gzip.open(self.match_path) as f:
+            return pickle.load(f)
 
     @property
     def info(self):

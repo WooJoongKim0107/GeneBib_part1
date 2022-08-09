@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Fix bugs from using namedtuple Match">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Refactor UniProt package">
       <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StringMatching/match.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/match.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringMatching/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UniProt/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniProt/containers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -362,14 +364,9 @@
       <workItem from="1659593759360" duration="598000" />
       <workItem from="1659653405148" duration="5476000" />
       <workItem from="1659680030101" duration="9572000" />
-      <workItem from="1659936214011" duration="21633000" />
-    </task>
-    <task id="LOCAL-00036" summary="Add Teste package for any kind of small tests">
-      <created>1653025904676</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1653025904676</updated>
+      <workItem from="1659936214011" duration="27486000" />
+      <workItem from="1659976309406" duration="9349000" />
+      <workItem from="1660010281167" duration="4857000" />
     </task>
     <task id="LOCAL-00037" summary="Refactor Papers &amp; Patents packages to have START STOP index on __init__.py">
       <created>1653027038574</created>
@@ -707,7 +704,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659964309046</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="Refactor UniProt package">
+      <created>1659964409705</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1659964409705</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -749,9 +753,9 @@
     <MESSAGE value="Fix bugs from get_ngram_list3, Journal.__bool__, Journal.find~&#10;&#10;    1. If get_ngram_list3() takes '   ', ValueError raised.&#10;      '   ' is not empty by itself, but nothing to be tokenized, which caused the error.&#10;      Therefore, str.strip() will be taken before check if empty.&#10;      &#10;    2. Journal.__bool__ returned string rather than boolean.&#10;    &#10;    3. Journal.find~~ method searched over CACHE.values() rather than .unique_values()" />
     <MESSAGE value="Refactor UniProt packages" />
     <MESSAGE value="Refactor UniProt packages &amp; StringMatching packages" />
-    <MESSAGE value="Refactor UniProt package" />
     <MESSAGE value="Fix bugs from using namedtuple Match" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix bugs from using namedtuple Match" />
+    <MESSAGE value="Refactor UniProt package" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor UniProt package" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

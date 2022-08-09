@@ -81,6 +81,6 @@ def get_ngram_list3(fullPhrase):
     if not fullPhrase.strip():  # strip() only used to check if empty
         return (), ()
     finditer = ngram_pattern.finditer(fullPhrase)
-    start_phrase = iter([match.start(), match.group()] for match in finditer)
-    indices, tokens = zip(*start_phrase)
+    span_phrase = iter([match.span(), match.group()] for match in finditer)
+    indices, tokens = zip(*span_phrase)
     return indices, tokens

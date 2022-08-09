@@ -269,13 +269,11 @@ class Nested(dict):
     def deep_items(self):
         return deep_items(self)
 
-    # TODO 1. Improve end = indices[j] + len(tokens[j]) by modifying get_ngram_list3()
     def strict_matches(self, text):
         indices, tokens = get_ngram_list3(text)
-        for i, start in enumerate(indices):  # i=token index, idx=location on target_text
+        for i, (start, _) in enumerate(indices):  # i=token index, idx=location on target_text
             for accs, matched_tokens in self._strict_matches(tokens[i:]):
-                j = i + len(matched_tokens) - 1
-                end = indices[j] + len(tokens[j])
+                _, end = indices[i + len(matched_tokens) - 1]
                 matched_text = text[start:end]
                 yield Match(accs, matched_tokens, (start, end), matched_text)
 
@@ -294,8 +292,12 @@ class Nested(dict):
             if raw_joined in joined2accs:
                 yield joined2accs[raw_joined], matched_tokens
 
-    # TODO 2. Improve match_list.sort(); match_list.filter() by using _strict_matches2()
-    def _strict_matches2(self, text):
+    def strict_matches2(self, text):
+        """
+        BAG-1L -> (BAG-1 + 1L) matches on older versions
+        BAG-1L -> (BAG-1 + L) matches on this version.
+        Thus, keep using strict_matches() rather than this.
+        """
         indices, tokens = get_ngram_list3(text)
         lower_tokens = tuple(token.lower() for token in tokens)
 
@@ -305,7 +307,7 @@ class Nested(dict):
                 cur = self
                 j = i
                 accs = []
-                spans = slice(0, 0)
+                terminal = 0
 
                 while True:
                     cur = cur[lower_tokens[j]]
@@ -314,13 +316,16 @@ class Nested(dict):
                         raw_joined = uniform_match(''.join(tokens[i:j]))
                         if raw_joined in cur[-1]:
                             accs = cur[-1][raw_joined]
-                            spans = slice(i, j)
+                            terminal = j
                     if not (j < len(tokens) and lower_tokens[j] in cur):
                         break
 
                 if accs:
-                    yield accs, lower_tokens[spans]
-                    i = j
+                    (start, _), (_, end) = indices[i], indices[terminal-1]
+                    yield Match(accs, lower_tokens[i:terminal], (start, end), text[start:end])
+                    i = terminal
+                else:
+                    i += 1
             else:
                 i += 1
 
