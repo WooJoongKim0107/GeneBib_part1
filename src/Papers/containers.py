@@ -3,7 +3,7 @@ import gzip
 import pickle
 from textwrap import dedent
 from functools import cache
-from operator import eq, contains
+from operator import eq, contains, itemgetter, attrgetter
 import webbrowser
 from myclass import MetaCacheExt
 from mypathlib import PathTemplate
@@ -225,6 +225,50 @@ class Journal(metaclass=MetaCacheExt):
         for v in cls.unique_values():
             if val in v.nlm_unique_id:
                 yield v
+
+    @classmethod
+    def journals4mp(cls, n):
+        return _get_partition(cls.unique_values(), n, key=attrgetter('counts'))
+
+
+# TODO Too slow for small n
+def _get_partition(x, n, key=None):
+    x = sorted(x, reverse=True, key=key)
+    target = sum(key(v) for v in x) / n
+
+    diffs = []
+    partition = []
+    i, anchor = 1, 0
+    while len(partition) < n:
+        if i >= len(x):
+            partition.append(x[anchor:i])
+            print('Yes')
+            break
+        if sum(key(v) for v in x[anchor:i]) > target:
+            smaller = sum(key(v) for v in x[anchor:i - 1])
+            bigger = sum(key(v) for v in x[anchor:i])
+            if (target - smaller) < (bigger - target):
+                diffs.append(smaller - target)
+                partition.append(x[anchor:i - 1])
+                anchor = i - 1
+            else:
+                diffs.append(bigger - target)
+                partition.append(x[anchor:i])
+                anchor = i
+        i += 1
+    else:
+        diffs, partition = zip(*sorted(zip(diffs, partition), key=itemgetter(0)))
+        j = 0
+        diff, part = diffs[j], partition[j]
+        while anchor < len(x):
+            if diff < 0:
+                diff += key(x[anchor])
+                part.append(x[anchor])
+                anchor += 1
+            else:
+                j += 1
+                diff, part = diffs[j], partition[j]
+    return partition
 
 
 if Journal._CACHE_PATH.is_file():
