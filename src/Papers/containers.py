@@ -233,29 +233,36 @@ class Journal(metaclass=MetaCacheExt):
 
 # TODO Too slow for small n
 def _get_partition(x, n, key=None):
+    def self(a):
+        return a
+
+    key = self if key is None else key
     x = sorted(x, reverse=True, key=key)
     target = sum(key(v) for v in x) / n
-
     diffs = []
     partition = []
-    i, anchor = 1, 0
+    anchor, i = 0, 1
+    fati = key(x[0])
     while len(partition) < n:
         if i >= len(x):
             partition.append(x[anchor:i])
-            print('Yes')
             break
-        if sum(key(v) for v in x[anchor:i]) > target:
-            smaller = sum(key(v) for v in x[anchor:i - 1])
-            bigger = sum(key(v) for v in x[anchor:i])
-            if (target - smaller) < (bigger - target):
-                diffs.append(smaller - target)
+        if fati > target:  # sum(key(v) for v in x[anchor:i])
+            fati_1 = fati - key(x[i - 1])
+            if (target - fati_1) < (fati - target):
+                diffs.append(fati_1 - target)
                 partition.append(x[anchor:i - 1])
                 anchor = i - 1
+                fati = key(x[i - 1])
             else:
-                diffs.append(bigger - target)
+                diffs.append(fati - target)
                 partition.append(x[anchor:i])
                 anchor = i
+                fati = 0
+
+        fati += key(x[i])
         i += 1
+
     else:
         diffs, partition = zip(*sorted(zip(diffs, partition), key=itemgetter(0)))
         j = 0

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Modify journal_selection.py according to new information">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add Journal.journals4mp method">
       <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/WC_StringMatching/data/uniprot_xml_parse/added_keyw_2022-05_2019-01.pkl" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
@@ -366,14 +366,8 @@
       <workItem from="1659936214011" duration="27486000" />
       <workItem from="1659976309406" duration="9349000" />
       <workItem from="1660010281167" duration="14868000" />
-      <workItem from="1660092438175" duration="16235000" />
-    </task>
-    <task id="LOCAL-00040" summary="Add OldPapers package to deal with pubmed 2020 version data">
-      <created>1653031616308</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1653031616308</updated>
+      <workItem from="1660092438175" duration="29614000" />
+      <workItem from="1660168465537" duration="5791000" />
     </task>
     <task id="LOCAL-00041" summary="Add OldPapers package to deal with pubmed 2020 version data">
       <created>1653031702439</created>
@@ -711,7 +705,14 @@
       <option name="project" value="LOCAL" />
       <updated>1660036355590</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="Add Journal.journals4mp method">
+      <created>1660114838531</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1660114838531</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -730,7 +731,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add Journal finding methods - findall &amp; find_issn" />
     <MESSAGE value="Added OldPatents package to deal with patent 2019 version" />
     <MESSAGE value="Fix OldPatents.merge not using its own globals" />
     <MESSAGE value="Add several Journal finding methods on Journal" />
@@ -755,7 +755,8 @@
     <MESSAGE value="Enhance readability by modifying get_ngram_list3's indices" />
     <MESSAGE value="Add WC's StringMatching packages with minimal changes" />
     <MESSAGE value="Modify journal_selection.py according to new information" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modify journal_selection.py according to new information" />
+    <MESSAGE value="Add Journal.journals4mp method" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Journal.journals4mp method" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
