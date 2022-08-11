@@ -4,12 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add Journal.journals4mp method">
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Refactor _get_partitions()">
+      <change afterPath="$PROJECT_DIR$/src/GoogleNgrams/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GoogleNgrams/as_dict.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/StringMatching/matched_texts.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/WC_StringMatching/data/uniprot_xml_parse/added_keyw_2022-05_2019-01.pkl" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringMatching/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UniProt/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniProt/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WC_StringMatching/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/WC_StringMatching/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -367,14 +371,8 @@
       <workItem from="1659976309406" duration="9349000" />
       <workItem from="1660010281167" duration="14868000" />
       <workItem from="1660092438175" duration="29614000" />
-      <workItem from="1660168465537" duration="5791000" />
-    </task>
-    <task id="LOCAL-00041" summary="Add OldPapers package to deal with pubmed 2020 version data">
-      <created>1653031702439</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1653031702439</updated>
+      <workItem from="1660168465537" duration="23859000" />
+      <workItem from="1660197631318" duration="6101000" />
     </task>
     <task id="LOCAL-00042" summary="Add OldPapers package to deal with pubmed 2020 version data">
       <created>1653032079210</created>
@@ -712,7 +710,14 @@
       <option name="project" value="LOCAL" />
       <updated>1660114838531</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="Refactor _get_partitions()">
+      <created>1660174381579</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1660174381580</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -731,7 +736,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added OldPatents package to deal with patent 2019 version" />
     <MESSAGE value="Fix OldPatents.merge not using its own globals" />
     <MESSAGE value="Add several Journal finding methods on Journal" />
     <MESSAGE value="Modify Some attributes of Journal and Article &amp; beyond&#10;&#10;&lt;Attr changes&gt;&#10;    1. Journal.titles &amp; Journal.issns: {dtype -&gt; set(values)} -&gt; set(values of all dtypes)&#10;    2. Journal.counts: Total number of distinct Articles each Journal contains&#10;    3. Journal.extra_attrs: Any extra attributes to reside without breaking backward compatibility&#10;    4. Journal.info: Method -&gt; @property&#10;    5. Article.journal: Removed and replaced with @property&#10;    6. Article._journal_title: Journal.medline_ta of its journal&#10;&lt;MetaCache&gt;&#10;&lt;Refactoring&gt;" />
@@ -756,7 +760,8 @@
     <MESSAGE value="Add WC's StringMatching packages with minimal changes" />
     <MESSAGE value="Modify journal_selection.py according to new information" />
     <MESSAGE value="Add Journal.journals4mp method" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Journal.journals4mp method" />
+    <MESSAGE value="Refactor _get_partitions()" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor _get_partitions()" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

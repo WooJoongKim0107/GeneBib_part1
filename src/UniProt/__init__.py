@@ -1,1 +1,1 @@
-from UniProt.containers import Nested
+from .containers import Nested
