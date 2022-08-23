@@ -56,6 +56,7 @@ class Journal(metaclass=MetaCacheExt):
     _ARTICLE_PATH = PathTemplate('$rsrc/pdata/paper/sorted/$journal.pkl.gz')
     _MATCH_PATH = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
     _TAR_PATH = PathTemplate('$rsrc/pdata/paper/papers.tar').substitute()
+    _SELECTED_PATH = PathTemplate('$base/jnls_selected.pkl').substitute()
     _PATTERN = re.compile(r'[^a-zA-Z0-9_]+')
     _FINDER_PATTERN = re.compile(r'\W')
 
@@ -227,8 +228,13 @@ class Journal(metaclass=MetaCacheExt):
                 yield v
 
     @classmethod
-    def journals4mp(cls, n):
-        return _get_partition(cls.unique_values(), n, key=attrgetter('counts'))
+    def journals4mp(cls, n, selected=False):
+        if selected:
+            with open(cls._SELECTED_PATH, 'rb') as file:
+                journals = [Journal[medline_ta] for medline_ta in pickle.load(file).values()]
+        else:
+            journals = cls.unique_values()
+        return _get_partition(journals, n, key=attrgetter('counts'))
 
 
 # TODO Too slow for small n

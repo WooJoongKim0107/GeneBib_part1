@@ -4,15 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Refactor _get_partitions()">
-      <change afterPath="$PROJECT_DIR$/src/GoogleNgrams/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GoogleNgrams/as_dict.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/StringMatching/matched_texts.py" afterDir="false" />
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add GoogleNgrams.as_dict &amp; StringMatching.matched_texts">
+      <change afterPath="$PROJECT_DIR$/src/GoogleNgrams/filtering.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/StringMatching/find_specific_keyword.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/WC_StringMatching/data/uniprot_xml_parse/added_keyw_2022-05_2019-01.pkl" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StringMatching/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UniProt/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniProt/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GoogleNgrams/as_dict.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/GoogleNgrams/as_dict.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringMatching/matched_texts.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/matched_texts.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/WC_StringMatching/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/WC_StringMatching/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -372,21 +372,18 @@
       <workItem from="1660010281167" duration="14868000" />
       <workItem from="1660092438175" duration="29614000" />
       <workItem from="1660168465537" duration="23859000" />
-      <workItem from="1660197631318" duration="6101000" />
-    </task>
-    <task id="LOCAL-00042" summary="Add OldPapers package to deal with pubmed 2020 version data">
-      <created>1653032079210</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1653032079210</updated>
-    </task>
-    <task id="LOCAL-00043" summary="Add OldPapers package to deal with pubmed 2020 version data">
-      <created>1653032188089</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1653032188089</updated>
+      <workItem from="1660197631318" duration="11334000" />
+      <workItem from="1660286621743" duration="526000" />
+      <workItem from="1660523051100" duration="20348000" />
+      <workItem from="1660623628069" duration="16363000" />
+      <workItem from="1660664689899" duration="176000" />
+      <workItem from="1660664897815" duration="1832000" />
+      <workItem from="1660691658055" duration="25467000" />
+      <workItem from="1660726127285" duration="707000" />
+      <workItem from="1660782409936" duration="597000" />
+      <workItem from="1660795059034" duration="1224000" />
+      <workItem from="1660800260363" duration="5120000" />
+      <workItem from="1661222924224" duration="13589000" />
     </task>
     <task id="LOCAL-00044" summary="Remove print statement on Journal.__new__">
       <created>1653032249832</created>
@@ -717,7 +714,21 @@
       <option name="project" value="LOCAL" />
       <updated>1660174381580</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="Fix circular import from __init__.py">
+      <created>1660203882482</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1660203882482</updated>
+    </task>
+    <task id="LOCAL-00092" summary="Add GoogleNgrams.as_dict &amp; StringMatching.matched_texts">
+      <created>1660203934404</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1660203934404</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -736,8 +747,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix OldPatents.merge not using its own globals" />
-    <MESSAGE value="Add several Journal finding methods on Journal" />
     <MESSAGE value="Modify Some attributes of Journal and Article &amp; beyond&#10;&#10;&lt;Attr changes&gt;&#10;    1. Journal.titles &amp; Journal.issns: {dtype -&gt; set(values)} -&gt; set(values of all dtypes)&#10;    2. Journal.counts: Total number of distinct Articles each Journal contains&#10;    3. Journal.extra_attrs: Any extra attributes to reside without breaking backward compatibility&#10;    4. Journal.info: Method -&gt; @property&#10;    5. Article.journal: Removed and replaced with @property&#10;    6. Article._journal_title: Journal.medline_ta of its journal&#10;&lt;MetaCache&gt;&#10;&lt;Refactoring&gt;" />
     <MESSAGE value="Add ArticleFiner &amp; RawFinder" />
     <MESSAGE value="Modify Journal.find_title" />
@@ -761,7 +770,9 @@
     <MESSAGE value="Modify journal_selection.py according to new information" />
     <MESSAGE value="Add Journal.journals4mp method" />
     <MESSAGE value="Refactor _get_partitions()" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor _get_partitions()" />
+    <MESSAGE value="Fix circular import from __init__.py" />
+    <MESSAGE value="Add GoogleNgrams.as_dict &amp; StringMatching.matched_texts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add GoogleNgrams.as_dict &amp; StringMatching.matched_texts" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
