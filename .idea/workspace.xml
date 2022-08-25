@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add GoogleNgrams.as_dict &amp; StringMatching.matched_texts">
-      <change afterPath="$PROJECT_DIR$/src/GoogleNgrams/filtering.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/StringMatching/find_specific_keyword.py" afterDir="false" />
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="a">
+      <change afterPath="$PROJECT_DIR$/src/StringMatching/match_patent.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/WC_StringMatching/data/uniprot_xml_parse/added_keyw_2022-05_2019-01.pkl" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GoogleNgrams/as_dict.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/GoogleNgrams/as_dict.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StringMatching/matched_texts.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/matched_texts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WC_StringMatching/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/WC_StringMatching/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Patents/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patents/containers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,6 +70,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\lrlr9\PycharmProjects\GeneBib\src\StringMatching" />
       <recent name="C:\Users\lrlr9\PycharmProjects\GeneBib\src\Papers" />
     </key>
   </component>
@@ -383,14 +380,10 @@
       <workItem from="1660782409936" duration="597000" />
       <workItem from="1660795059034" duration="1224000" />
       <workItem from="1660800260363" duration="5120000" />
-      <workItem from="1661222924224" duration="13589000" />
-    </task>
-    <task id="LOCAL-00044" summary="Remove print statement on Journal.__new__">
-      <created>1653032249832</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1653032249832</updated>
+      <workItem from="1661222924224" duration="25299000" />
+      <workItem from="1661306728036" duration="12325000" />
+      <workItem from="1661405558100" duration="78000" />
+      <workItem from="1661407100840" duration="2389000" />
     </task>
     <task id="LOCAL-00045" summary="Modify data structure of the last merged file from {pmid -&gt; list[Articles]} to {pmid -&gt; Articles}">
       <created>1653222213998</created>
@@ -728,7 +721,14 @@
       <option name="project" value="LOCAL" />
       <updated>1660203934404</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="a">
+      <created>1661244238555</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1661244238555</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -747,7 +747,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Modify Some attributes of Journal and Article &amp; beyond&#10;&#10;&lt;Attr changes&gt;&#10;    1. Journal.titles &amp; Journal.issns: {dtype -&gt; set(values)} -&gt; set(values of all dtypes)&#10;    2. Journal.counts: Total number of distinct Articles each Journal contains&#10;    3. Journal.extra_attrs: Any extra attributes to reside without breaking backward compatibility&#10;    4. Journal.info: Method -&gt; @property&#10;    5. Article.journal: Removed and replaced with @property&#10;    6. Article._journal_title: Journal.medline_ta of its journal&#10;&lt;MetaCache&gt;&#10;&lt;Refactoring&gt;" />
     <MESSAGE value="Add ArticleFiner &amp; RawFinder" />
     <MESSAGE value="Modify Journal.find_title" />
     <MESSAGE value="Modify Journal.info, Article.info &amp; ArtFinder" />
@@ -772,7 +771,8 @@
     <MESSAGE value="Refactor _get_partitions()" />
     <MESSAGE value="Fix circular import from __init__.py" />
     <MESSAGE value="Add GoogleNgrams.as_dict &amp; StringMatching.matched_texts" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add GoogleNgrams.as_dict &amp; StringMatching.matched_texts" />
+    <MESSAGE value="a" />
+    <option name="LAST_COMMIT_MESSAGE" value="a" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

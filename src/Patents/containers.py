@@ -58,13 +58,13 @@ class Patent:
             new.citations = citations
         return new
 
+    @property
     def info(self):
         return dedent(f"""\
         {self}
-            Date:
-                application: {self.filing_date}
-                publication: {self.pub_date}
-                      grant: {self.grant_date if self.is_granted else 'Not granted'}
+          application: {self.app_number}  {self.filing_date}
+          publication: {self.pub_number}  {self.pub_date}
+                grant: {self.grant_date if self.is_granted else 'Not granted'}
                       
              Citation: total {len(self.citations)}; {_print_set(self.citations)}
             CPC codes: {_print_set(self.cpcs)}
