@@ -12,33 +12,33 @@ from StringMatching.base import plural_keyw, get_ngram_list3, uniform_match
 name_tags = {
     ('protein', 'recommendedName', 'fullName'): 0,
     ('protein', 'recommendedName', 'shortName'): 1,
-    ('protein', 'recommendedName', 'ecNumber'): 2,  # Deprecated in new version
+    ('protein', 'recommendedName', 'ecNumber'): 2,  # Not used
     ('protein', 'alternativeName', 'fullName'): 3,
     ('protein', 'alternativeName', 'shortName'): 4,
-    ('protein', 'alternativeName', 'ecNumber'): 5,  # Deprecated in new version
+    ('protein', 'alternativeName', 'ecNumber'): 5,  # Not used
     ('protein', 'allergenName'): 6,
     ('protein', 'cdAntigenName'): 7,
     ('protein', 'innName'): 8,
-    ('protein', 'component', 'recommendedName', 'fullName'): 9,
-    ('protein', 'component', 'recommendedName', 'shortName'): 10,
-    ('protein', 'component', 'recommendedName', 'ecNumber'): 11,  # Deprecated in new version
-    ('protein', 'component', 'alternativeName', 'fullName'): 12,
-    ('protein', 'component', 'alternativeName', 'shortName'): 13,
-    ('protein', 'component', 'alternativeName', 'ecNumber'): 14,  # Deprecated in new version
-    ('protein', 'component', 'allergenName'): 15,
-    ('protein', 'domain', 'recommendedName', 'fullName'): 16,
-    ('protein', 'domain', 'recommendedName', 'shortName'): 17,
-    ('protein', 'domain', 'recommendedName', 'ecNumber'): 18,  # Deprecated in new version
-    ('protein', 'domain', 'alternativeName', 'fullName'): 19,
-    ('protein', 'domain', 'alternativeName', 'shortName'): 20,
-    ('protein', 'domain', 'alternativeName', 'ecNumber'): 21,  # Deprecated in new version
+    ('protein', 'component', 'recommendedName', 'fullName'): 9,  # Not used
+    ('protein', 'component', 'recommendedName', 'shortName'): 10,  # Not used
+    ('protein', 'component', 'recommendedName', 'ecNumber'): 11,  # Not used
+    ('protein', 'component', 'alternativeName', 'fullName'): 12,  # Not used
+    ('protein', 'component', 'alternativeName', 'shortName'): 13,  # Not used
+    ('protein', 'component', 'alternativeName', 'ecNumber'): 14,  # Not used
+    ('protein', 'component', 'allergenName'): 15,  # Not used
+    ('protein', 'domain', 'recommendedName', 'fullName'): 16,  # Not used
+    ('protein', 'domain', 'recommendedName', 'shortName'): 17,  # Not used
+    ('protein', 'domain', 'recommendedName', 'ecNumber'): 18,  # Not used
+    ('protein', 'domain', 'alternativeName', 'fullName'): 19,  # Not used
+    ('protein', 'domain', 'alternativeName', 'shortName'): 20,  # Not used
+    ('protein', 'domain', 'alternativeName', 'ecNumber'): 21,  # Not used
     ('gene', 'name', 'primary'): 22,
     ('gene', 'name', 'synonym'): 23,
-    ('gene', 'name', 'ordered locus'): 24,    # Deprecated in new version
-    ('gene', 'name', 'ORF'): 25  # Deprecated in new version
+    ('gene', 'name', 'ordered locus'): 24,  # Not used
+    ('gene', 'name', 'ORF'): 25  # Not used
 }
 inv_tags = {v: k for k, v in name_tags.items()}
-deprecated = {2, 5, 11, 14, 18, 21, 24, 25}
+deprecated = {2, 5, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 24, 25}
 
 alpha2greek = {
     "alpha": '\u03b1',      # α, Α
