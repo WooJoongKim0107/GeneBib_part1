@@ -21,7 +21,7 @@ from mypathlib import PathTemplate
 from Papers import Journal
 
 
-class Foo:
+class MatchedKeywordFinder:
     PATH = PathTemplate('$base/logs/${target}.logs')
 
     def __init__(self, *targets):
@@ -45,10 +45,15 @@ class Foo:
             p.map(self.find_target, args)
 
 
-if __name__ == '__main__':
-    # import sys
-    # targets = sys.argv[1:]
+def main():
     from GoogleNgrams.filtering import list_up
-    q, w = list_up()
-    e = Foo(*(v[0] for v in q[1]))
-    e.mp_find_target(60)
+    summary, _ = list_up()
+    mkf = MatchedKeywordFinder(*(v[0] for v in summary[1]))
+    mkf.mp_find_target(60)
+
+
+if __name__ == '__main__':
+    import sys
+    targets = sys.argv[1:]
+    q = MatchedKeywordFinder(*targets)
+    q.mp_find_target(50)

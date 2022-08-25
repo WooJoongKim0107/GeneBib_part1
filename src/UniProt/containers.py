@@ -6,10 +6,10 @@ from collections import namedtuple
 from dataclasses import dataclass, field
 from more_itertools import nth
 from mypathlib import PathTemplate
-from StringMatching.base import plural_keyw, get_ngram_list3, uniform_match
+from StringMatching.base import pluralize, tokenize, unify
 
-# name_tags provides maps to old-style kw_type
-name_tags = {
+# NAME_TAGS provides maps to old-style kw_type
+NAME_TAGS = {
     ('protein', 'recommendedName', 'fullName'): 0,
     ('protein', 'recommendedName', 'shortName'): 1,
     ('protein', 'recommendedName', 'ecNumber'): 2,  # Not used
@@ -37,10 +37,12 @@ name_tags = {
     ('gene', 'name', 'ordered locus'): 24,  # Not used
     ('gene', 'name', 'ORF'): 25  # Not used
 }
-inv_tags = {v: k for k, v in name_tags.items()}
-deprecated = {2, 5, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 24, 25}
 
-alpha2greek = {
+INV_TAGS = {v: k for k, v in NAME_TAGS.items()}
+
+BLACK_LIST = {2, 5, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 24, 25}
+
+ALPHA2GREEK = {
     "alpha": '\u03b1',      # α, Α
     "beta": '\u03b2',       # β, Β
     "gamma": '\u03b3',      # γ, Γ
@@ -67,7 +69,7 @@ alpha2greek = {
     "sigma": '\u03c3',      # σ, Σ, ς(final sigma)
 }
 
-protein_patterns = [
+PROTEIN_PATTERNS = [
     re.compile(r'\w*protein$', re.IGNORECASE),
     re.compile(r'\w*enzyme$', re.IGNORECASE),
     re.compile(r'\w*subunit$', re.IGNORECASE),
@@ -84,19 +86,19 @@ protein_patterns = [
 
 
 class Token:
-    ALPHA2GREEK = alpha2greek
-    PROTEIN_PATTERNS = protein_patterns
+    ALPHA2GREEK = ALPHA2GREEK
+    PROTEIN_PATTERNS = PROTEIN_PATTERNS
 
     @classmethod
     def tokenize(cls, text):
-        tokens = get_ngram_list3(text)[1]
+        tokens = tokenize(text)[1]
         return tokens, cls.join(tokens)
 
     @classmethod
     def as_plural(cls, tokens):
         idx = cls.where_protein(tokens)
         res = list(tokens)
-        res[idx] = plural_keyw(tokens[idx])
+        res[idx] = pluralize(tokens[idx])
         return tuple(res), cls.join(res)
 
     @classmethod
@@ -106,7 +108,7 @@ class Token:
 
     @staticmethod
     def join(tokens):
-        return uniform_match(''.join(tokens))
+        return unify(''.join(tokens))
 
     @classmethod
     def is_protein(cls, token):
@@ -129,9 +131,9 @@ class Token:
 
 
 class KeyWord(str):
-    NAME_TAGS = name_tags
-    INV_TAGS = inv_tags
-    DEPRECATED = deprecated
+    NAME_TAGS = NAME_TAGS
+    INV_TAGS = INV_TAGS
+    BLACK_LIST = BLACK_LIST
     __slots__ = ['type']
 
     def __new__(cls, kw_type, val):
@@ -173,7 +175,7 @@ class KeyWord(str):
         return self.type < 22  # Note that ('gene', *, *) starts with index 22
 
     def is_valid(self):
-        return self.type not in self.DEPRECATED
+        return self.type not in self.BLACK_LIST
 
     def greek_exist(self):
         return any(Token.is_greek(token) for token in self.tokenize()[0])
@@ -191,8 +193,7 @@ class Reference:
         if self.type == 'journal article':
             pub_date = ', '.join(f'{k}={v}' for k, v in self.pub_date.items())
             return f'https://pubmed.ncbi.nlm.nih.gov/{self.pmid}/ ({pub_date})'
-        else:
-            return f'Reference(type={self.type}, pub_date={self.pub_date})'
+        return f'Reference(type={self.type}, pub_date={self.pub_date})'
 
 
 class UniProtEntry:
@@ -245,6 +246,12 @@ class Nested(dict):
             data = self.generate()
         super().__init__(data)
 
+    def match_and_filter(self, target_text):
+        target_match_list = list(self.strict_matches(target_text))
+        target_match_list.sort(key=_sort_key)
+        filter_smaller(target_match_list)
+        return target_match_list
+
     def extend(self, accs, lower_tokens, value):
         cur = self
         for lower_token in lower_tokens:
@@ -270,7 +277,7 @@ class Nested(dict):
         return deep_items(self)
 
     def strict_matches(self, text):
-        indices, tokens = get_ngram_list3(text)
+        indices, tokens = tokenize(text)
         for i, (start, _) in enumerate(indices):  # i=token index, idx=location on target_text
             for accs, matched_tokens in self._strict_matches(tokens[i:]):
                 _, end = indices[i + len(matched_tokens) - 1]
@@ -288,7 +295,7 @@ class Nested(dict):
 
     def _strict_matches(self, tokens):
         for joined2accs, matched_tokens in self._matches(tuple(token.lower() for token in tokens)):
-            raw_joined = uniform_match(''.join(tokens[:len(matched_tokens)]))
+            raw_joined = unify(''.join(tokens[:len(matched_tokens)]))
             if raw_joined in joined2accs:
                 yield joined2accs[raw_joined], matched_tokens
 
@@ -298,7 +305,7 @@ class Nested(dict):
         BAG-1L -> (BAG-1 + L) matches on this version.
         Thus, keep using strict_matches() rather than this.
         """
-        indices, tokens = get_ngram_list3(text)
+        indices, tokens = tokenize(text)
         lower_tokens = tuple(token.lower() for token in tokens)
 
         i = 0
@@ -313,7 +320,7 @@ class Nested(dict):
                     cur = cur[lower_tokens[j]]
                     j += 1
                     if -1 in cur:
-                        raw_joined = uniform_match(''.join(tokens[i:j]))
+                        raw_joined = unify(''.join(tokens[i:j]))
                         if raw_joined in cur[-1]:
                             accs = cur[-1][raw_joined]
                             terminal = j
@@ -352,15 +359,31 @@ class Nested(dict):
             pickle.dump(dict(self), file)
 
 
+Match = namedtuple('Match', ['accessions', 'tokens', 'spans', 'text'])
+
+
+def _sort_key(match: Match):
+    start, end = match.spans
+    return start, start-end  # No typo here
+
+
+def filter_smaller(matches: list[Match]):
+    initial, final, i = 0, -1, 0
+    while i < len(matches):
+        ini, fin = matches[i].spans
+        if (initial <= ini) and (fin <= final):
+            matches.pop(i)
+        else:
+            initial, final = ini, fin
+            i += 1
+
+
 def deep_items(x, keys=()):
     for k, v in x.items():
         if k == -1:
             yield keys, v
         else:
             yield from deep_items(v, keys=(*keys, k))
-
-
-Match = namedtuple('Match', ['accessions', 'tokens', 'spans', 'text'])
 
 
 class Unip(dict):

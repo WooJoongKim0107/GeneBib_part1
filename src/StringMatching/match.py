@@ -3,44 +3,21 @@ import pickle
 from multiprocessing import Pool
 from mypathlib import PathTemplate
 from Papers import Journal
-from UniProt.containers import Nested, Match
+from UniProt.containers import Nested
 
 
-nested = Nested(True)
+NESTED = Nested(True)
 
 R_FILE = PathTemplate('$base/journals_selected.pkl')
 W_FILE = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
 
 
-def match_and_filter(target_text):
-    target_match_list = list(nested.strict_matches(target_text))
-    target_match_list.sort(key=_sort_key)
-    filter_smaller(target_match_list)
-    return target_match_list
-
-
-def _sort_key(match: Match):
-    start, end = match.spans
-    return start, start-end  # No typo here
-
-
-def filter_smaller(matches: list[Match]):
-    initial, final, i = 0, -1, 0
-    while i < len(matches):
-        ini, fin = matches[i].spans
-        if (initial <= ini) and (fin <= final):
-            matches.pop(i)
-        else:
-            initial, final = ini, fin
-            i += 1
-
-
-def main(medline_ta):
+def match_entire_journal(medline_ta):
     res = {}
     journal = Journal[medline_ta]
     for art in journal.get_articles():
-        title = match_and_filter(art.title)
-        abstract = match_and_filter(art.abstract)
+        title = NESTED.match_and_filter(art.title)
+        abstract = NESTED.match_and_filter(art.abstract)
         if title or abstract:
             res[art.pmid] = title, abstract
 
@@ -49,11 +26,10 @@ def main(medline_ta):
     print(medline_ta)
 
 
-if __name__ == '__main__':
-    already = set()
-    # with open(PathTemplate('$base/match_log.txt').substitute(), 'r') as file:
-    #     already = file.read().splitlines()
-    todo = [k for k in Journal.unique_keys() if k not in already]
-
+def main():
     with Pool(50) as p:
-        p.map(main, todo)
+        p.map(match_entire_journal, Journal.unique_keys())
+
+
+if __name__ == '__main__':
+    main()

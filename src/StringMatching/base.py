@@ -1,86 +1,28 @@
 import re
 
-
-greek_dict = {
-    'α': "alpha",
-    'β': "beta",
-    'γ': "gamma",
-    'δ': "delta",
-    'ε': "epsilon",
-    'ζ': "zeta",
-    'η': "eta",
-    'θ': "theta",
-    'ι': "iota",
-    'κ': "kappa",
-    'λ': "lamda",
-    'μ': "mu",
-    'ν': "nu",
-    'ξ': "xi",
-    'ο': "omicron",
-    'π': "pi",
-    'ρ': "rho",
-    'ς': "final",
-    'σ': "sigma",
-    'τ': "tau",
-    'υ': "upsilon",
-    'φ': "phi",
-    'χ': "chi",
-    'ψ': "psi",
-    'ω': "omega",
-
-    'Α': "alpha",
-    'Β': "beta",
-    'Γ': "gamma",
-    'Δ': "delta",
-    'Ε': "epsilon",
-    'Ζ': "zeta",
-    'Η': "eta",
-    'Θ': "theta",
-    'Ι': "iota",
-    'Κ': "kappa",
-    'Λ': "lamda",
-    'Μ': "mu",
-    'Ν': "nu",
-    'Ξ': "xi",
-    'Ο': "omicron",
-    'Π': "pi",
-    'Ρ': "rho",
-    'Σ': "sigma",
-    'Τ': "tau",
-    'Υ': "upsilon",
-    'Φ': "phi",
-    'Χ': "chi",
-    'Ψ': "psi",
-    'Ω': "omega",
-    'ϴ': "theta"
-}
 ngram_pattern = re.compile(r'\d+(\.\d+)+|\$\d+(\.\d+)?|[a-zA-Z0-9]+\++|[a-zA-Z_]+|\d+|[^a-zA-Z0-9_ ]')
 
-def uniform_match(aKeyword) :
-    keywLength = len(aKeyword)
-    if keywLength > 4:
-        unifiedKeyw = aKeyword.lower()
-    elif keywLength > 2:
-        unifiedKeyw = aKeyword[0].upper()+aKeyword[1:]
-    else :
-        unifiedKeyw = aKeyword
-    return unifiedKeyw
+
+def unify(s: str):
+    if len(s) > 4:
+        return s.lower()
+    elif len(s) > 2:
+        return s[0].upper()+s[1:]
+    else:
+        return s
 
 
-def plural_keyw(text=''):
-    postfix = 's'
-    if len(text) > 2:
-        if text[-2:] in ('ch', 'sh', 'ss'):
-            postfix = 'es'
-        elif text[-1:] in ('s', 'x', 'z'):
-            postfix = 'es'
-    return text + postfix
+def pluralize(s: str):
+    if len(s) > 2:
+        if s[-2:] in ('ch', 'sh', 'ss') or s[-1:] in ('s', 'x', 'z'):
+            return s + 'es'
+    return s + 's'
 
 
-def get_ngram_list3(fullPhrase):
-    if not fullPhrase.strip():  # strip() only used to check if empty
+def tokenize(s: str):
+    if not s.strip():  # strip() only used to check if empty
         return (), ()
-    finditer = ngram_pattern.finditer(fullPhrase)
+    finditer = ngram_pattern.finditer(s)
     span_phrase = iter([match.span(), match.group()] for match in finditer)
     indices, tokens = zip(*span_phrase)
     return indices, tokens

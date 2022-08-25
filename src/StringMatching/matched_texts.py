@@ -78,7 +78,7 @@ def get_matched_texts(j):
     return c, res, j
 
 
-def main(js):
+def _main(js):
     _counts = Counter()
     _paths = {}
     _double_check = []
@@ -90,21 +90,17 @@ def main(js):
     return _counts, _paths, _double_check
 
 
-if __name__ == '__main__':
+def main():
     counts = Counter()
     paths = {}
     args = Journal.journals4mp(50, selected=False)
-    print(sum(map(len, args)))
 
     double_check = []
     with Pool(50) as p:
-        for count, path, check in p.map(main, args):
-        # for count, path in p.map(get_matched_texts, Journal.unique_values()):
+        for count, path, check in p.map(_main, args):
             counts += count
             paths.update(path)
             double_check.append(check)
-    print(sum(map(len, args)))
-    print(args == check)
 
     with open(W_FILES['counts'], 'wb') as file:
         pickle.dump(counts, file)
@@ -112,3 +108,7 @@ if __name__ == '__main__':
         pickle.dump(paths, file)
     with open(W_FILES['double_check'], 'wb') as file:
         pickle.dump(double_check, file)
+
+
+if __name__ == '__main__':
+    main()

@@ -4,13 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Fix name_tags black list updated (no sub-domain names)">
-      <change afterPath="$PROJECT_DIR$/src/GoogleNgrams/__main__.py" afterDir="false" />
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Refactor GoogleNgram package">
       <change afterPath="$PROJECT_DIR$/src/WC_StringMatching/data/uniprot_xml_parse/added_keyw_2022-05_2019-01.pkl" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GoogleNgrams/as_dict.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/GoogleNgrams/as_dict.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GoogleNgrams/filtering.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/GoogleNgrams/filtering.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringMatching/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringMatching/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringMatching/find_specific_keyword.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/find_specific_keyword.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringMatching/journal_selection.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/journal_selection.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringMatching/match.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/match.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringMatching/match_patent.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/match_patent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringMatching/matched_texts.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/matched_texts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UniProt/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniProt/containers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WC_StringMatching/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/WC_StringMatching/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -385,14 +391,8 @@
       <workItem from="1661306728036" duration="12325000" />
       <workItem from="1661405558100" duration="78000" />
       <workItem from="1661407100840" duration="9063000" />
-      <workItem from="1661428403691" duration="3697000" />
-    </task>
-    <task id="LOCAL-00047" summary="Add RawFinder for Papers &amp; OldPapers">
-      <created>1653276390897</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1653276390897</updated>
+      <workItem from="1661428403691" duration="7787000" />
+      <workItem from="1661452308585" duration="2678000" />
     </task>
     <task id="LOCAL-00048" summary="Add RawFinder for Papers &amp; OldPapers">
       <created>1653276410510</created>
@@ -730,7 +730,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661418297512</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="Refactor GoogleNgram package">
+      <created>1661433568432</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1661433568433</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -749,7 +756,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Modify Journal.info, Article.info &amp; ArtFinder" />
     <MESSAGE value="Add Sorted collection of Articles by Journal" />
     <MESSAGE value="Modify Sorting mechanism of Articles to reduce memory usage" />
     <MESSAGE value="Refactor Papers &amp; OldPapers" />
@@ -774,7 +780,8 @@
     <MESSAGE value="a" />
     <MESSAGE value="Add string-matching code for patent" />
     <MESSAGE value="Fix name_tags black list updated (no sub-domain names)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix name_tags black list updated (no sub-domain names)" />
+    <MESSAGE value="Refactor GoogleNgram package" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor GoogleNgram package" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

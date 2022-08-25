@@ -2,21 +2,23 @@ import gzip
 import pickle
 from multiprocessing import Pool
 from mypathlib import PathTemplate
-from StringMatching.match import match_and_filter
+from UniProt.containers import Nested
 from Patents.merge import W_FILE as R_FILE
 
+
+NESTED = Nested(True)
 
 W_FILE = PathTemplate('$rsrc/pdata/patent/matched/patent_$index.pkl.gz')
 
 
-def main(index):
+def match_entire_file(index):
     with gzip.open(R_FILE.substitute(index=index), 'rb') as file:
         container = pickle.load(file)
 
     res = {}
     for pub, patent in container.items():
-        title = match_and_filter(patent.title)
-        abstract = match_and_filter(patent.abstract)
+        title = NESTED.match_and_filter(patent.title)
+        abstract = NESTED.match_and_filter(patent.abstract)
         if title or abstract:
             res[pub] = title, abstract
 
@@ -25,7 +27,10 @@ def main(index):
     print(index)
 
 
-if __name__ == '__main__':
-    todo = range(112)
+def main():
     with Pool(50) as p:
-        p.map(main, todo)
+        p.map(match_entire_file, range(112))
+
+
+if __name__ == '__main__':
+    main()
