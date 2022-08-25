@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add string-matching code for patent">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Fix name_tags black list updated (no sub-domain names)">
+      <change afterPath="$PROJECT_DIR$/src/GoogleNgrams/__main__.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/WC_StringMatching/data/uniprot_xml_parse/added_keyw_2022-05_2019-01.pkl" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GoogleNgrams/as_dict.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/GoogleNgrams/as_dict.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Teste/bar.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Teste/foo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UniProt/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniProt/containers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GoogleNgrams/filtering.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/GoogleNgrams/filtering.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -385,14 +384,8 @@
       <workItem from="1661222924224" duration="25299000" />
       <workItem from="1661306728036" duration="12325000" />
       <workItem from="1661405558100" duration="78000" />
-      <workItem from="1661407100840" duration="8400000" />
-    </task>
-    <task id="LOCAL-00046" summary="Modify data structure of the last merged file from {pmid -&gt; list[Articles]} to {pmid -&gt; Articles}">
-      <created>1653222841412</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1653222841412</updated>
+      <workItem from="1661407100840" duration="9063000" />
+      <workItem from="1661428403691" duration="3697000" />
     </task>
     <task id="LOCAL-00047" summary="Add RawFinder for Papers &amp; OldPapers">
       <created>1653276390897</created>
@@ -730,7 +723,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661410890853</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="Fix name_tags black list updated (no sub-domain names)">
+      <created>1661418297512</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1661418297512</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -749,7 +749,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Modify Journal.find_title" />
     <MESSAGE value="Modify Journal.info, Article.info &amp; ArtFinder" />
     <MESSAGE value="Add Sorted collection of Articles by Journal" />
     <MESSAGE value="Modify Sorting mechanism of Articles to reduce memory usage" />
@@ -774,7 +773,8 @@
     <MESSAGE value="Add GoogleNgrams.as_dict &amp; StringMatching.matched_texts" />
     <MESSAGE value="a" />
     <MESSAGE value="Add string-matching code for patent" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add string-matching code for patent" />
+    <MESSAGE value="Fix name_tags black list updated (no sub-domain names)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix name_tags black list updated (no sub-domain names)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
