@@ -13,12 +13,12 @@ assert str(_W_FILE1) == str(Journal._ARTICLE_PATH)
 
 
 def write(journal: Journal, pmids):
-    if journal.path.is_file():
+    if journal.match_path.is_file():
         print(journal.medline_ta, ': already done')
         return
 
     key = journal.medline_ta
-    with gzip.open(journal.path, 'wb') as file:
+    with gzip.open(journal.match_path, 'wb') as file:
         pickle.dump(journal.counts+1, file)
         pickle.dump(key, file)
         for article in ArticleFinder.from_pmids(*pmids):
