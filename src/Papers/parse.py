@@ -5,11 +5,11 @@ from .containers import ISSN, choose_title
 
 def parse_journal(pubmed_article_elt: Element):
     medline_ta: str = pubmed_article_elt.findtext('./MedlineCitation/MedlineJournalInfo/MedlineTA')
-    nlm_unique_id: str|None = pubmed_article_elt.findtext('./MedlineCitation/MedlineJournalInfo/NlmUniqueID')
-    issn: tuple[ISSN|None, str] = parse_issn(pubmed_article_elt.find('./MedlineCitation/Article/Journal/ISSN'))
-    issn_l: tuple[ISSN|None, str] = _as_issn_l(pubmed_article_elt.findtext('./MedlineCitation/MedlineJournalInfo/ISSNLinking'))
-    title: str|None = pubmed_article_elt.findtext('./MedlineCitation/Article/Journal/Title')
-    iso_abbreviation: str|None = pubmed_article_elt.findtext('./MedlineCitation/Article/Journal/ISOAbbreviation')
+    nlm_unique_id: str | None = pubmed_article_elt.findtext('./MedlineCitation/MedlineJournalInfo/NlmUniqueID')
+    issn: tuple[ISSN | None, str] = parse_issn(pubmed_article_elt.find('./MedlineCitation/Article/Journal/ISSN'))
+    issn_l: tuple[ISSN | None, str] = _as_issn_l(pubmed_article_elt.findtext('./MedlineCitation/MedlineJournalInfo/ISSNLinking'))
+    title: str | None = pubmed_article_elt.findtext('./MedlineCitation/Article/Journal/Title')
+    iso_abbreviation: str | None = pubmed_article_elt.findtext('./MedlineCitation/Article/Journal/ISOAbbreviation')
     return medline_ta, nlm_unique_id, issn, issn_l, title, iso_abbreviation
 
 
@@ -23,7 +23,7 @@ def find_journal_key(pubmed_article_elt: Element):
 
 def parse_article(pubmed_article_elt: Element):
     pmid: int = int(pubmed_article_elt.findtext('./MedlineCitation/PMID'))
-    pub_date: dict[str, str|int] = parse_pub_date(pubmed_article_elt.find('./MedlineCitation/Article/Journal/JournalIssue/PubDate'))
+    pub_date: dict[str, str | int] = parse_pub_date(pubmed_article_elt.find('./MedlineCitation/Article/Journal/JournalIssue/PubDate'))
     title: str = pubmed_article_elt.findtext('./MedlineCitation/Article/ArticleTitle')
     abstract: str = merge_abstract_texts(pubmed_article_elt.findall('./MedlineCitation/Article/Abstract/AbstractText'))
     return pmid, pub_date, title, abstract
@@ -62,7 +62,6 @@ def parse_pub_date(pub_date_elt: Element):
         case {'Year': year}:
             return {'Year': int(year)}
 
-
         # MedlineData exist
         case {'MedlineDate': valid_string} if (year:=md_parser.search(valid_string)):
             return {'Year': int(year.group())}
@@ -85,7 +84,7 @@ def parse_month(x):
 
 
 def merge_abstract_texts(abstract_texts: list[Element]):
-    lst = [txt if (txt:=elt.text) else '' for elt in abstract_texts]
+    lst = [txt if (txt := elt.text) else '' for elt in abstract_texts]
     return ' '.join(lst)
 
 
