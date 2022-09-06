@@ -1,1 +1,6 @@
 /rsrc/
+*.pkl
+*.gz
+*.csv
+*.txt
+*.lnk
