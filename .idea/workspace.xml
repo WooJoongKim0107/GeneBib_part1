@@ -4,15 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Add cpc-tree detection code">
-      <change afterPath="$PROJECT_DIR$/src/Community/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Community/containers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Community/parse.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/WC_StringMatching/data/uniprot_xml_parse/added_keyw_2022-05_2019-01.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Build Community package">
+      <change afterPath="$PROJECT_DIR$/src/StringMatching/__main__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UniProt/__main__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UniProt/gram_corpus.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringMatching/match.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/match.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UniProt/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniProt/containers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UniProt/parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniProt/parse.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -393,21 +391,8 @@
       <workItem from="1661499388627" duration="30000" />
       <workItem from="1662353678907" duration="189000" />
       <workItem from="1662445473302" duration="7305000" />
-      <workItem from="1662460305258" duration="8373000" />
-    </task>
-    <task id="LOCAL-00054" summary="Modify Some attributes of Journal and Article &amp; beyond&#10;&#10;&lt;Attr changes&gt;&#10;    1. Journal.titles &amp; Journal.issns: {dtype -&gt; set(values)} -&gt; set(values of all dtypes)&#10;    2. Journal.counts: Total number of distinct Articles each Journal contains&#10;    3. Journal.extra_attrs: Any extra attributes to reside without breaking backward compatibility&#10;    4. Journal.info: Method -&gt; @property&#10;    5. Article.journal: Removed and replaced with @property&#10;    6. Article._journal_title: Journal.medline_ta of its journal&#10;&lt;MetaCache&gt;&#10;&lt;Refactoring&gt;">
-      <created>1654656822585</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1654656822585</updated>
-    </task>
-    <task id="LOCAL-00055" summary="Modify Some attributes of Journal and Article &amp; beyond&#10;&#10;&lt;Attr changes&gt;&#10;    1. Journal.titles &amp; Journal.issns: {dtype -&gt; set(values)} -&gt; set(values of all dtypes)&#10;    2. Journal.counts: Total number of distinct Articles each Journal contains&#10;    3. Journal.extra_attrs: Any extra attributes to reside without breaking backward compatibility&#10;    4. Journal.info: Method -&gt; @property&#10;    5. Article.journal: Removed and replaced with @property&#10;    6. Article._journal_title: Journal.medline_ta of its journal&#10;&lt;MetaCache&gt;&#10;&lt;Refactoring&gt;">
-      <created>1654662150017</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1654662150017</updated>
+      <workItem from="1662460305258" duration="12197000" />
+      <workItem from="1662486054812" duration="9135000" />
     </task>
     <task id="LOCAL-00056" summary="Modify Some attributes of Journal and Article &amp; beyond&#10;&#10;&lt;Attr changes&gt;&#10;    1. Journal.titles &amp; Journal.issns: {dtype -&gt; set(values)} -&gt; set(values of all dtypes)&#10;    2. Journal.counts: Total number of distinct Articles each Journal contains&#10;    3. Journal.extra_attrs: Any extra attributes to reside without breaking backward compatibility&#10;    4. Journal.info: Method -&gt; @property&#10;    5. Article.journal: Removed and replaced with @property&#10;    6. Article._journal_title: Journal.medline_ta of its journal&#10;&lt;MetaCache&gt;&#10;&lt;Refactoring&gt;">
       <created>1654670217161</created>
@@ -738,7 +723,21 @@
       <option name="project" value="LOCAL" />
       <updated>1662471856993</updated>
     </task>
-    <option name="localTasksCounter" value="103" />
+    <task id="LOCAL-00103" summary="Update gitignore">
+      <created>1662472264494</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1662472264494</updated>
+    </task>
+    <task id="LOCAL-00104" summary="Build Community package">
+      <created>1662472302652</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1662472302652</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -757,8 +756,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add Temporary writing feature on TempOpen" />
-    <MESSAGE value="Removed compressing into .tar after sorting" />
     <MESSAGE value="Refactor string-matching codes by WC" />
     <MESSAGE value="Fix bugs from get_ngram_list3, Journal.__bool__, Journal.find~&#10;&#10;    1. If get_ngram_list3() takes '   ', ValueError raised.&#10;      '   ' is not empty by itself, but nothing to be tokenized, which caused the error.&#10;      Therefore, str.strip() will be taken before check if empty.&#10;      &#10;    2. Journal.__bool__ returned string rather than boolean.&#10;    &#10;    3. Journal.find~~ method searched over CACHE.values() rather than .unique_values()" />
     <MESSAGE value="Refactor UniProt packages" />
@@ -782,7 +779,9 @@
     <MESSAGE value="Fix use of deprecated attribute" />
     <MESSAGE value="Optimize file io directories" />
     <MESSAGE value="Add cpc-tree detection code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add cpc-tree detection code" />
+    <MESSAGE value="Update gitignore" />
+    <MESSAGE value="Build Community package" />
+    <option name="LAST_COMMIT_MESSAGE" value="Build Community package" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

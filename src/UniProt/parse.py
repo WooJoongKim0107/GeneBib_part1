@@ -8,9 +8,10 @@ from UniProt.containers import UniProtEntry, Nested
 HEADER = '{http://uniprot.org/uniprot}'
 LEN_HEADER = len(HEADER)
 R_FILE = PathTemplate('$rsrc/data/uniprot/uniprot_sprot.xml.gz')
-_W_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl')
+_W_FILE0 = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl')
+_W_FILE1 = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz')
 W_FILES = {'keywords': Nested.R_FILE,
-           'parsed': PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz')}
+           'parsed': UniProtEntry.R_FILE}
 
 
 def parse_date(x):
@@ -89,7 +90,7 @@ def extract_keywords(parsed):
     keywords = {}
     for key_acc, entry in parsed.items():
         for k in entry.keywords:
-            keywords.setdefault(k, []).append(key_acc)
+            keywords.setdefault(k, set()).add(key_acc)
     return keywords
 
 

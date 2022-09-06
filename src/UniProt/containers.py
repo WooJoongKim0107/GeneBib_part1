@@ -1,4 +1,5 @@
 import re
+import gzip
 import pickle
 from textwrap import dedent
 from itertools import chain
@@ -198,6 +199,7 @@ class Reference:
 
 class UniProtEntry:
     __slots__ = ['name', 'accessions', '_keywords', '_references']
+    R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz')
 
     def __init__(self, dct):
         self.name = dct['name']
@@ -234,6 +236,11 @@ class UniProtEntry:
             References: {_print_refs(self.references)}
         """)
 
+    @classmethod
+    def load_entries(cls):
+        with gzip.open(cls.R_FILE, 'rb') as file:
+            return pickle.load(file)
+
 
 class Nested(dict):
     R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl')
@@ -252,11 +259,13 @@ class Nested(dict):
         filter_smaller(target_match_list)
         return target_match_list
 
-    def extend(self, accs, lower_tokens, value):
+    def extend(self, lower_tokens, joined, key_accs, keywords):
         cur = self
         for lower_token in lower_tokens:
             cur = cur.setdefault(lower_token, {})
-        cur.setdefault(-1, {}).setdefault(value, []).extend(accs)
+        val = cur.setdefault(-1, {}).setdefault(joined, [set(), set()])
+        val[0].update(key_accs)
+        val[1].add(keywords)
 
     def get_from_tuple(self, tuple_of_keys):
         cur = self
@@ -279,10 +288,16 @@ class Nested(dict):
     def strict_matches(self, text):
         indices, tokens = tokenize(text)
         for i, (start, _) in enumerate(indices):  # i=token index, idx=location on target_text
-            for accs, matched_tokens in self._strict_matches(tokens[i:]):
+            for unified, (entries, keywords), matched_tokens in self._strict_matches(tokens[i:]):
                 _, end = indices[i + len(matched_tokens) - 1]
                 matched_text = text[start:end]
-                yield Match(accs, matched_tokens, (start, end), matched_text)
+                yield Match(matched_tokens, unified, entries, keywords, (start, end), matched_text)
+
+    def _strict_matches(self, tokens):
+        for joined2ents_keyws, matched_tokens in self._matches(tuple(token.lower() for token in tokens)):
+            raw_joined = unify(''.join(tokens[:len(matched_tokens)]))
+            if raw_joined in joined2ents_keyws:
+                yield raw_joined, joined2ents_keyws[raw_joined], matched_tokens
 
     def _matches(self, lower_tokens):
         i = 0
@@ -293,60 +308,17 @@ class Nested(dict):
             if -1 in cur:
                 yield cur[-1], lower_tokens[:i]
 
-    def _strict_matches(self, tokens):
-        for joined2accs, matched_tokens in self._matches(tuple(token.lower() for token in tokens)):
-            raw_joined = unify(''.join(tokens[:len(matched_tokens)]))
-            if raw_joined in joined2accs:
-                yield joined2accs[raw_joined], matched_tokens
-
-    def strict_matches2(self, text):
-        """
-        BAG-1L -> (BAG-1 + 1L) matches on older versions
-        BAG-1L -> (BAG-1 + L) matches on this version.
-        Thus, keep using strict_matches() rather than this.
-        """
-        indices, tokens = tokenize(text)
-        lower_tokens = tuple(token.lower() for token in tokens)
-
-        i = 0
-        while i < len(tokens):
-            if lower_tokens[i] in self:
-                cur = self
-                j = i
-                accs = []
-                terminal = 0
-
-                while True:
-                    cur = cur[lower_tokens[j]]
-                    j += 1
-                    if -1 in cur:
-                        raw_joined = unify(''.join(tokens[i:j]))
-                        if raw_joined in cur[-1]:
-                            accs = cur[-1][raw_joined]
-                            terminal = j
-                    if not (j < len(tokens) and lower_tokens[j] in cur):
-                        break
-
-                if accs:
-                    (start, _), (_, end) = indices[i], indices[terminal-1]
-                    yield Match(accs, lower_tokens[i:terminal], (start, end), text[start:end])
-                    i = terminal
-                else:
-                    i += 1
-            else:
-                i += 1
-
     @classmethod
     def generate(cls):
         with open(cls.R_FILE.substitute(), 'rb') as file:
             keywords: dict[KeyWord, list[str]] = pickle.load(file)
 
         nested = super().__new__(cls)
-        for kw, accs in keywords.items():
+        for kw, key_accs in keywords.items():
             if kw.is_valid():
                 for tokens, joined in kw.get_all_tokens():
                     lower_tokens = tuple(token.lower() for token in tokens)
-                    nested.extend(accs, lower_tokens, joined)
+                    nested.extend(lower_tokens, joined, key_accs, str(kw))
         return nested
 
     @classmethod
@@ -359,7 +331,7 @@ class Nested(dict):
             pickle.dump(dict(self), file)
 
 
-Match = namedtuple('Match', ['accessions', 'tokens', 'spans', 'text'])
+Match = namedtuple('Match', ['tokens', 'unified', 'entries', 'keywords', 'spans', 'text'])
 
 
 def _sort_key(match: Match):
@@ -430,3 +402,12 @@ def _print_refs(refs):
         return ',  '.join(str(ref) for ref in refs)
     else:
         return ''
+
+
+def main():
+    q = Nested(load=False)
+    q.dump()
+
+
+if __name__ == '__main__':
+    main()
