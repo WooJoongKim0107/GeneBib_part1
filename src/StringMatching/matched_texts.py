@@ -63,9 +63,10 @@ from Papers import Journal
 from mypathlib import PathTemplate
 
 
-W_FILES = {'counts': PathTemplate('$base/match_counts.pkl').substitute(),
-           'paths': PathTemplate('$base/matched_paths.pkl').substitute(),
-           'double_check': PathTemplate('$base/matched_double_check.pkl').substitute()}
+_R_FILE = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
+W_FILES = {'counts': PathTemplate('$rsrc/lite/match/match_counts.pkl').substitute(),
+           'paths': PathTemplate('$rsrc/lite/match/matched_paths.pkl').substitute(),
+           'double_check': PathTemplate('$rsrc/lite/match/matched_double_check.pkl').substitute()}
 
 
 def get_matched_texts(j):

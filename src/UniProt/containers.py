@@ -236,8 +236,8 @@ class UniProtEntry:
 
 
 class Nested(dict):
-    R_FILE = PathTemplate('$base/uniprot_keywords.pkl')
-    W_FILE = PathTemplate('$base/nested.pkl')
+    R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl')
+    W_FILE = PathTemplate('$rsrc/pdata/uniprot/nested.pkl')
 
     def __init__(self, load=True):
         if load:

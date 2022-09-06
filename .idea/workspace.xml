@@ -4,12 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Refactor Papers.parse">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Fix use of deprecated attribute">
+      <change afterPath="$PROJECT_DIR$/src/Clustering/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Clustering/containers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Clustering/parse.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/WC_StringMatching/data/uniprot_xml_parse/added_keyw_2022-05_2019-01.pkl" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/myclass/EasyLoad.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GoogleNgrams/as_dict.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/GoogleNgrams/as_dict.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GoogleNgrams/filtering.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/GoogleNgrams/filtering.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Papers/article_finder.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/article_finder.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Papers/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/containers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Papers/sort.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Papers/sort.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringMatching/find_specific_keyword.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/find_specific_keyword.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringMatching/journal_selection.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/journal_selection.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringMatching/match.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/match.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringMatching/matched_texts.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/matched_texts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UniProt/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniProt/containers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UniProt/gram_corpus.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UniProt/parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniProt/parse.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -386,14 +398,11 @@
       <workItem from="1661407100840" duration="9063000" />
       <workItem from="1661428403691" duration="7787000" />
       <workItem from="1661452308585" duration="3200000" />
-      <workItem from="1661472417686" duration="8010000" />
-    </task>
-    <task id="LOCAL-00051" summary="Added OldPatents package to deal with patent 2019 version">
-      <created>1653441868343</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1653441868343</updated>
+      <workItem from="1661472417686" duration="10602000" />
+      <workItem from="1661499388627" duration="30000" />
+      <workItem from="1662353678907" duration="189000" />
+      <workItem from="1662445473302" duration="7305000" />
+      <workItem from="1662460305258" duration="7994000" />
     </task>
     <task id="LOCAL-00052" summary="Fix OldPatents.merge not using its own globals">
       <created>1653655281207</created>
@@ -731,7 +740,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661482288315</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="Fix use of deprecated attribute">
+      <created>1661492384072</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1661492384072</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -750,7 +766,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Refactor .main -&gt; .refine" />
     <MESSAGE value="Refactor Patents" />
     <MESSAGE value="Refactor OldPatents" />
     <MESSAGE value="Add Temporary writing feature on TempOpen" />
@@ -775,7 +790,8 @@
     <MESSAGE value="Refactor StringMatching packages" />
     <MESSAGE value="Refactor StringMatching packages (minor change)" />
     <MESSAGE value="Refactor Papers.parse" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor Papers.parse" />
+    <MESSAGE value="Fix use of deprecated attribute" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix use of deprecated attribute" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

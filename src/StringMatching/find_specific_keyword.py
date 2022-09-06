@@ -22,7 +22,7 @@ from Papers import Journal
 
 
 class MatchedKeywordFinder:
-    PATH = PathTemplate('$base/logs/${target}.logs')
+    PATH = PathTemplate('$base/match_key_finder/${target}.logs')
 
     def __init__(self, *targets):
         self.targets = set(targets)

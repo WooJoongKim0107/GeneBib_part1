@@ -5,8 +5,8 @@ from . import Journal
 from .merge import W_FILE as R_FILE
 
 
-W_FILES = {'PmidToIdx': PathTemplate('$rsrc/pdata/paper/article_to_index.pkl').substitute(),
-           'JnlToPmids': PathTemplate('$rsrc/pdata/paper/journal_to_article$index.$format')}
+W_FILES = {'PmidToIdx': PathTemplate('$rsrc/lite/paper/article_to_index.pkl').substitute(),
+           'JnlToPmids': PathTemplate('$rsrc/lite/paper/journal_to_article$index.$format')}
 
 
 class PmidToIdx(dict):

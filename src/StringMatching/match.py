@@ -8,7 +8,6 @@ from UniProt.containers import Nested
 
 NESTED = Nested(True)
 
-R_FILE = PathTemplate('$base/journals_selected.pkl')
 W_FILE = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
 
 

@@ -18,7 +18,7 @@ from multiprocessing import Pool
 R_FILES = {'1gram': PathTemplate('/home/data/01_data/google_ngrams/1grams/1-${i}-of-00024.gz', key='{:0>5}'.format),
            '2gram': PathTemplate('/home/data/01_data/google_ngrams/2grams/2-${i}-of-00589.gz', key='{:0>5}'.format)}
 
-W_FILES = {'total': PathTemplate('$base/google_ngram_counts.pkl.gz').substitute(),
+W_FILES = {'total': PathTemplate('$rsrc/pdata/ngram/google_ngram_counts.pkl.gz').substitute(),
            '1gram': PathTemplate('/home/data/01_data/google_ngrams/1grams/1grams.pkl.gz', key='{:0>5}'.format).substitute(),
            '2gram': PathTemplate('/home/data/01_data/google_ngrams/2grams/2grams.pkl.gz', key='{:0>5}'.format).substitute()}
 

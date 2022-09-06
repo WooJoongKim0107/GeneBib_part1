@@ -3,13 +3,14 @@ import pickle
 from xml.etree.ElementTree import Element
 from xml.etree.ElementTree import parse as etree_parse
 from mypathlib import PathTemplate
-from UniProt.containers import UniProtEntry
+from UniProt.containers import UniProtEntry, Nested
 
 HEADER = '{http://uniprot.org/uniprot}'
 LEN_HEADER = len(HEADER)
-R_FILE = PathTemplate('$base/uniprot_sprot.xml.gz')
-W_FILES = {'keywords': PathTemplate('$base/uniprot_keywords.pkl'),
-           'parsed': PathTemplate('$base/uniprot_keywords.pkl')}
+R_FILE = PathTemplate('$rsrc/data/uniprot/uniprot_sprot.xml.gz')
+_W_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl')
+W_FILES = {'keywords': Nested.R_FILE,
+           'parsed': PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz')}
 
 
 def parse_date(x):
