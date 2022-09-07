@@ -6,6 +6,8 @@
         <entryData>
           <resourceRoots>
             <path value="file://$PROJECT_DIR$/rsrc" />
+            <path value="file://$PROJECT_DIR$/backup" />
+            <path value="file://$PROJECT_DIR$/maybe" />
           </resourceRoots>
         </entryData>
       </entry>

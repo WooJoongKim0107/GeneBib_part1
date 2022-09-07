@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Build Community package">
-      <change afterPath="$PROJECT_DIR$/src/StringMatching/__main__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UniProt/__main__.py" afterDir="false" />
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Modified the value of Nested, uniprot_keywords.pkl, and Match">
+      <change beforePath="$PROJECT_DIR$/.idea/webResources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webResources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StringMatching/match.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/match.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UniProt/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniProt/containers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UniProt/parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniProt/parse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GoogleNgrams/filtering.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/GoogleNgrams/filtering.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -392,14 +389,7 @@
       <workItem from="1662353678907" duration="189000" />
       <workItem from="1662445473302" duration="7305000" />
       <workItem from="1662460305258" duration="12197000" />
-      <workItem from="1662486054812" duration="9135000" />
-    </task>
-    <task id="LOCAL-00056" summary="Modify Some attributes of Journal and Article &amp; beyond&#10;&#10;&lt;Attr changes&gt;&#10;    1. Journal.titles &amp; Journal.issns: {dtype -&gt; set(values)} -&gt; set(values of all dtypes)&#10;    2. Journal.counts: Total number of distinct Articles each Journal contains&#10;    3. Journal.extra_attrs: Any extra attributes to reside without breaking backward compatibility&#10;    4. Journal.info: Method -&gt; @property&#10;    5. Article.journal: Removed and replaced with @property&#10;    6. Article._journal_title: Journal.medline_ta of its journal&#10;&lt;MetaCache&gt;&#10;&lt;Refactoring&gt;">
-      <created>1654670217161</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1654670217161</updated>
+      <workItem from="1662486054812" duration="15328000" />
     </task>
     <task id="LOCAL-00057" summary="Modify Some attributes of Journal and Article &amp; beyond&#10;&#10;&lt;Attr changes&gt;&#10;    1. Journal.titles &amp; Journal.issns: {dtype -&gt; set(values)} -&gt; set(values of all dtypes)&#10;    2. Journal.counts: Total number of distinct Articles each Journal contains&#10;    3. Journal.extra_attrs: Any extra attributes to reside without breaking backward compatibility&#10;    4. Journal.info: Method -&gt; @property&#10;    5. Article.journal: Removed and replaced with @property&#10;    6. Article._journal_title: Journal.medline_ta of its journal&#10;&lt;MetaCache&gt;&#10;&lt;Refactoring&gt;">
       <created>1654684761526</created>
@@ -737,7 +727,14 @@
       <option name="project" value="LOCAL" />
       <updated>1662472302652</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="Modified the value of Nested, uniprot_keywords.pkl, and Match">
+      <created>1662496226897</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1662496226897</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -756,7 +753,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Refactor string-matching codes by WC" />
     <MESSAGE value="Fix bugs from get_ngram_list3, Journal.__bool__, Journal.find~&#10;&#10;    1. If get_ngram_list3() takes '   ', ValueError raised.&#10;      '   ' is not empty by itself, but nothing to be tokenized, which caused the error.&#10;      Therefore, str.strip() will be taken before check if empty.&#10;      &#10;    2. Journal.__bool__ returned string rather than boolean.&#10;    &#10;    3. Journal.find~~ method searched over CACHE.values() rather than .unique_values()" />
     <MESSAGE value="Refactor UniProt packages" />
     <MESSAGE value="Refactor UniProt packages &amp; StringMatching packages" />
@@ -781,7 +777,8 @@
     <MESSAGE value="Add cpc-tree detection code" />
     <MESSAGE value="Update gitignore" />
     <MESSAGE value="Build Community package" />
-    <option name="LAST_COMMIT_MESSAGE" value="Build Community package" />
+    <MESSAGE value="Modified the value of Nested, uniprot_keywords.pkl, and Match" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modified the value of Nested, uniprot_keywords.pkl, and Match" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

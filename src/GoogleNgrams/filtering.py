@@ -8,13 +8,13 @@ from StringMatching.matched_texts import W_FILES as _R_FILES1
 _R_FILE0 = PathTemplate('$rsrc/pdata/ngram/google_ngram_counts.pkl.gz').substitute()
 _R_FILE1 = PathTemplate('$rsrc/lite/match/match_counts.pkl').substitute(),
 _R_FILE2 = PathTemplate('$rsrc/lite/match/matched_paths.pkl').substitute(),
-R_FILES = {'ngrams': PathTemplate('/home/data/01_data/wc_ngram_curation/1903182220KPO.${n}gramOnSort'),
-           'nonME': PathTemplate('/home/data/01_data/wc_ngram_curation/1908272135ZKO.ngramSorted_nonME').substitute(),
+R_FILES = {'ngrams': PathTemplate('$rsrc/data/wc_ngram_curation/1903182220KPO.${n}gramOnSort'),
+           'nonME': PathTemplate('$rsrc/data/wc_ngram_curation/1908272135ZKO.ngramSorted_nonME').substitute(),
            'answered': PathTemplate('$rsrc/data/papat_hit_phrase_200517.pkl').substitute(),
            'ngram_counts': _R_FILES0['total'],
            'paths': _R_FILES1['paths'],
            'counts': _R_FILES1['counts']}
-W_FILE = PathTemplate('$/home/data/01_data/google_ngrams/to_filter/${n}grams4filter.txt')
+W_FILE = PathTemplate('/home/data/01_data/google_ngrams/to_filter/${n}grams4filter.txt')
 
 
 def get_answered():
