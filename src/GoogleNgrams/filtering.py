@@ -8,11 +8,13 @@ from StringMatching.matched_texts import W_FILES as _R_FILES1
 _R_FILE0 = PathTemplate('$rsrc/pdata/ngram/google_ngram_counts.pkl.gz').substitute()
 _R_FILE1 = PathTemplate('$rsrc/lite/match/match_counts.pkl').substitute(),
 _R_FILE2 = PathTemplate('$rsrc/lite/match/matched_paths.pkl').substitute(),
+_R_FILE3 = PathTemplate('$rsrc/lite/match/matched_parents.pkl').substitute(),
 R_FILES = {'ngrams': PathTemplate('$rsrc/data/wc_ngram_curation/1903182220KPO.${n}gramOnSort'),
            'nonME': PathTemplate('$rsrc/data/wc_ngram_curation/1908272135ZKO.ngramSorted_nonME').substitute(),
            'answered': PathTemplate('$rsrc/data/papat_hit_phrase_200517.pkl').substitute(),
            'ngram_counts': _R_FILES0['total'],
            'paths': _R_FILES1['paths'],
+           'parents': _R_FILES1['parents'],
            'counts': _R_FILES1['counts']}
 W_FILE = PathTemplate('/home/data/01_data/google_ngrams/to_filter/${n}grams4filter.txt')
 
@@ -50,11 +52,14 @@ def get_todo():
 
     with open(R_FILES['counts'], 'rb') as file:
         counts = pickle.load(file)
-    return keys, counts
+
+    with open(R_FILES['parents'], 'rb') as file:
+        parents = pickle.load(file)
+    return keys, counts, parents
 
 
 def list_up():
-    todo, todo_counts = get_todo()
+    todo, todo_counts, todo_parents = get_todo()
     answered, preserved, removed = get_answered()
 
     def okay_to_skip(k):
@@ -88,12 +93,13 @@ def list_up():
     for n, keys in keys_to_check.items():
         temp = []
         for key in keys:
+            entries, keywords = todo_parents[key]
             tc = todo_counts[key]
             nc = ngram_counts.get(key, 0)
             where = find_where(key)
             alias = ci_answered.get(key.lower(), '')
-            temp.append((key, tc, nc, where, alias))
-        summary[n] = sorted(temp, key=lambda x: (len(x[-1]) > 0, *x[::-1][1:]), reverse=True)
+            temp.append((key, tc, nc, where, alias, entries, keywords))
+        summary[n] = sorted(temp, key=lambda x: (len(x[-3]) > 0, *x[::-1][3:]), reverse=True)
 
     return summary, already
 
@@ -116,8 +122,8 @@ def main():
     for n, x in summary.items():
         with open(W_FILE.substitute(n=n), 'wt') as file:
             file.write('keyword, paper_matches, ngram_counts, case_insensitive_in_removed\n')
-            for k, pm, nc, wh, al in x:
-                print(k, pm, nc, wh, al, sep=', ', end='\n', file=file)
+            for k, pm, nc, wh, al, entries, keywords in x:
+                print(k, pm, nc, wh, al, entries, keywords, sep=', ', end='\n', file=file)
     return summary, already
 
 
