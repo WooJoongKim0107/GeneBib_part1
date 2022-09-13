@@ -48,6 +48,14 @@ class MetaCache(type):
         with gzip.open(path, 'rb') as file:
             self._CACHE = pickle.load(file)
 
+    def import_cache_if_empty(self, path=None, verbose=True):
+        path = path if path else self._CACHE_PATH
+        if verbose:
+            print(f'Import {self.__name__} cache from:', path)
+        if not self._CACHE:
+            with gzip.open(path, 'rb') as file:
+                self._CACHE = pickle.load(file)
+
     def merge_caches(self, *caches):
         assert 'merge' in dir(self), f'Merging {self.__name__} cache failed: {self.__name__}.merge does not exist.'
         anchor = caches[0].copy()
