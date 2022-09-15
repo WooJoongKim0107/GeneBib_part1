@@ -132,6 +132,7 @@ class Token:
 
 
 class KeyWord(str):
+    R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
     NAME_TAGS = NAME_TAGS
     INV_TAGS = INV_TAGS
     BLACK_LIST = BLACK_LIST
@@ -156,6 +157,12 @@ class KeyWord(str):
                 return [self.tokenize(), self.as_greek()]
             case True, True:
                 return [self.tokenize(), self.as_greek(), self.as_plural(), self.as_greek_plural()]
+
+    @classmethod
+    def load_keywords(cls):
+        """dict[KeyWord, set[UniProtEntry]]"""
+        with open(cls.R_FILE, 'rb') as file:
+            return pickle.load(file)
 
     def tokenize(self):
         return Token.tokenize(self)
@@ -199,7 +206,7 @@ class Reference:
 
 class UniProtEntry:
     __slots__ = ['name', 'accessions', '_keywords', '_references']
-    R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz')
+    R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()
 
     def __init__(self, dct):
         self.name = dct['name']
