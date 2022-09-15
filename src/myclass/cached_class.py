@@ -50,9 +50,9 @@ class MetaCache(type):
 
     def import_cache_if_empty(self, path=None, verbose=True):
         path = path if path else self._CACHE_PATH
-        if verbose:
-            print(f'Import {self.__name__} cache from:', path)
         if not self._CACHE:
+            if verbose:
+                print(f'Import {self.__name__} cache from:', path)
             with gzip.open(path, 'rb') as file:
                 self._CACHE = pickle.load(file)
 
@@ -92,3 +92,61 @@ class MetaCacheExt(MetaCache):
 
     def items(cls):
         return cls._CACHE.items()
+
+
+if __name__ == '__main__':
+    from multiprocessing import Pool
+    from mypathlib import PathTemplate
+
+
+    class Foo(metaclass=MetaCacheExt):
+        _CACHE_PATH = PathTemplate('$base/foo_cache.pkl').substitute()
+
+        def __new__(cls, key, caching=True):
+            """__new__ method must not be skipped - Assertion of MetaCacheExt"""
+            return super().__new__(cls)
+
+        def __init__(self, key, caching=True):
+            self.key = key
+            self.x = set()
+
+        def __getnewargs__(self):
+            """__getnewargs__ must not be deleted - Assertion of MetaCacheExt"""
+            return self.key, False
+
+        def merge(self, other):
+            """Method to merge another instance to itself
+            This method must not be deleted or renamed - Assertion of MetaCacheExt"""
+            self.x.update(other.x)
+
+
+    def pioneer():
+        for i in range(100):
+            Foo(i).x.add(i)
+        return Foo._CACHE
+
+
+    def part1(x):
+        Foo(x).x.add(x**2)
+        return Foo._CACHE
+
+
+    def part2(x):
+        Foo(x).x.add(x**3)
+        return Foo._CACHE
+
+
+    def main():
+        pioneer()
+        # Foo(i).x == {i}
+        with Pool(5) as p:
+            caches = p.map(part1, range(100))
+        # Foo(i).x == {i} in main process, but caches[i][i].x == {i, i**2}
+        Foo.merge_caches(*caches)
+        # Foo(i).x == {i, i**2}
+        with Pool(5) as p:
+            caches = p.map(part2, range(100))
+        # Foo(i).x == {i, i**2} in main process, but caches[i][i].x == {i, i**2, i**3}
+        Foo.merge_caches(*caches)
+        # Foo(i).x == {i, i**2, i**3}
+        Foo.export_cache()

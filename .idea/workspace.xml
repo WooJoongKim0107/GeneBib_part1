@@ -4,12 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Feature Entries and KeyWords for each matched_texts added">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Complete-blueprint of Community.containers">
+      <change afterPath="$PROJECT_DIR$/src/Community/__main__.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Community/assign.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Community/mappings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Community/build.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Community/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Community/containers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StringMatching/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringMatching/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Community/parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Community/parse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UniProt/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniProt/containers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/myclass/cached_class.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/myclass/cached_class.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -75,7 +77,7 @@
       <recent name="C:\Users\lrlr9\PycharmProjects\GeneBib\src\Papers" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.check">
+  <component name="RunManager" selected="Python.testee">
     <configuration name="__main__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="GeneBib" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -186,7 +188,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="pioneer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="testee" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="GeneBib" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -194,12 +196,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/Papers" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/Community" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\lrlr9\PycharmProjects\GeneBib\src\Papers\pioneer.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/Community/testee.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -232,11 +234,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.testee" />
         <item itemvalue="Python.check" />
         <item itemvalue="Python.pioneer (1)" />
         <item itemvalue="Python.__main__" />
         <item itemvalue="Python.__main__" />
-        <item itemvalue="Python.trial" />
       </list>
     </recent_temporary>
   </component>
@@ -396,28 +398,11 @@
       <workItem from="1662522432557" duration="13880000" />
       <workItem from="1662611119419" duration="629000" />
       <workItem from="1662620331839" duration="3436000" />
-      <workItem from="1663031761704" duration="10869000" />
-    </task>
-    <task id="LOCAL-00059" summary="Modify Some attributes of Journal and Article &amp; beyond&#10;&#10;&lt;Attr changes&gt;&#10;    1. Journal.titles &amp; Journal.issns: {dtype -&gt; set(values)} -&gt; set(values of all dtypes)&#10;    2. Journal.counts: Total number of distinct Articles each Journal contains&#10;    3. Journal.extra_attrs: Any extra attributes to reside without breaking backward compatibility&#10;    4. Journal.info: Method -&gt; @property&#10;    5. Article.journal: Removed and replaced with @property&#10;    6. Article._journal_title: Journal.medline_ta of its journal&#10;&lt;MetaCache&gt;&#10;&lt;Refactoring&gt;">
-      <created>1654685218358</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1654685218358</updated>
-    </task>
-    <task id="LOCAL-00060" summary="Add ArticleFiner &amp; RawFinder">
-      <created>1654686410657</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1654686410657</updated>
-    </task>
-    <task id="LOCAL-00061" summary="Add ArticleFiner &amp; RawFinder">
-      <created>1654687425503</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1654687425503</updated>
+      <workItem from="1663031761704" duration="20856000" />
+      <workItem from="1663121945713" duration="5227000" />
+      <workItem from="1663133314005" duration="10493000" />
+      <workItem from="1663150571110" duration="11813000" />
+      <workItem from="1663205778026" duration="9408000" />
     </task>
     <task id="LOCAL-00062" summary="Add ArticleFiner &amp; RawFinder">
       <created>1654689564824</created>
@@ -741,7 +726,28 @@
       <option name="project" value="LOCAL" />
       <updated>1662534590560</updated>
     </task>
-    <option name="localTasksCounter" value="108" />
+    <task id="LOCAL-00108" summary="Add string-unifying function used for clustering UniProt KeyWords">
+      <created>1663051358150</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1663051358151</updated>
+    </task>
+    <task id="LOCAL-00109" summary="Feature to import cache only if cache is empty (myclass.MetaCache)">
+      <created>1663051421598</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1663051421598</updated>
+    </task>
+    <task id="LOCAL-00110" summary="Complete-blueprint of Community.containers">
+      <created>1663051488501</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1663051488501</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -760,9 +766,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Refactor UniProt packages &amp; StringMatching packages" />
-    <MESSAGE value="Fix bugs from using namedtuple Match" />
-    <MESSAGE value="Refactor UniProt package" />
     <MESSAGE value="Enhance readability by modifying get_ngram_list3's indices" />
     <MESSAGE value="Add WC's StringMatching packages with minimal changes" />
     <MESSAGE value="Modify journal_selection.py according to new information" />
@@ -785,7 +788,10 @@
     <MESSAGE value="Modified the value of Nested, uniprot_keywords.pkl, and Match" />
     <MESSAGE value="Fix no such directory err from GoogleNgrams.filtering" />
     <MESSAGE value="Feature Entries and KeyWords for each matched_texts added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feature Entries and KeyWords for each matched_texts added" />
+    <MESSAGE value="Add string-unifying function used for clustering UniProt KeyWords" />
+    <MESSAGE value="Feature to import cache only if cache is empty (myclass.MetaCache)" />
+    <MESSAGE value="Complete-blueprint of Community.containers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Complete-blueprint of Community.containers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -800,6 +806,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/GeneBib$check.coverage" NAME="check Coverage Results" MODIFIED="1652767948187" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/GeneBib$testee.coverage" NAME="testee Coverage Results" MODIFIED="1663137067147" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/Community" />
     <SUITE FILE_PATH="coverage/GeneBib$trial.coverage" NAME="trial Coverage Results" MODIFIED="1651644695683" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/Papers" />
     <SUITE FILE_PATH="coverage/GeneBib$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1651651180592" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/Papers" />
     <SUITE FILE_PATH="coverage/GeneBib$main__2_.coverage" NAME="main (2) Coverage Results" MODIFIED="1652070489092" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/Patents" />
