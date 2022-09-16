@@ -1,9 +1,10 @@
 import gzip
 import pickle
+from collections.abc import Iterable
 from UniProt.containers import Match
 from myclass.cached_class import MetaCacheExt
 from mypathlib import PathTemplate
-from StringMatching.base import uniform_keyw_2
+from StringMatching.base import unify
 
 
 class Community(metaclass=MetaCacheExt):
@@ -18,8 +19,7 @@ class Community(metaclass=MetaCacheExt):
     def __init__(self, cmnt_idx: int, caching=True):
         self.cmnt_idx: int = cmnt_idx
         self.entries: list[str] = []
-        self.added_keywords: set[str] = set()
-        self.removed_keywords: set[str] = set()
+        self.keywords: set[str] = set()
         self.pmids: set[int] = set()
         self.pub_numbers: set[str] = set()
 
@@ -34,11 +34,10 @@ class Community(metaclass=MetaCacheExt):
         self.pub_numbers.update(cmnt.pub_numbers)
 
     @classmethod
-    def from_parse(cls, cmnt_idx: int, entries: list[str], added: list[str], removed: list[str]):
+    def from_parse(cls, cmnt_idx: int, entries: tuple[str], unified_keywords: set[str]):
         new = cls(cmnt_idx)
         new.entries = [cls.ENTRIES[ent] for ent in entries]
-        new.added = ClusterEqKeys.all_equivalents(added)
-        new.removed = ClusterEqKeys.all_equivalents(removed)
+        new.keywords = UnifyEqKeys.all_equivalents(unified_keywords)
 
     @classmethod
     def load_entries(cls):
@@ -82,7 +81,7 @@ class Key2Cmnt(dict):
             pickle.dump(dict(self), file)
 
 
-class ClusterEqKeys:
+class UnifyEqKeys:
     R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
     DATA = {}
 
@@ -91,11 +90,11 @@ class ClusterEqKeys:
         if not cls.DATA:
             with open(cls.R_FILE, 'rb') as file:
                 for keyw in pickle.load(file).values():
-                    cluster_key = uniform_keyw_2(keyw)
-                    cls.DATA.setdefault(cluster_key, set()).add(str(keyw))
+                    match_key = unify(keyw)
+                    cls.DATA.setdefault(match_key, set()).add(str(keyw))
 
     @classmethod
-    def all_equivalents(cls, keywords: list[str]):
+    def all_equivalents(cls, keywords: Iterable[str]):
         it = (cls.DATA[k] for k in keywords)
         return set().union(*it)
 

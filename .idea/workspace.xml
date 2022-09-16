@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Draft of Community package">
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="NewInfo from WC: ORF tag itself is not to be banned (some keywords of ORF tags are in a blacklist)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UniProt/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniProt/containers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Community/build.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Community/build.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Community/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Community/containers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -398,14 +399,7 @@
       <workItem from="1663150571110" duration="11813000" />
       <workItem from="1663205778026" duration="9609000" />
       <workItem from="1663305760715" duration="650000" />
-      <workItem from="1663311436750" duration="2140000" />
-    </task>
-    <task id="LOCAL-00065" summary="Add ArticleFiner &amp; RawFinder">
-      <created>1654753593455</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1654753593455</updated>
+      <workItem from="1663311436750" duration="3791000" />
     </task>
     <task id="LOCAL-00066" summary="Modify Journal.find_title">
       <created>1654756089668</created>
@@ -743,7 +737,14 @@
       <option name="project" value="LOCAL" />
       <updated>1663228979319</updated>
     </task>
-    <option name="localTasksCounter" value="114" />
+    <task id="LOCAL-00114" summary="NewInfo from WC: ORF tag itself is not to be banned (some keywords of ORF tags are in a blacklist)">
+      <created>1663314776364</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1663314776364</updated>
+    </task>
+    <option name="localTasksCounter" value="115" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -762,7 +763,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add Journal.journals4mp method" />
     <MESSAGE value="Refactor _get_partitions()" />
     <MESSAGE value="Fix circular import from __init__.py" />
     <MESSAGE value="Add GoogleNgrams.as_dict &amp; StringMatching.matched_texts" />
@@ -787,7 +787,8 @@
     <MESSAGE value="Feature verbose option in import_cache_if_tempy() works only if cache not exist" />
     <MESSAGE value="Feature KeyWord.load_keywords()" />
     <MESSAGE value="Draft of Community package" />
-    <option name="LAST_COMMIT_MESSAGE" value="Draft of Community package" />
+    <MESSAGE value="NewInfo from WC: ORF tag itself is not to be banned (some keywords of ORF tags are in a blacklist)" />
+    <option name="LAST_COMMIT_MESSAGE" value="NewInfo from WC: ORF tag itself is not to be banned (some keywords of ORF tags are in a blacklist)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
