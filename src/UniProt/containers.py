@@ -36,12 +36,12 @@ NAME_TAGS = {
     ('gene', 'name', 'primary'): 22,
     ('gene', 'name', 'synonym'): 23,
     ('gene', 'name', 'ordered locus'): 24,  # Not used
-    ('gene', 'name', 'ORF'): 25  # Not used
+    ('gene', 'name', 'ORF'): 25
 }
 
 INV_TAGS = {v: k for k, v in NAME_TAGS.items()}
 
-BLACK_LIST = {2, 5, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 24, 25}
+BLACK_LIST = {2, 5, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 24}
 
 ALPHA2GREEK = {
     "alpha": '\u03b1',      # α, Α

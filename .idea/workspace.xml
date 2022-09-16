@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Complete-blueprint of Community.containers">
-      <change afterPath="$PROJECT_DIR$/src/Community/__main__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Community/assign.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Community/build.py" afterDir="false" />
+    <list default="true" id="b1ca67d8-f147-41ec-9236-785f9e0a2e2c" name="Changes" comment="Draft of Community package">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Community/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Community/containers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Community/parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Community/parse.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UniProt/containers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniProt/containers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/myclass/cached_class.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/myclass/cached_class.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -402,28 +396,9 @@
       <workItem from="1663121945713" duration="5227000" />
       <workItem from="1663133314005" duration="10493000" />
       <workItem from="1663150571110" duration="11813000" />
-      <workItem from="1663205778026" duration="9408000" />
-    </task>
-    <task id="LOCAL-00062" summary="Add ArticleFiner &amp; RawFinder">
-      <created>1654689564824</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1654689564824</updated>
-    </task>
-    <task id="LOCAL-00063" summary="Add ArticleFiner &amp; RawFinder">
-      <created>1654741723997</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1654741723997</updated>
-    </task>
-    <task id="LOCAL-00064" summary="Add ArticleFiner &amp; RawFinder">
-      <created>1654749444869</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1654749444869</updated>
+      <workItem from="1663205778026" duration="9609000" />
+      <workItem from="1663305760715" duration="650000" />
+      <workItem from="1663311436750" duration="2140000" />
     </task>
     <task id="LOCAL-00065" summary="Add ArticleFiner &amp; RawFinder">
       <created>1654753593455</created>
@@ -747,7 +722,28 @@
       <option name="project" value="LOCAL" />
       <updated>1663051488501</updated>
     </task>
-    <option name="localTasksCounter" value="111" />
+    <task id="LOCAL-00111" summary="Feature verbose option in import_cache_if_tempy() works only if cache not exist">
+      <created>1663228928452</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1663228928453</updated>
+    </task>
+    <task id="LOCAL-00112" summary="Feature KeyWord.load_keywords()">
+      <created>1663228957131</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1663228957131</updated>
+    </task>
+    <task id="LOCAL-00113" summary="Draft of Community package">
+      <created>1663228979319</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1663228979319</updated>
+    </task>
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -766,9 +762,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Enhance readability by modifying get_ngram_list3's indices" />
-    <MESSAGE value="Add WC's StringMatching packages with minimal changes" />
-    <MESSAGE value="Modify journal_selection.py according to new information" />
     <MESSAGE value="Add Journal.journals4mp method" />
     <MESSAGE value="Refactor _get_partitions()" />
     <MESSAGE value="Fix circular import from __init__.py" />
@@ -791,7 +784,10 @@
     <MESSAGE value="Add string-unifying function used for clustering UniProt KeyWords" />
     <MESSAGE value="Feature to import cache only if cache is empty (myclass.MetaCache)" />
     <MESSAGE value="Complete-blueprint of Community.containers" />
-    <option name="LAST_COMMIT_MESSAGE" value="Complete-blueprint of Community.containers" />
+    <MESSAGE value="Feature verbose option in import_cache_if_tempy() works only if cache not exist" />
+    <MESSAGE value="Feature KeyWord.load_keywords()" />
+    <MESSAGE value="Draft of Community package" />
+    <option name="LAST_COMMIT_MESSAGE" value="Draft of Community package" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
