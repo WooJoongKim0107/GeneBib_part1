@@ -13,6 +13,7 @@ python -m StringMatching.find_specific_keyword Mater > ../Mater.logs
     https://pubmed.ncbi.nlm.nih.gov/22492928/        (J Virol)
     https://pubmed.ncbi.nlm.nih.gov/15477400/        (Circulation)
 """
+import sys
 from itertools import chain
 from operator import attrgetter
 from more_itertools import unique_everseen
@@ -46,14 +47,10 @@ class MatchedKeywordFinder:
 
 
 def main():
-    from GoogleNgrams.filtering import list_up
-    summary, _ = list_up()
-    mkf = MatchedKeywordFinder(*(v[0] for v in summary[1]))
-    mkf.mp_find_target(60)
-
-
-if __name__ == '__main__':
-    import sys
     targets = sys.argv[1:]
     q = MatchedKeywordFinder(*targets)
     q.mp_find_target(50)
+
+
+if __name__ == '__main__':
+    main()
