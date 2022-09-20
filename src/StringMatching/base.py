@@ -29,6 +29,7 @@ def tokenize(s: str):
 
 
 def uniform_keyw_2(x):
+    """Used when localizing keywords after clustering UniProtEntries"""
     keywLength = len(x)
     outputKeyw = x
     outputKeyw = re.sub(' ?, ?', ',', outputKeyw)
