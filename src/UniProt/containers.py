@@ -413,12 +413,3 @@ def _print_refs(refs):
         return ',  '.join(str(ref) for ref in refs)
     else:
         return ''
-
-
-def main():
-    q = Nested(load=False)
-    q.dump()
-
-
-if __name__ == '__main__':
-    main()
