@@ -3,15 +3,15 @@ import pickle
 from xml.etree.ElementTree import Element
 from xml.etree.ElementTree import parse as etree_parse
 from mypathlib import PathTemplate
-from UniProt.containers import UniProtEntry, Nested
+from UniProt.containers import UniProtEntry
+
+
+R_FILE = PathTemplate('$rsrc/data/uniprot/uniprot_sprot.xml.gz')
+W_FILES = {'keywords': PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute(),
+           'entries': PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()}
 
 HEADER = '{http://uniprot.org/uniprot}'
 LEN_HEADER = len(HEADER)
-R_FILE = PathTemplate('$rsrc/data/uniprot/uniprot_sprot.xml.gz')
-_W_FILE0 = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl')
-_W_FILE1 = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz')
-W_FILES = {'keywords': Nested.R_FILE,
-           'parsed': UniProtEntry.R_FILE}
 
 
 def parse_date(x):
@@ -99,11 +99,11 @@ def main():
         root = etree_parse(file).getroot()[:-1]
 
     parsed = parse_and_wrap(root)
-    with gzip.open(W_FILES['parsed'].substitute(), 'wb') as file:
+    with gzip.open(W_FILES['entries'], 'wb') as file:
         pickle.dump(parsed, file)
 
     keywords = extract_keywords(parsed)
-    with open(W_FILES['keywords'].substitute(), 'wb') as file:
+    with open(W_FILES['keywords'], 'wb') as file:
         pickle.dump(keywords, file)
 
 

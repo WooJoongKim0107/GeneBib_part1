@@ -1,9 +1,9 @@
 from mypathlib import PathTemplate
 from . import START, STOP
-from .refine import W_FILE as R_FILE
 from Papers.replicas import Replica
 
 
+R_FILE = PathTemplate('$rsrc/pdata/patent/patent_202111_$number.pkl.gz', key='{:0>12}'.format)
 W_FILES = {'replica': PathTemplate('$rsrc/pdata/patent/patent_replicas.pkl'),
            'prints': PathTemplate('$rsrc/pdata/patent/patent_replicas.txt')}
 

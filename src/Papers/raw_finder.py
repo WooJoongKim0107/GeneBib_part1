@@ -1,8 +1,11 @@
 import gzip
 from multiprocessing import Pool
 from lxml.etree import tostring, parse
+from mypathlib import PathTemplate
 from . import START, STOP
-from .refine import R_FILE
+
+
+R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
 
 
 class RawFinder:

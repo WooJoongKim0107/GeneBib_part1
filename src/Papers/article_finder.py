@@ -1,10 +1,11 @@
-import gzip, pickle
+import gzip
+import pickle
 from multiprocessing import Pool
 from mypathlib import PathTemplate
 from . import Journal
-from .merge import W_FILE as R_FILE
 
 
+R_FILE = PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz')
 W_FILES = {'PmidToIdx': PathTemplate('$rsrc/lite/paper/article_to_index.pkl').substitute(),
            'JnlToPmids': PathTemplate('$rsrc/lite/paper/journal_to_article$index.$format')}
 

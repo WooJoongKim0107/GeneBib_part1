@@ -3,12 +3,11 @@ import pickle
 from multiprocessing import Pool
 from mypathlib import PathTemplate
 from UniProt.containers import Nested
-from Patents.merge import W_FILE as R_FILE
 
 
-NESTED = Nested(True)
-
+R_FILE = PathTemplate('$rsrc/pdata/patent/patent_$index.pkl.gz')
 W_FILE = PathTemplate('$rsrc/pdata/patent/matched/patent_$index.pkl.gz')
+NESTED = Nested(True)
 
 
 def match_entire_file(index):

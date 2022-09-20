@@ -6,10 +6,7 @@ from Papers import Journal
 from Papers.article_finder import ArticleFinder, JnlToPmids
 
 
-_W_FILE0 = PathTemplate('$rsrc/pdata/paper/papers.tar')
-_W_FILE1 = PathTemplate('$rsrc/pdata/paper/sorted/$journal.pkl.gz')
-assert str(_W_FILE0.substitute()) == str(Journal._TAR_PATH)
-assert str(_W_FILE1) == str(Journal._ARTICLE_PATH)
+_W_FILE = PathTemplate('$rsrc/pdata/paper/sorted/$journal.pkl.gz')
 
 
 def write(journal: Journal, pmids):

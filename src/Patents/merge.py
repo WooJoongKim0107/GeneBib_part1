@@ -1,10 +1,10 @@
 from mypathlib import PathTemplate
 from Papers.merge import Merge
 from . import START, STOP
-from .refine import W_FILE as R_FILE
 from .replicas import PatentReplica
 
 
+R_FILE = PathTemplate('$rsrc/pdata/patent/patent_202111_$number.pkl.gz', key='{:0>12}'.format)
 W_FILE = PathTemplate('$rsrc/pdata/patent/patent_$index.pkl.gz')
 
 

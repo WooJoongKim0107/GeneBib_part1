@@ -5,10 +5,10 @@ from more_itertools import pairwise
 from multiprocessing import Pool
 from mypathlib import PathTemplate
 from . import START, STOP
-from .refine import W_FILE as R_FILE
 from .replicas import PaperReplica
 
 
+R_FILE = PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format)
 W_FILE = PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz')
 
 

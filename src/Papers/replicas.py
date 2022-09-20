@@ -5,9 +5,9 @@ from collections import Counter
 from multiprocessing import Pool
 from mypathlib import PathTemplate
 from . import START, STOP
-from .refine import W_FILE as R_FILE
 
 
+R_FILE = PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format)
 W_FILES = {'replica': PathTemplate('$rsrc/pdata/paper/paper_replicas.pkl'),
            'prints': PathTemplate('$rsrc/pdata/paper/paper_replicas.txt')}
 

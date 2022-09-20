@@ -2,6 +2,7 @@ import pickle
 from functools import cached_property
 from mypathlib import PathTemplate
 
+
 R_FILES = {'greped': PathTemplate('$rsrc/data/cpc_updated_220525/cpc-keywsrch-total.txt'),
            'sec': PathTemplate('$rsrc/data/cpc_updated_220525/cpc-section-${sec}_20220501.txt'),
            'selected': PathTemplate('$rsrc/data/cpc_updated_220525/cpc-level${i}-titles-filtered_220524.txt')}

@@ -10,14 +10,13 @@ from .parse import parse_article, find_journal_key
 
 
 R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
-W_FILE = PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format)
-MSG = PathTemplate('$rsrc/pdata/paper/article22n$number.txt', key='{:0>4}'.format)
+W_FILES = {'refined': PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format),
+           'message': PathTemplate('$rsrc/pdata/paper/article22n$number.txt', key='{:0>4}'.format)}
 
 
 class Refine:
     R_FILE = R_FILE
-    W_FILE = W_FILE
-    MSG = MSG
+    W_FILES = W_FILES
     START = START
     STOP = STOP
     JNL = Journal
@@ -39,7 +38,7 @@ class Refine:
     def write(cls, number):
         eng_arts = cls.read_eng_articles(number)
         res = [cls.refine_article(number, pubmed_article_elt) for pubmed_article_elt in eng_arts]
-        with gzip.open(cls.W_FILE.substitute(number=number), 'wb') as file:
+        with gzip.open(cls.W_FILES['refined'].substitute(number=number), 'wb') as file:
             pickle.dump(res, file)
         print(number)
 
@@ -52,7 +51,7 @@ class Refine:
     def report_journal(cls, number, pubmed_article_elt: Element, pmid):
         key = find_journal_key(pubmed_article_elt)
         if key not in cls.JNL:
-            with open(cls.MSG.substitute(number), 'a') as file:
+            with open(cls.W_FILES['message'].substitute(number), 'a') as file:
                 file.write(f'Cannot find appropriate Journal for {number}: {pmid}\n')
         return key
 

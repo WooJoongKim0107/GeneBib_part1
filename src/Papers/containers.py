@@ -55,7 +55,6 @@ class Journal(metaclass=MetaCacheExt):
     _CACHE_PATH = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
     _ARTICLE_PATH = PathTemplate('$rsrc/pdata/paper/sorted/$journal.pkl.gz')
     _MATCH_PATH = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
-    _TAR_PATH = PathTemplate('$rsrc/pdata/paper/papers.tar').substitute()
     _SELECTED_PATH = PathTemplate('$rsrc/lite/paper/jnls_selected.pkl').substitute()
     _PATTERN = re.compile(r'[^a-zA-Z0-9_]+')
     _FINDER_PATTERN = re.compile(r'\W')

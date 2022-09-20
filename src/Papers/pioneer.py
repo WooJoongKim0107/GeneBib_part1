@@ -10,7 +10,6 @@ from .merge_journals import merge
 
 R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
 _W_FILE = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz')
-assert _W_FILE.substitute() == Journal._CACHE_PATH
 
 
 class Pioneer:

@@ -53,7 +53,7 @@ class Community(metaclass=MetaCacheExt):
 
 
 class Key2Cmnt(dict):
-    _R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()
+    _R_FILE = Community._CACHE_PATH
     RW_FILE = PathTemplate('$rsrc/lite/community/key2cmnt.pkl').substitute()
 
     def __init__(self, load=True):

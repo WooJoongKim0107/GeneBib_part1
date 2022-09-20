@@ -7,6 +7,7 @@ from . import START, STOP
 from .containers import Patent
 from .parse import parse_patent
 
+
 R_FILE = PathTemplate('$rsrc/data/patent/patent_202111_$number.json.gz', key='{:0>12}'.format)
 W_FILE = PathTemplate('$rsrc/pdata/patent/patent_202111_$number.pkl.gz', key='{:0>12}'.format)
 

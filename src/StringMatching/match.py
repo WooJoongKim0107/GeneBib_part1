@@ -6,10 +6,8 @@ from Papers import Journal
 from UniProt.containers import Nested
 
 
+W_FILE = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
 NESTED = Nested(True)
-
-_W_FILE = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
-W_FILE = Journal._MATCH_PATH
 
 
 def match_entire_journal(medline_ta):

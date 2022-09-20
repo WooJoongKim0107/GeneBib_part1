@@ -3,17 +3,17 @@ from mypathlib import PathTemplate
 from Community.containers import Community, Key2Cmnt, UnifyEqKeys
 
 
-R_FILE0 = PathTemplate('$data/community/update_curated_cmnt_map_220914.pkl').substitute()
-R_FILE1 = PathTemplate('$data/community/cmnt_to_keyw_matchform_220915.pkl').substitute()
+R_FILES = {'c2e': PathTemplate('$data/community/update_curated_cmnt_map_220914.pkl').substitute(),
+           'c2k': PathTemplate('$data/community/cmnt_to_keyw_matchform_220915.pkl').substitute()}
 _R_FILE0 = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()
 _R_FILE1 = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
 _W_FILE0 = PathTemplate('$rsrc/lite/community/key2cmnt.pkl').substitute()
 
 
 def build_cmnts():
-    with open(R_FILE0, 'rb') as file:
+    with open(R_FILES['c2e'], 'rb') as file:
         c2e: dict[int, tuple[str]] = pickle.load(file)
-    with open(R_FILE0, 'rb') as file:
+    with open(R_FILES['c2k'], 'rb') as file:
         c2k: dict[int, set[str]] = pickle.load(file)
 
     UnifyEqKeys.load()
