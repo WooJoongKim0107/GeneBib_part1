@@ -5,3 +5,4 @@
 *.csv
 *.txt
 *.lnk
+/backup/keyword_list_200201.pickle
