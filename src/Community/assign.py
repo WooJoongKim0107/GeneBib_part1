@@ -16,13 +16,13 @@ def assign_paper_match(js, manager):
     for j in js:
         for pmid, (title_matches, abstract_matches) in j.get_matches().items():
             manager.assign(pmid, 'pmid', *title_matches, *abstract_matches)
-    return Community._CACHE
+    return Community.CACHE
 
 
 def assign_patent_match(index, selected, manager):
     for pub_number, (title_matches, abstract_matches) in load_patent_matches(index, selected):
         manager.assign(pub_number, 'pub_number', *title_matches, *abstract_matches)
-    return Community._CACHE
+    return Community.CACHE
 
 
 def load_patent_matches(index, selected):

@@ -52,7 +52,7 @@ class Journal(metaclass=MetaCacheExt):
         Specifies the accession number, a unique identifier for the journal,
         as assigned to the journal's catalog record by NLM.
     """
-    _CACHE_PATH = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
+    CACHE_PATH = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
     _ARTICLE_PATH = PathTemplate('$rsrc/pdata/paper/sorted/$journal.pkl.gz')
     _MATCH_PATH = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
     _SELECTED_PATH = PathTemplate('$rsrc/lite/paper/jnls_selected.pkl').substitute()
@@ -283,7 +283,7 @@ def _get_partition(x, n, key=None):
     return partition
 
 
-if Journal._CACHE_PATH.is_file():
+if Journal.CACHE_PATH.is_file():
     Journal.import_cache(verbose=True)
 
 

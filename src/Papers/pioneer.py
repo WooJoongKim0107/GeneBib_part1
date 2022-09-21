@@ -24,14 +24,14 @@ class Pioneer:
         root = cls.read(number)
         cls.explore(root)
         print(number)
-        return cls.JNL._CACHE
+        return cls.JNL.CACHE
 
     @classmethod
     def main(cls):
         with Pool(6) as p:
             caches = p.map(cls.read_and_explore, range(cls.START, cls.STOP))
         cls.JNL.merge_caches(*caches)
-        cls.JNL._CACHE = merge(cls.JNL._CACHE)
+        cls.JNL.CACHE = merge(cls.JNL.CACHE)
         cls.JNL.export_cache()
 
     @classmethod

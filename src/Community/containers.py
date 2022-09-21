@@ -9,7 +9,7 @@ from StringMatching.base import unify
 
 class Community(metaclass=MetaCacheExt):
     R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()
-    _CACHE_PATH = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
+    CACHE_PATH = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
     ENTRIES = {}
 
     def __new__(cls, cmnt_idx: int, caching=True):
@@ -53,7 +53,7 @@ class Community(metaclass=MetaCacheExt):
 
 
 class Key2Cmnt(dict):
-    _R_FILE = Community._CACHE_PATH
+    _R_FILE = Community.CACHE_PATH
     RW_FILE = PathTemplate('$rsrc/lite/community/key2cmnt.pkl').substitute()
 
     def __init__(self, load=True):
