@@ -1,5 +1,6 @@
+import gzip
+import pickle
 from functools import wraps
-import pickle, gzip
 
 
 def deco_new(new):

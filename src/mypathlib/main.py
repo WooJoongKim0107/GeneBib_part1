@@ -2,7 +2,6 @@ __all__ = ['PathTemplate', 'TempOpen']
 
 from string import Template
 from pathlib import Path
-from contextlib import contextmanager
 from collections import ChainMap
 from collections.abc import Callable, Mapping
 

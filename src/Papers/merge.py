@@ -22,6 +22,16 @@ class Merge:
     STEP = 10
 
     @classmethod
+    def assign_constants(cls, r_file, w_file, replicas, key_attr, start, stop, step):
+        cls.R_FILE = r_file
+        cls.W_FILE = w_file
+        cls.REPLICAS = replicas
+        cls.KEY_ATTR = key_attr
+        cls.START = start
+        cls.stop = stop
+        cls.step = step
+
+    @classmethod
     def read(cls, number):
         with gzip.open(cls.R_FILE.substitute(number=number), 'rb') as file:
             return pickle.load(file)

@@ -44,9 +44,9 @@ def parse_patent(x):
     title = get_title(x['title_localized'])
     abstract = get_abstract(x['abstract_localized'])
 
-    filing_date =  parse_date(x['filing_date'])
-    pub_date =  parse_date(x['publication_date'])
-    grant_date =  parse_date(x['grant_date'])
+    filing_date = parse_date(x['filing_date'])
+    pub_date = parse_date(x['publication_date'])
+    grant_date = parse_date(x['grant_date'])
 
     cpcs = collect_cpcs(x['cpc'])
     citations = collect_citations(x['citation'])

@@ -1,5 +1,6 @@
 from .cached_class import MetaCache
 
+
 class Foo(metaclass=MetaCache):
     def __new__(cls, title, caching=True):
         """asdfasdf"""
