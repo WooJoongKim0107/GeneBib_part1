@@ -1,4 +1,4 @@
-from .cached_class import MetaCache
+from .cached import MetaCache
 
 
 class Foo(metaclass=MetaCache):

@@ -22,17 +22,12 @@ def build_cmnts():
         entries = c2e.get(cmnt_idx, ())
         unified_keywords = c2k.get(cmnt_idx, set())
         Community.from_parse(cmnt_idx, entries, unified_keywords)
-    Community.export_cache()
-
-
-def build_key2cmnt():
-    k2c = Key2Cmnt(load=False)
-    k2c.dump()
+    Community.export_cache()  # Write0
 
 
 def main():
     build_cmnts()
-    build_key2cmnt()
+    Key2Cmnt.build()  # Write1
 
 
 if __name__ == '__main__':

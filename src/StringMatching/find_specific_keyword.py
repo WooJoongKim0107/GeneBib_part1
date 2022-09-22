@@ -23,7 +23,7 @@ from Papers import Journal
 
 
 class MatchedKeywordFinder:
-    PATH = PathTemplate('$base/match_key_finder/${target}.logs')
+    W_FILE = PathTemplate('$base/match_key_finder/${target}.logs')
 
     def __init__(self, *targets):
         self.targets = set(targets)
@@ -38,7 +38,7 @@ class MatchedKeywordFinder:
                         done.add(match.text)
                         url = f'https://pubmed.ncbi.nlm.nih.gov/{pmid}/'
                         print(f'{url:<45}    ({j.medline_ta})',
-                              file=self.PATH.substitute(target=match.text).open('a'))
+                              file=self.W_FILE.substitute(target=match.text).open('a'))
 
     def mp_find_target(self, n):
         args = Journal.journals4mp(n, selected=True)

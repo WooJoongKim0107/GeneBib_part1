@@ -9,9 +9,9 @@ R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.f
 
 
 class RawFinder:
+    R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
     START = START
     STOP = STOP
-    R_FILE = R_FILE
 
     def __init__(self, number):
         self.root = self.get(number)

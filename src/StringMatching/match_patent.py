@@ -7,7 +7,8 @@ from UniProt.containers import Nested
 
 R_FILE = PathTemplate('$rsrc/pdata/patent/patent_$index.pkl.gz')
 W_FILE = PathTemplate('$rsrc/pdata/patent/matched/patent_$index.pkl.gz')
-NESTED = Nested(True)
+
+NESTED = Nested.load()  # Read0
 
 
 def match_entire_file(index):

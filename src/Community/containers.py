@@ -1,9 +1,9 @@
 import gzip
 import pickle
 from collections.abc import Iterable
-from UniProt.containers import Match
-from myclass.cached_class import MetaCacheExt
+from myclass import MetaCacheExt, MetaLoad, MetaDisposal
 from mypathlib import PathTemplate
+from UniProt.containers import Match
 from StringMatching.base import unify
 
 
@@ -52,21 +52,10 @@ class Community(metaclass=MetaCacheExt):
         return keywords | tobe_added - tobe_removed
 
 
-class Key2Cmnt(dict):
-    _R_FILE = Community.CACHE_PATH
-    RW_FILE = PathTemplate('$rsrc/lite/community/key2cmnt.pkl').substitute()
-
-    def __init__(self, load=True):
-        if load:
-            data = self.load()
-        else:
-            data = self.generate()
-        super().__init__(data)
-
-    @classmethod
-    def load(cls):
-        with open(cls.RW_FILE, 'rb') as file:
-            return pickle.load(file)
+class Key2Cmnt(dict, metaclass=MetaLoad):
+    _R_FILE0 = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
+    _R_FILE1 = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()
+    LOAD_PATH = PathTemplate('$rsrc/lite/community/key2cmnt.pkl').substitute()
 
     @classmethod
     def generate(cls):
@@ -76,39 +65,35 @@ class Key2Cmnt(dict):
             for key in cmnt.get_keywords():
                 yield key, cmnt
 
-    def dump(self):
-        with open(self.RW_FILE, 'wb') as file:
-            pickle.dump(dict(self), file)
 
-
-class UnifyEqKeys:
+class UnifyEqKeys(metaclass=MetaDisposal):
     R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
     DATA = {}
 
     @classmethod
     def load(cls):
-        if not cls.DATA:
-            with open(cls.R_FILE, 'rb') as file:
-                for keyw in pickle.load(file).values():
-                    match_key = unify(keyw)
-                    cls.DATA.setdefault(match_key, set()).add(str(keyw))
+        """.load() or .safe_load() must be called before .all_equivalents()"""
+        with open(cls.R_FILE, 'rb') as file:  # Read
+            for keyw in pickle.load(file).values():
+                match_key = unify(keyw)
+                cls.DATA.setdefault(match_key, set()).add(str(keyw))
 
     @classmethod
     def all_equivalents(cls, keywords: Iterable[str]):
+        """.load() or .safe_load() must be called before .all_equivalents()"""
         it = (cls.DATA[k] for k in keywords)
         return set().union(*it)
 
 
-class TextFilter:
+class TextFilter(metaclass=MetaDisposal):
     R_FILE = PathTemplate('$rsrc/data/filtered/filtered.txt').substitute()
     DATA = set()
 
     @classmethod
     def load(cls):
-        if not cls.DATA:
-            with open(cls.R_FILE, 'r') as file:
-                for x in file.read().splitlines():
-                    cls.DATA.add(x)
+        with open(cls.R_FILE, 'r') as file:  # Read
+            for x in file.read().splitlines():
+                cls.DATA.add(x)
 
     @classmethod
     def isvalid(cls, x: str):
@@ -125,9 +110,9 @@ class TextFilter:
 
 class Manager:
     def __init__(self):
-        Community.import_cache_if_empty(verbose=True)
-        TextFilter.load()
-        self.k2c = Key2Cmnt(load=True)
+        Community.import_cache_if_empty(verbose=True)  # Read0
+        TextFilter.load()  # Read1
+        self.k2c = Key2Cmnt.load()  # Read2
 
     def assign(self, key, attr, *matches):
         already = set()

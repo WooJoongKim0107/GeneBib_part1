@@ -34,7 +34,7 @@ def main():
         assert len(result) == 1 or method == 'failed'
 
     selected = {k: result[0].medline_ta for k, (method, result) in q.items() if method != 'failed'}
-    with open(W_FILE, 'wb') as file:
+    with open(Journal.SELECTED_PATH, 'wb') as file:
         pickle.dump(selected, file)
 
 

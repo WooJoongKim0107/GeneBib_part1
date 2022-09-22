@@ -6,6 +6,7 @@ from itertools import chain
 from collections import namedtuple
 from dataclasses import dataclass, field
 from more_itertools import nth
+from myclass import MetaLoad
 from mypathlib import PathTemplate
 from StringMatching.base import pluralize, tokenize, unify
 
@@ -253,16 +254,9 @@ class UniProtEntry:
             return pickle.load(file)
 
 
-class Nested(dict):
-    R_FILE = _R_FILES_['keywords']
-    W_FILE = PathTemplate('$rsrc/pdata/uniprot/nested.pkl')
-
-    def __init__(self, load=True):
-        if load:
-            data = self.load()
-        else:
-            data = self.generate()
-        super().__init__(data)
+class Nested(dict, metaclass=MetaLoad):
+    R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
+    LOAD_PATH = PathTemplate('$rsrc/pdata/uniprot/nested.pkl')
 
     def match_and_filter(self, target_text):
         target_match_list = list(self.strict_matches(target_text))
@@ -331,15 +325,6 @@ class Nested(dict):
                     lower_tokens = tuple(token.lower() for token in tokens)
                     nested.extend(lower_tokens, joined, key_accs, str(kw))
         return nested
-
-    @classmethod
-    def load(cls):
-        with open(cls.W_FILE.substitute(), 'rb') as file:
-            return pickle.load(file)
-
-    def dump(self):
-        with open(self.W_FILE.substitute(), 'wb') as file:
-            pickle.dump(dict(self), file)
 
 
 Match = namedtuple('Match', ['tokens', 'unified', 'entries', 'keywords', 'spans', 'text'])

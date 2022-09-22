@@ -53,9 +53,9 @@ class Journal(metaclass=MetaCacheExt):
         as assigned to the journal's catalog record by NLM.
     """
     CACHE_PATH = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
-    _ARTICLE_PATH = PathTemplate('$rsrc/pdata/paper/sorted/$journal.pkl.gz')
-    _MATCH_PATH = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
-    _SELECTED_PATH = PathTemplate('$rsrc/lite/paper/jnls_selected.pkl').substitute()
+    ARTICLE_PATH = PathTemplate('$rsrc/pdata/paper/sorted/$journal.pkl.gz')
+    MATCH_PATH = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
+    SELECTED_PATH = PathTemplate('$rsrc/lite/paper/jnls_selected.pkl').substitute()
     _PATTERN = re.compile(r'[^a-zA-Z0-9_]+')
     _FINDER_PATTERN = re.compile(r'\W')
 
@@ -139,7 +139,7 @@ class Journal(metaclass=MetaCacheExt):
 
     @property
     def art_path(self):
-        return self._ARTICLE_PATH.substitute(journal=self._simple_title)
+        return self.ARTICLE_PATH.substitute(journal=self._simple_title)
 
     def get_articles(self):
         with gzip.open(self.art_path) as f:
@@ -152,7 +152,7 @@ class Journal(metaclass=MetaCacheExt):
 
     @property
     def match_path(self):
-        return self._MATCH_PATH.substitute(journal=self._simple_title)
+        return self.MATCH_PATH.substitute(journal=self._simple_title)
 
     def get_matches(self):
         with gzip.open(self.match_path) as f:
@@ -229,7 +229,7 @@ class Journal(metaclass=MetaCacheExt):
     @classmethod
     def journals4mp(cls, n, selected=False):
         if selected:
-            with open(cls._SELECTED_PATH, 'rb') as file:
+            with open(cls.SELECTED_PATH, 'rb') as file:
                 journals = [Journal[medline_ta] for medline_ta in pickle.load(file).values()]
         else:
             journals = cls.unique_values()

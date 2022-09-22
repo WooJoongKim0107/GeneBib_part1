@@ -3,6 +3,7 @@ import pickle
 from textwrap import dedent, indent
 from collections import Counter
 from multiprocessing import Pool
+from myclass import MetaLoad
 from mypathlib import PathTemplate
 from . import START, STOP
 
@@ -12,30 +13,30 @@ W_FILES = {'replica': PathTemplate('$rsrc/pdata/paper/paper_replicas.pkl'),
            'prints': PathTemplate('$rsrc/pdata/paper/paper_replicas.txt')}
 
 
-class Replica(dict):
+class Replica(dict, metaclass=MetaLoad):
     """
     Replica: dict[pmid, list[Article]] for paper, dict[pub_number, list[Patents]] for patent
     """
     R_FILE = PathTemplate('')
-    W_FILES = {'replica': PathTemplate(''), 'prints': PathTemplate('')}
+    LOAD_PATH = PathTemplate('')
+    W_FILE = PathTemplate('')
     START = 0
     STOP = 0
     KEY_ATTR = ''
 
-    def __init__(self, load=True):
-        if load:
-            super().__init__(self.load())
-        else:
-            collected_keys = self.collect_keys()
-            self.locations = self.find_locations(collected_keys)
-            super().__init__(self.get_replicas(self.locations))
-
     @classmethod
     def main(cls):
-        q = cls(load=False)
-        q.dump()
-        with open(W_FILES['prints'].substitute(), 'w', encoding='UTF-8') as file:
+        q = cls.build()  # Load(w)
+        with open(cls.W_FILE.substitute(), 'w', encoding='UTF-8') as file:  # Write
             file.write(q.full_comparison())
+
+    @classmethod
+    def generate(cls):
+        self = cls()
+        collected_keys = self.collect_keys()
+        self.locations = self.find_locations(collected_keys)
+        self.get_replicas(self.locations)
+        return self
 
     @classmethod
     def collect_keys(cls):
@@ -78,14 +79,6 @@ class Replica(dict):
         Below are the full list of .info of those {len(x):,} cases:""")
         return '\n\n'.join([initial]+x)
 
-    def load(self):
-        with open(self.W_FILES['replica'].substitute(), 'rb') as file:
-            return pickle.load(file)
-
-    def dump(self):
-        with open(self.W_FILES['replica'].substitute(), 'wb') as file:
-            pickle.dump(dict(self), file)
-
     @classmethod
     def read(cls, number):
         with gzip.open(cls.R_FILE.substitute(number=number)) as file:
@@ -101,7 +94,7 @@ class Replica(dict):
 
         replicas = {}
         for c in containers:
-            if (key:=getattr(c, cls.KEY_ATTR)) in keys:
+            if (key := getattr(c, cls.KEY_ATTR)) in keys:
                 replicas.setdefault(key, []).append(c)
         return replicas
 

@@ -13,13 +13,13 @@ W_FILE = PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz')
 
 
 class Merge:
-    R_FILE = R_FILE
-    W_FILE = W_FILE
-    REPLICAS = PaperReplica(load=True)
-    KEY_ATTR = 'pmid'
-    START = START
-    STOP = STOP
-    STEP = 10
+    R_FILE = PathTemplate('')
+    W_FILE = PathTemplate('')
+    REPLICAS = PaperReplica()
+    KEY_ATTR = ''
+    START = 0
+    STOP = 0
+    STEP = 0
 
     @classmethod
     def assign_constants(cls, r_file, w_file, replicas, key_attr, start, stop, step):
@@ -59,6 +59,7 @@ class Merge:
 
     @classmethod
     def main(cls):
+        cls.REPLICAS = type(cls.REPLICAS).load()  # Read0
         splits = [i for i in range(cls.START, cls.STOP, cls.STEP)] + [cls.STOP]
         args = [(index, start, stop) for index, (start, stop) in enumerate(pairwise(splits))]
         with Pool(5) as p:
@@ -66,6 +67,7 @@ class Merge:
         cls.append_repeated(args[-1][0])
 
 
+Merge.assign_constants(R_FILE, W_FILE, PaperReplica(), 'pmid', START, STOP, 10)
 main = Merge.main
 
 if __name__ == '__main__':

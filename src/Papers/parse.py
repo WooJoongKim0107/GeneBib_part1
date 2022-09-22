@@ -49,6 +49,8 @@ def _as_issn_l(x: str|None):
 # 5. 'Spring 2009'
 # 6. '2003 ' + str
 md_parser = re.compile(r'\b[12]\d{3}\b')  # r'(19|20)\d{2}(?=\s*)' on previous study
+
+
 def parse_pub_date(pub_date_elt: Element):
     pub_date = children_as_dict(pub_date_elt)
     match pub_date:
@@ -76,6 +78,8 @@ def parse_pub_date(pub_date_elt: Element):
 _month = {s: i for i, s in enumerate(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], start=1)}
 _month.update({s: i for i, s in enumerate(['January', 'February', 'March', 'April', 'May', 'June', 'July',
                                            'August', 'September', 'October', 'November', 'December'], start=1)})
+
+
 def parse_month(x):
     if x in _month:
         return _month[x]
