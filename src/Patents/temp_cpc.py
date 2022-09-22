@@ -3,12 +3,12 @@ from functools import cached_property
 from mypathlib import PathTemplate
 
 
-R_FILES = {'greped': PathTemplate('$rsrc/data/cpc_updated_220525/cpc-keywsrch-total.txt'),
-           'sec': PathTemplate('$rsrc/data/cpc_updated_220525/cpc-section-${sec}_20220501.txt'),
-           'selected': PathTemplate('$rsrc/data/cpc_updated_220525/cpc-level${i}-titles-filtered_220524.txt')}
+R_FILE = PathTemplate('$rsrc/data/cpc_updated_220525/cpc-keywsrch-total.txt').substitute()
+_R_FILE0 = PathTemplate('$rsrc/data/cpc_updated_220525/cpc-section-${sec}_20220501.txt')
+_R_FILE1 = PathTemplate('$rsrc/data/cpc_updated_220525/cpc-level${i}-titles-filtered_220524.txt')
 
-W_FILES = {'tree': PathTemplate('$rsrc/lite/patent/cpc_tree.pkl').substitute(),
-           'selected': PathTemplate('$rsrc/lite/patent/cpc_selected.pkl').substitute()}
+_W_FILES = {'tree': PathTemplate('$rsrc/lite/patent/cpc_tree.pkl').substitute(),
+            'selected': PathTemplate('$rsrc/lite/patent/cpc_selected.pkl').substitute()}
 
 
 def read_cpc(f):
@@ -37,17 +37,17 @@ def parse_hier(f):
 
 def get_greped():
     res = []
-    with open(R_FILES['greped'].substitute(), 'rt') as file:
+    with open(R_FILE, 'rt') as file:
         for line in file.read().splitlines():
             res.append(line.split()[0])
     return res
 
 
 class CPCTree(dict):
-    R_FILE = R_FILES['sec']
-    R_FILE_SELECTED = R_FILES['selected']
-    W_FILE = W_FILES['tree']
-    W_FILE_SELECTED = W_FILES['selected']
+    R_FILE = PathTemplate('$rsrc/data/cpc_updated_220525/cpc-section-${sec}_20220501.txt')
+    R_FILE_SELECTED = PathTemplate('$rsrc/data/cpc_updated_220525/cpc-level${i}-titles-filtered_220524.txt')
+    W_FILE = PathTemplate('$rsrc/lite/patent/cpc_tree.pkl').substitute()
+    W_FILE_SELECTED = PathTemplate('$rsrc/lite/patent/cpc_selected.pkl').substitute()
 
     def __init__(self, load=True):
         if load:
@@ -129,7 +129,7 @@ class CPCTree(dict):
     def _full_hier(cls):
         hier = {}
         for sec in 'ABCDEFGHY':
-            with open(cls.R_FILE.substitute(sec=sec), 'rt') as file:
+            with open(cls.R_FILE.substitute(sec=sec), 'rt') as file:  # Read0
                 hier.update(parse_hier(file))
         return hier
 
@@ -137,7 +137,7 @@ class CPCTree(dict):
     def _get_selected(cls):
         res = []
         for i in range(3, 6):
-            with open(cls.R_FILE_SELECTED.substitute(i=i), 'rt') as file:
+            with open(cls.R_FILE_SELECTED.substitute(i=i), 'rt') as file:  # Read1
                 for line in file.read().splitlines()[1:]:
                     res.append(line.split()[0])
         return res

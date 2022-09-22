@@ -9,6 +9,7 @@ from . import Journal
 R_FILE = PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz')
 W_FILES = {'PmidToIdx': PathTemplate('$rsrc/lite/paper/article_to_index.pkl').substitute(),
            'JnlToPmids': PathTemplate('$rsrc/lite/paper/journal_to_article$index.$format')}
+_W_FILE0 = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
 
 
 class PmidToIdx(dict, metaclass=MetaLoad):
@@ -102,7 +103,9 @@ class JnlToPmids(dict, metaclass=MetaLoad):
 
 
 class ArticleFinder:
-    R_FILE = R_FILE
+    R_FILE = PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz')
+    _R_FILE0 = PathTemplate('$rsrc/lite/paper/journal_to_article.pkl').substitute()
+    _R_FILE1 = PathTemplate('$rsrc/lite/paper/article_to_index.pkl').substitute()
     J2A = None
 
     @classmethod

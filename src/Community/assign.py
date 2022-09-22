@@ -2,19 +2,26 @@ import gzip
 import pickle
 from multiprocessing import Pool
 from mypathlib import PathTemplate
-from Papers import Journal
+from Papers import Journal  # Read0
 from Patents.temp_cpc import CPCTree
 from Community.containers import Community, Manager
 
 
 R_FILE = {'patent_matches': PathTemplate('$rsrc/pdata/patent/matched/patent_$index.pkl.gz'),
           'patent': PathTemplate('$rsrc/pdata/patent/patent_$index.pkl.gz')}
-_R_FILE0 = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
+_R_FILE0 = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
+_R_FILE1 = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
+_R_FILE2 = PathTemplate('$rsrc/data/filtered/filtered.txt').substitute()
+_R_FILE3 = PathTemplate('$rsrc/lite/community/key2cmnt.pkl').substitute()
+_R_FILE4 = PathTemplate('$rsrc/lite/paper/jnls_selected.pkl').substitute()
+_R_FILE5 = PathTemplate('$rsrc/lite/patent/cpc_tree.pkl').substitute()
+_R_FILE6 = PathTemplate('$rsrc/lite/patent/cpc_selected.pkl').substitute()
+_RW_FILE = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
 
 
 def assign_paper_match(js, manager):
     for j in js:
-        for pmid, (title_matches, abstract_matches) in j.get_matches().items():
+        for pmid, (title_matches, abstract_matches) in j.get_matches().items():  # Read1
             manager.assign(pmid, 'pmid', *title_matches, *abstract_matches)
     return Community.CACHE
 
@@ -34,13 +41,13 @@ def load_patent_matches(index, selected):
 
 
 def get_p_args():
-    manager = Manager()
-    return [(js, manager) for js in Journal.journals4mp(50, selected=True)]
+    manager = Manager()  # RW(R), Read2,3
+    return [(js, manager) for js in Journal.journals4mp(50, selected=True)]  # Read4
 
 
 def get_t_args():
-    manager = Manager()
-    cpc = CPCTree(load=True)
+    manager = Manager()  # RW(R), Read2,3
+    cpc = CPCTree(load=True)  # Read5,6
     for index in range(112):
         selected = get_selected_patents(index, cpc)
         yield index, selected, manager

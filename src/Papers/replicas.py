@@ -8,9 +8,9 @@ from mypathlib import PathTemplate
 from . import START, STOP
 
 
-R_FILE = PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format)
-W_FILES = {'replica': PathTemplate('$rsrc/pdata/paper/paper_replicas.pkl'),
-           'prints': PathTemplate('$rsrc/pdata/paper/paper_replicas.txt')}
+_R_FILE = PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format)
+_W_FILES = {'replica': PathTemplate('$rsrc/pdata/paper/paper_replicas.pkl'),
+            'prints': PathTemplate('$rsrc/pdata/paper/paper_replicas.txt')}
 
 
 class Replica(dict, metaclass=MetaLoad):
@@ -106,8 +106,9 @@ def _different(s0, s1):
 
 
 class PaperReplica(Replica):
-    R_FILE = R_FILE
-    W_FILES = W_FILES
+    R_FILE = PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format)
+    LOAD_PATH = PathTemplate('$rsrc/pdata/paper/paper_replicas.pkl')
+    W_FILE = PathTemplate('$rsrc/pdata/paper/paper_replicas.txt')
     START = START
     STOP = STOP
     KEY_ATTR = 'pmid'

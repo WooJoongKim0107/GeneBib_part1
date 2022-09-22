@@ -2,7 +2,7 @@ import gzip
 import pickle
 from multiprocessing import Pool
 from mypathlib import PathTemplate
-from Papers import Journal
+from Papers import Journal  # Read0
 from UniProt.containers import Nested
 
 
@@ -16,8 +16,8 @@ NESTED = Nested.load()  # Read1
 
 def match_entire_journal(medline_ta):
     res = {}
-    journal = Journal[medline_ta]
-    for art in journal.get_articles():
+    journal = Journal(medline_ta)
+    for art in journal.get_articles():  # Read2
         title = NESTED.match_and_filter(art.title)
         abstract = NESTED.match_and_filter(art.abstract)
         if title or abstract:

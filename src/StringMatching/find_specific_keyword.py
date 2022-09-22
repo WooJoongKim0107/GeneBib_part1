@@ -19,7 +19,13 @@ from operator import attrgetter
 from more_itertools import unique_everseen
 from multiprocessing import Pool
 from mypathlib import PathTemplate
-from Papers import Journal
+from Papers import Journal  # Read0
+
+
+_R_FILE0 = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
+_R_FILE1 = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
+_R_FILE2 = PathTemplate('$rsrc/lite/paper/jnls_selected.pkl').substitute()
+_W_FILE = PathTemplate('$base/match_key_finder/${target}.logs')
 
 
 class MatchedKeywordFinder:
@@ -32,7 +38,7 @@ class MatchedKeywordFinder:
     def find_target(self, js):
         for j in js:
             done = set()
-            for pmid, matches in j.get_matches().items():
+            for pmid, matches in j.get_matches().items():  # Read1
                 for match in unique_everseen(chain(*matches), key=self._getter):
                     if (match.text not in done) and (match.text in self.targets):
                         done.add(match.text)
@@ -41,7 +47,7 @@ class MatchedKeywordFinder:
                               file=self.W_FILE.substitute(target=match.text).open('a'))
 
     def mp_find_target(self, n):
-        args = Journal.journals4mp(n, selected=True)
+        args = Journal.journals4mp(n, selected=True)  # Read2
         with Pool(n) as p:
             p.map(self.find_target, args)
 

@@ -9,6 +9,7 @@ from .replicas import PaperReplica
 
 
 R_FILE = PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format)
+_R_FILE0 = PathTemplate('$rsrc/pdata/paper/paper_replicas.pkl')
 W_FILE = PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz')
 
 

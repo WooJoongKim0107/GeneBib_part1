@@ -5,18 +5,20 @@ from lxml.etree import _Element as Element
 from lxml.etree import parse
 from mypathlib import PathTemplate
 from . import START, STOP
-from .containers import Article, Journal
+from .containers import Article, Journal  # Read0
 from .parse import parse_article, find_journal_key
 
 
 R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
+_R_FILE0 = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
 W_FILES = {'refined': PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format),
            'message': PathTemplate('$rsrc/pdata/paper/article22n$number.txt', key='{:0>4}'.format)}
 
 
 class Refine:
-    R_FILE = R_FILE
-    W_FILES = W_FILES
+    R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
+    W_FILES = {'refined': PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format),
+               'message': PathTemplate('$rsrc/pdata/paper/article22n$number.txt', key='{:0>4}'.format)}
     START = START
     STOP = STOP
     JNL = Journal

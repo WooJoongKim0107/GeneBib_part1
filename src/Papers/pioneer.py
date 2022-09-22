@@ -13,8 +13,8 @@ _W_FILE = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz')
 
 
 class Pioneer:
-    R_FILE = R_FILE
-    _W_FILE = _W_FILE
+    R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
+    _W_FILE = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz')
     START = START
     STOP = STOP
     JNL = Journal
@@ -32,7 +32,7 @@ class Pioneer:
             caches = p.map(cls.read_and_explore, range(cls.START, cls.STOP))
         cls.JNL.merge_caches(*caches)
         cls.JNL.CACHE = merge(cls.JNL.CACHE)
-        cls.JNL.export_cache()
+        cls.JNL.export_cache()  # Write
 
     @classmethod
     def read(cls, number):

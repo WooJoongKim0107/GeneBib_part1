@@ -2,11 +2,12 @@ import pickle
 from itertools import chain
 from collections import Counter
 from multiprocessing import Pool
-from Papers import Journal
+from Papers import Journal  # Read0
 from mypathlib import PathTemplate
 
 
-_R_FILE = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
+_R_FILE0 = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
+_R_FILE1 = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
 W_FILES = {'counts': PathTemplate('$rsrc/lite/match/match_counts.pkl').substitute(),
            'paths': PathTemplate('$rsrc/lite/match/matched_paths.pkl').substitute(),
            'parents': PathTemplate('$rsrc/lite/match/matched_parents.pkl').substitute(),
@@ -17,7 +18,7 @@ def get_matched_texts(j):
     res = {}
     c = Counter()
     parents = {}
-    for matches in j.get_matches().values():
+    for matches in j.get_matches().values():  # Read1
         for match in chain(*matches):
             c[match.text] += 1
             res[match.text] = match.tokens

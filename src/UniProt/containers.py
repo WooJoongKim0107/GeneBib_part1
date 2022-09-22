@@ -11,9 +11,6 @@ from mypathlib import PathTemplate
 from StringMatching.base import pluralize, tokenize, unify
 
 
-_R_FILES_ = {'keywords': PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute(),
-             'entries': PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()}
-
 # NAME_TAGS provides maps to old-style kw_type
 NAME_TAGS = {
     ('protein', 'recommendedName', 'fullName'): 0,
@@ -137,7 +134,7 @@ class Token:
 
 
 class KeyWord(str):
-    R_FILE = _R_FILES_['keywords']
+    R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
     NAME_TAGS = NAME_TAGS
     INV_TAGS = INV_TAGS
     BLACK_LIST = BLACK_LIST
@@ -211,7 +208,7 @@ class Reference:
 
 class UniProtEntry:
     __slots__ = ['name', 'accessions', '_keywords', '_references']
-    R_FILE = _R_FILES_['entries']
+    R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()
 
     def __init__(self, dct):
         self.name = dct['name']

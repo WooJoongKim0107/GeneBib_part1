@@ -41,7 +41,7 @@ class Community(metaclass=MetaCacheExt):
 
     @classmethod
     def load_entries(cls):
-        with gzip.open(cls.R_FILE, 'rb') as file:
+        with gzip.open(cls.R_FILE, 'rb') as file:  # Read
             cls.ENTRIES = pickle.load(file)
 
     def get_keywords(self):
@@ -59,8 +59,8 @@ class Key2Cmnt(dict, metaclass=MetaLoad):
 
     @classmethod
     def generate(cls):
-        Community.import_cache_if_empty(verbose=True)
-        Community.load_entries()
+        Community.import_cache_if_empty(verbose=True)  # Read0
+        Community.load_entries()  # Read1
         for cmnt in Community.values():
             for key in cmnt.get_keywords():
                 yield key, cmnt
@@ -109,6 +109,10 @@ class TextFilter(metaclass=MetaDisposal):
 
 
 class Manager:
+    _R_FILE0 = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
+    _R_FILE1 = PathTemplate('$rsrc/data/filtered/filtered.txt').substitute()
+    _R_FILE2 = PathTemplate('$rsrc/lite/community/key2cmnt.pkl').substitute()
+
     def __init__(self):
         Community.import_cache_if_empty(verbose=True)  # Read0
         TextFilter.load()  # Read1

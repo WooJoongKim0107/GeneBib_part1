@@ -7,8 +7,8 @@ from UniProt.containers import UniProtEntry, KeyWord
 
 
 R_FILE = PathTemplate('$rsrc/data/uniprot/uniprot_sprot.xml.gz')
-W_FILES = {'keywords': PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute(),
-           'entries': PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()}
+_W_FILES = {'keywords': PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute(),
+            'entries': PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()}
 
 HEADER = '{http://uniprot.org/uniprot}'
 LEN_HEADER = len(HEADER)
