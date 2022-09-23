@@ -18,8 +18,8 @@ class Replica(dict, metaclass=MetaLoad):
     Replica: dict[pmid, list[Article]] for paper, dict[pub_number, list[Patents]] for patent
     """
     R_FILE = PathTemplate('')
-    LOAD_PATH = PathTemplate('')
-    W_FILE = PathTemplate('')
+    LOAD_PATH = PathTemplate('').substitute()
+    W_FILE = PathTemplate('').substitute()
     START = 0
     STOP = 0
     KEY_ATTR = ''
@@ -27,16 +27,14 @@ class Replica(dict, metaclass=MetaLoad):
     @classmethod
     def main(cls):
         q = cls.build()  # Load(w)
-        with open(cls.W_FILE.substitute(), 'w', encoding='UTF-8') as file:  # Write
+        with open(cls.W_FILE, 'w', encoding='UTF-8') as file:  # Write
             file.write(q.full_comparison())
 
     @classmethod
     def generate(cls):
-        self = cls()
-        collected_keys = self.collect_keys()
-        self.locations = self.find_locations(collected_keys)
-        self.get_replicas(self.locations)
-        return self
+        collected_keys = cls.collect_keys()
+        locations = cls.find_locations(collected_keys)
+        return cls.get_replicas(locations)
 
     @classmethod
     def collect_keys(cls):
@@ -55,7 +53,7 @@ class Replica(dict, metaclass=MetaLoad):
         with Pool() as p:
             lst_replicas = p.starmap(cls._get_replicas, locations.items())
 
-        res = {}
+        res = cls()
         for replicas in lst_replicas:
             for key, x in replicas.items():
                 res.setdefault(key, []).extend(x)
@@ -107,8 +105,8 @@ def _different(s0, s1):
 
 class PaperReplica(Replica):
     R_FILE = PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format)
-    LOAD_PATH = PathTemplate('$rsrc/pdata/paper/paper_replicas.pkl')
-    W_FILE = PathTemplate('$rsrc/pdata/paper/paper_replicas.txt')
+    LOAD_PATH = PathTemplate('$rsrc/pdata/paper/paper_replicas.pkl').substitute()
+    W_FILE = PathTemplate('$rsrc/pdata/paper/paper_replicas.txt').substitute()
     START = START
     STOP = STOP
     KEY_ATTR = 'pmid'

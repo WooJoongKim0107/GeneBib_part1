@@ -10,8 +10,8 @@ W_FILES = {'replica': PathTemplate('$rsrc/pdata/patent/patent_replicas.pkl'),
 
 class PatentReplica(Replica):
     R_FILE = PathTemplate('$rsrc/pdata/patent/patent_202111_$number.pkl.gz', key='{:0>12}'.format)
-    LOAD_PATH = PathTemplate('$rsrc/pdata/patent/patent_replicas.pkl')
-    W_FILE = PathTemplate('$rsrc/pdata/patent/patent_replicas.txt')
+    LOAD_PATH = PathTemplate('$rsrc/pdata/patent/patent_replicas.pkl').substitute()
+    W_FILE = PathTemplate('$rsrc/pdata/patent/patent_replicas.txt').substitute()
     START = START
     STOP = STOP
     KEY_ATTR = 'pub_number'
