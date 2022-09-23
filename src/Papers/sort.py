@@ -28,7 +28,7 @@ def write(journal: Journal):
 
 def main():
     with Pool(50) as p:
-        p.starmap(write, Journal.unique_values())
+        p.map(write, Journal.unique_values())
 
 
 if __name__ == '__main__':
