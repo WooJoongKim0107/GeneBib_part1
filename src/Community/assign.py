@@ -3,7 +3,7 @@ import pickle
 from multiprocessing import Pool
 from mypathlib import PathTemplate
 from Papers import Journal  # Read0
-from Patents.temp_cpc import CPCTree
+from Patents.cpc import CPCTree
 from Community.containers import Community, Manager
 
 

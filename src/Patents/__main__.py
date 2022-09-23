@@ -5,3 +5,5 @@ if __name__ == '__main__':
     main1()
     from .merge import main as main2
     main2()
+    from .cpc import main as main3
+    main3()
