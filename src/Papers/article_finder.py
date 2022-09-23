@@ -7,8 +7,8 @@ from . import Journal
 
 
 R_FILE = PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz')
-W_FILES = {'PmidToIdx': PathTemplate('$rsrc/lite/paper/article_to_index.pkl').substitute(),
-           'JnlToPmids': PathTemplate('$rsrc/lite/paper/journal_to_article$index.$format')}
+_W_FILES = {'PmidToIdx': PathTemplate('$rsrc/lite/paper/article_to_index.pkl').substitute(),
+            'JnlToPmids': PathTemplate('$rsrc/lite/paper/journal_to_article$index.$format')}
 _W_FILE0 = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
 
 
@@ -28,7 +28,7 @@ class PmidToIdx(dict, metaclass=MetaLoad):
 
     @classmethod
     def generate(cls):
-        with Pool(5) as p:
+        with Pool(50) as p:
             pmids_pack = p.map(cls.list_up, range(cls.STOP))
 
         for index, pmids in enumerate(pmids_pack):
@@ -51,7 +51,7 @@ class JnlToPmids(dict, metaclass=MetaLoad):
 
     @classmethod
     def generate(cls):
-        with Pool(5) as p:
+        with Pool(50) as p:
             p.map(cls._write, range(cls.STOP))  # RW(W)
 
         files = [open(cls.RW_FILE.substitute(index=i), 'r') for i in range(cls.STOP)]  # RW(R)

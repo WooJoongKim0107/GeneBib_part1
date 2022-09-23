@@ -63,7 +63,7 @@ class Merge:
         cls.REPLICAS = type(cls.REPLICAS).load()  # Read0
         splits = [i for i in range(cls.START, cls.STOP, cls.STEP)] + [cls.STOP]
         args = [(index, start, stop) for index, (start, stop) in enumerate(pairwise(splits))]
-        with Pool(5) as p:
+        with Pool(50) as p:
             p.starmap(cls.merge_and_write, args)
         cls.append_repeated(args[-1][0])
 

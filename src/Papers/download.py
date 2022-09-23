@@ -21,7 +21,7 @@ def download(n):
 
 
 def main():
-    with Pool(6) as p:
+    with Pool(50) as p:
         p.map(download, list(range(START, STOP)))
 
 

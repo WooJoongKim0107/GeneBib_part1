@@ -39,7 +39,7 @@ class Refine:
 
     @classmethod
     def main(cls):
-        with Pool(6) as p:
+        with Pool(50) as p:
             p.map(cls.write, range(cls.START, cls.STOP))
 
 
