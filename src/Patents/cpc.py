@@ -179,6 +179,10 @@ def _deep_items(x):
         yield from _deep_items(v)
 
 
-if __name__ == '__main__':
+def main():
     cpc_tree = CPCTree(load=False)
     cpc_tree.dump()
+
+
+if __name__ == '__main__':
+    main()
