@@ -29,8 +29,8 @@ class Merge:
         cls.REPLICAS = replicas
         cls.KEY_ATTR = key_attr
         cls.START = start
-        cls.stop = stop
-        cls.step = step
+        cls.STOP = stop
+        cls.STEP = step
 
     @classmethod
     def read(cls, number):
