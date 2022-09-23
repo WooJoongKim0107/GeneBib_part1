@@ -9,3 +9,5 @@ if __name__ == '__main__':
     main3()
     from .sort import main as main4
     main4()
+    from .sort import main as main5
+    main5()
