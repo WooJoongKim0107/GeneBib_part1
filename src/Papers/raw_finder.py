@@ -5,7 +5,7 @@ from mypathlib import PathTemplate
 from . import START, STOP
 
 
-R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
+_R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
 
 
 class RawFinder:

@@ -9,10 +9,10 @@ from .containers import Article, Journal  # Read0
 from .parse import parse_article, find_journal_key
 
 
-R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
+_R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
 _R_FILE0 = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
-W_FILES = {'refined': PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format),
-           'message': PathTemplate('$rsrc/pdata/paper/article22n$number.txt', key='{:0>4}'.format)}
+_W_FILES = {'refined': PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format),
+            'message': PathTemplate('$rsrc/pdata/paper/article22n$number.txt', key='{:0>4}'.format)}
 
 
 class Refine:

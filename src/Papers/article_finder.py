@@ -3,13 +3,14 @@ import pickle
 from multiprocessing import Pool
 from myclass import MetaLoad
 from mypathlib import PathTemplate
-from . import Journal
+from . import Journal  # RW(R)
 
 
-R_FILE = PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz')
+_R_FILE = PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz')
 _W_FILES = {'PmidToIdx': PathTemplate('$rsrc/lite/paper/article_to_index.pkl').substitute(),
-            'JnlToPmids': PathTemplate('$rsrc/lite/paper/journal_to_article$index.$format')}
-_W_FILE0 = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
+            'JnlToPmids': PathTemplate('$rsrc/lite/paper/journal_to_article.pkl').substitute(),
+            '': PathTemplate('$rsrc/lite/paper/journal_to_article$index.txt')}
+_RW_FILE0 = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
 
 
 class PmidToIdx(dict, metaclass=MetaLoad):
@@ -138,7 +139,7 @@ class ArticleFinder:
 def main():
     PmidToIdx.build()
     JnlToPmids.build()
-    Journal.export_cache()  # Write0
+    Journal.export_cache()  # RW(W)
 
 
 if __name__ == '__main__':
