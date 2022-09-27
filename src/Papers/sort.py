@@ -13,22 +13,46 @@ _R_FILE3 = PathTemplate('$rsrc/lite/paper/article_to_index.pkl')
 _W_FILE = PathTemplate('$rsrc/pdata/paper/sorted/$journal.pkl.gz')
 
 
-def write(journal: Journal):
+def already_written(journal: Journal):
     if journal.art_path.is_file():
-        print(journal.medline_ta, ': already done')
-        return
+        with gzip.open(journal.art_path, 'rb') as file:
+            counts = pickle.load(file) - 1
+            medline_ta = pickle.load(file)
+            if counts == journal.counts and medline_ta == journal.medline_ta:
+                try:
+                    length = 0
+                    while length <= counts:  # length == num of success
+                        pickle.load(file)
+                        length += 1
+
+                except EOFError:
+                    return length == counts
+    return False
+
+
+def write(journal: Journal):
+    if already_written(journal):
+        return journal.medline_ta, 0
 
     with gzip.open(journal.art_path, 'wb') as file:  # Write
         pickle.dump(journal.counts+1, file)
         pickle.dump(journal.medline_ta, file)
+        c = 0
         for article in ArticleFinder.from_journal(journal.medline_ta):
             pickle.dump(article, file)
-    print(journal._simple_title)
+            c += 1
+        if c != journal.counts:
+            raise ValueError(f'{journal.medline_ta}: Invalid!  {journal.art_path}')
+    return journal.medline_ta, 1
 
 
 def main():
     with Pool(50) as p:
-        p.map(write, Journal.unique_values())
+        for k, code in p.imap_unordered(write, Journal.unique_values()):
+            if code:
+                print(k)
+            else:
+                print(k, ': already done')
 
 
 if __name__ == '__main__':
