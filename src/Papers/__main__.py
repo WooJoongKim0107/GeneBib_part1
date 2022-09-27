@@ -7,7 +7,7 @@ if __name__ == '__main__':
     main2()
     from .merge import main as main3
     main3()
-    from .sort import main as main4
+    from .article_finder import main as main4
     main4()
     from .sort import main as main5
     main5()
