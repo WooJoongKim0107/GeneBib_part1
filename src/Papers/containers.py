@@ -3,6 +3,7 @@ import gzip
 import pickle
 from textwrap import dedent
 from functools import cache
+from collections import Counter
 from operator import eq, contains, itemgetter, attrgetter
 import webbrowser
 from myclass import MetaCacheExt
@@ -188,7 +189,7 @@ class Journal(metaclass=MetaCacheExt):
         return bool(self.medline_ta)
 
     def __eq__(self, other):
-        return self.__dict__ == other.__dict__
+        return (self.info == other.info) or (Counter(self.info) == Counter(other.info))
 
     def __hash__(self):
         return hash(self.medline_ta)
