@@ -134,7 +134,7 @@ class Token:
 
 
 class KeyWord(str):
-    R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
+    RW_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
     NAME_TAGS = NAME_TAGS
     INV_TAGS = INV_TAGS
     BLACK_LIST = BLACK_LIST
@@ -163,7 +163,7 @@ class KeyWord(str):
     @classmethod
     def load_keywords(cls):
         """dict[KeyWord, set[UniProtEntry]]"""
-        with open(cls.R_FILE, 'rb') as file:
+        with open(cls.RW_FILE, 'rb') as file:
             return pickle.load(file)
 
     def tokenize(self):
@@ -208,7 +208,7 @@ class Reference:
 
 class UniProtEntry:
     __slots__ = ['name', 'accessions', '_keywords', '_references']
-    R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()
+    RW_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()
 
     def __init__(self, dct):
         self.name = dct['name']
@@ -247,13 +247,13 @@ class UniProtEntry:
 
     @classmethod
     def load_entries(cls):
-        with gzip.open(cls.R_FILE, 'rb') as file:
+        with gzip.open(cls.RW_FILE, 'rb') as file:
             return pickle.load(file)
 
 
 class Nested(dict, metaclass=MetaLoad):
     R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
-    LOAD_PATH = PathTemplate('$rsrc/pdata/uniprot/nested.pkl')
+    LOAD_PATH = PathTemplate('$rsrc/pdata/uniprot/nested.pkl').substitute()
 
     def match_and_filter(self, target_text):
         target_match_list = list(self.strict_matches(target_text))

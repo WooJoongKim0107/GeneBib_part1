@@ -99,11 +99,11 @@ def main():
         root = etree_parse(file).getroot()[:-1]
 
     parsed = parse_and_wrap(root)
-    with gzip.open(UniProtEntry.R_FILE, 'wb') as file:
+    with gzip.open(UniProtEntry.RW_FILE, 'wb') as file:
         pickle.dump(parsed, file)
 
     keywords = extract_keywords(parsed)
-    with open(KeyWord.R_FILE, 'wb') as file:
+    with open(KeyWord.RW_FILE, 'wb') as file:
         pickle.dump(keywords, file)
 
 
