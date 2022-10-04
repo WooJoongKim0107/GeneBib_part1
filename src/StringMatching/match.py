@@ -25,12 +25,13 @@ def match_entire_journal(medline_ta):
 
     with gzip.open(journal.match_path, 'wb') as file:
         pickle.dump(res, file)
-    print(medline_ta)
+    return medline_ta
 
 
 def main():
     with Pool(50) as p:
-        p.map(match_entire_journal, Journal.unique_keys())
+        for medline_ta in p.imap_unordered(match_entire_journal, Journal.unique_keys()):
+            print(medline_ta+'\n', end='')
 
 
 if __name__ == '__main__':
