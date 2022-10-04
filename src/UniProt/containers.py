@@ -159,7 +159,7 @@ class KeyWord(str):
 
     @classmethod
     def load(cls):
-        """dict[KeyWord, set[UniProtEntry]]"""
+        """dict[KeyWord, set[Entry]]"""
         with open(cls.RW_FILE, 'rb') as file:
             return pickle.load(file)
 
@@ -203,7 +203,7 @@ class Reference:
         return f'Reference(type={self.type}, pub_date={self.pub_date})'
 
 
-class UniProtEntry(metaclass=MetaCacheExt):
+class Entry(metaclass=MetaCacheExt):
     __slots__ = ['key_acc', 'name', 'accessions', '_keywords', '_references']
     CACHE_PATH = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()
 
@@ -226,7 +226,7 @@ class UniProtEntry(metaclass=MetaCacheExt):
         self._references = [x for x in dct['refs']]
 
     def __repr__(self):
-        return f"UniProtEntry({self.name}, {self.key_acc})"
+        return f"Entry({self.name}, {self.key_acc})"
 
     @property
     def keywords(self):

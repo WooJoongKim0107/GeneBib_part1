@@ -3,7 +3,7 @@ import pickle
 from xml.etree.ElementTree import Element
 from xml.etree.ElementTree import parse as etree_parse
 from mypathlib import PathTemplate
-from UniProt.containers import UniProtEntry, KeyWord
+from UniProt.containers import Entry, KeyWord
 
 
 R_FILE = PathTemplate('$rsrc/data/uniprot/uniprot_sprot.xml.gz')
@@ -80,12 +80,12 @@ def simple_parse(entry_elt):
 
 def fill_cache(x: Element):
     for elt in x:
-        UniProtEntry.from_parse(simple_parse(elt))
+        Entry.from_parse(simple_parse(elt))
 
 
 def extract_keywords():
     keywords = {}
-    for key_acc, entry in UniProtEntry.items():
+    for key_acc, entry in Entry.items():
         for k in entry.keywords:
             keywords.setdefault(k, set()).add(key_acc)
     return keywords
@@ -96,7 +96,7 @@ def main():
         root = etree_parse(file).getroot()[:-1]
 
     fill_cache(root)
-    UniProtEntry.export_cache()
+    Entry.export_cache()
 
     keywords = extract_keywords()
     with open(KeyWord.RW_FILE, 'wb') as file:
