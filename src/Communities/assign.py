@@ -4,7 +4,7 @@ from multiprocessing import Pool
 from mypathlib import PathTemplate
 from Papers import Journal  # Read0
 from Patents.cpc import CPCTree
-from Community.containers import Community, Manager
+from Communities.containers import Community, Manager
 
 
 R_FILE = {'patent_matches': PathTemplate('$rsrc/pdata/patent/matched/patent_$index.pkl.gz'),

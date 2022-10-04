@@ -1,6 +1,6 @@
 import pickle
 from mypathlib import PathTemplate
-from Community.containers import Community, Key2Cmnt, UnifyEqKeys
+from Communities.containers import Community, Key2Cmnt, UnifyEqKeys
 
 
 R_FILES = {'c2e': PathTemplate('$rsrc/data/community/update_curated_cmnt_map_220914.pkl').substitute(),
