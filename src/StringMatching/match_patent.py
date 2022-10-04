@@ -25,12 +25,13 @@ def match_entire_file(index):
 
     with gzip.open(W_FILE.substitute(index=index), 'wb') as file:
         pickle.dump(res, file)
-    print(index)
+    return index
 
 
 def main():
     with Pool(50) as p:
-        p.map(match_entire_file, range(112))
+        for index in p.imap_unordered(match_entire_file, range(112)):
+            print(f'{index}\n', end='')
 
 
 if __name__ == '__main__':
