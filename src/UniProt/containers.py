@@ -250,6 +250,9 @@ class UniProtEntry(metaclass=MetaCacheExt):
             References: {_print_refs(self.references)}
         """)
 
+    def __getnewargs__(self):
+        return self.key_acc, False
+
 
 class Nested(dict, metaclass=MetaLoad):
     _R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
