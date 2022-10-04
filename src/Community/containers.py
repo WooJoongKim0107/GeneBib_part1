@@ -1,16 +1,12 @@
-import gzip
-import pickle
 from collections.abc import Iterable
 from myclass import MetaCacheExt, MetaLoad, MetaDisposal
 from mypathlib import PathTemplate
-from UniProt.containers import Match
+from UniProt.containers import Match, KeyWord
 from StringMatching.base import unify
 
 
 class Community(metaclass=MetaCacheExt):
-    R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()
     CACHE_PATH = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
-    ENTRIES = {}
 
     def __new__(cls, cmnt_idx: int, caching=True):
         """__new__ method must not be skipped - Assertion of MetaCacheExt"""
@@ -41,46 +37,29 @@ class Community(metaclass=MetaCacheExt):
         new.entries = list(entries)
         new.keywords = UnifyEqKeys.all_equivalents(unified_keywords)
 
-    @classmethod
-    def load_entries(cls):
-        with gzip.open(cls.R_FILE, 'rb') as file:  # Read
-            cls.ENTRIES = pickle.load(file)
-
-    """
-    def get_keywords(self):
-        entries = [self.ENTRIES[ent] for ent in self.entries if ent in self.ENTRIES]
-        keywords = {k for ent in entries for k in ent.keywords}
-        tobe_added = set().union(*(ent.added_keywords for ent in entries))
-        tobe_removed = set().union(*(ent.removed_keywords for ent in entries))
-        return keywords | tobe_added - tobe_removed
-    """
-
 
 class Key2Cmnt(dict, metaclass=MetaLoad):
     _R_FILE0 = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
-    _R_FILE1 = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()
     LOAD_PATH = PathTemplate('$rsrc/lite/community/key2cmnt.pkl').substitute()
 
     @classmethod
     def generate(cls):
         Community.import_cache_if_empty(verbose=True)  # Read0
-        Community.load_entries()  # Read1
         for cmnt in Community.values():
             for key in cmnt.keywords:
                 yield key, cmnt.cmnt_idx
 
 
 class UnifyEqKeys(metaclass=MetaDisposal):
-    R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
+    _R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
     DATA = {}
 
     @classmethod
     def load(cls):
         """.load() or .safe_load() must be called before .all_equivalents()"""
-        with open(cls.R_FILE, 'rb') as file:  # Read
-            for keyw in pickle.load(file):
-                match_key = unify(keyw)
-                cls.DATA.setdefault(match_key, set()).add(str(keyw))
+        for keyw in KeyWord.load():  # Read
+            match_key = unify(keyw)
+            cls.DATA.setdefault(match_key, set()).add(str(keyw))
 
     @classmethod
     def all_equivalents(cls, keywords: Iterable[str]):

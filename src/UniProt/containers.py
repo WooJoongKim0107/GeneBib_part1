@@ -1,12 +1,11 @@
 import re
-import gzip
 import pickle
 from textwrap import dedent
 from itertools import chain
 from collections import namedtuple
 from dataclasses import dataclass, field
 from more_itertools import nth
-from myclass import MetaLoad
+from myclass import MetaLoad, MetaCacheExt
 from mypathlib import PathTemplate
 from StringMatching.base import pluralize, tokenize, unify
 
@@ -159,7 +158,7 @@ class KeyWord(str):
             yield self.as_greek_plural()
 
     @classmethod
-    def load_keywords(cls):
+    def load(cls):
         """dict[KeyWord, set[UniProtEntry]]"""
         with open(cls.RW_FILE, 'rb') as file:
             return pickle.load(file)
@@ -204,11 +203,23 @@ class Reference:
         return f'Reference(type={self.type}, pub_date={self.pub_date})'
 
 
-class UniProtEntry:
-    __slots__ = ['name', 'accessions', '_keywords', '_references']
-    RW_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()
+class UniProtEntry(metaclass=MetaCacheExt):
+    __slots__ = ['key_acc', 'name', 'accessions', '_keywords', '_references']
+    CACHE_PATH = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()
 
-    def __init__(self, dct):
+    def __new__(cls, key_acc, caching=True):
+        return super().__new__(cls)
+
+    def __init__(self, key_acc, caching=True):
+        self.key_acc = key_acc
+        self.name: str = ''
+        self.accessions: list[str] = []
+        self._keywords: list[tuple[str, str]] = []
+        self._references: list[dict] = []
+
+    @classmethod
+    def from_parse(cls, dct):
+        self = cls(dct['accessions'][0])
         self.name = dct['name']
         self.accessions = dct['accessions']
         self._keywords = [(KeyWord.NAME_TAGS[key_type], v) for (key_type, v) in chain(dct['proteins'], dct['genes'])]
@@ -216,10 +227,6 @@ class UniProtEntry:
 
     def __repr__(self):
         return f"UniProtEntry({self.name}, {self.key_acc})"
-
-    @property
-    def key_acc(self):
-        return self.accessions[0]
 
     @property
     def keywords(self):
@@ -243,14 +250,9 @@ class UniProtEntry:
             References: {_print_refs(self.references)}
         """)
 
-    @classmethod
-    def load_entries(cls):
-        with gzip.open(cls.RW_FILE, 'rb') as file:
-            return pickle.load(file)
-
 
 class Nested(dict, metaclass=MetaLoad):
-    R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
+    _R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
     LOAD_PATH = PathTemplate('$rsrc/pdata/uniprot/nested.pkl').substitute()
 
     def match_and_filter(self, target_text):
@@ -297,10 +299,8 @@ class Nested(dict, metaclass=MetaLoad):
 
     @classmethod
     def generate(cls):
-        with open(cls.R_FILE, 'rb') as file:
-            keywords: dict[KeyWord, list[str]] = pickle.load(file)
-
         nested = super().__new__(cls)
+        keywords: dict[KeyWord, list[str]] = KeyWord.load()
         for kw, key_accs in keywords.items():
             if kw.is_valid():
                 for tokens, joined in kw.get_all_alternatives():

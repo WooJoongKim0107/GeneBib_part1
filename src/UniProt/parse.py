@@ -78,17 +78,14 @@ def simple_parse(entry_elt):
                 refs=[parse_ref(elt) for elt in x['reference']],)
 
 
-def parse_and_wrap(x: Element):
-    refactored = {}
+def fill_cache(x: Element):
     for elt in x:
-        entry = UniProtEntry(simple_parse(elt))
-        refactored[entry.key_acc] = entry
-    return refactored
+        UniProtEntry.from_parse(simple_parse(elt))
 
 
-def extract_keywords(parsed):
+def extract_keywords():
     keywords = {}
-    for key_acc, entry in parsed.items():
+    for key_acc, entry in UniProtEntry.items():
         for k in entry.keywords:
             keywords.setdefault(k, set()).add(key_acc)
     return keywords
@@ -98,11 +95,10 @@ def main():
     with gzip.open(R_FILE.substitute(), 'rb') as file:
         root = etree_parse(file).getroot()[:-1]
 
-    parsed = parse_and_wrap(root)
-    with gzip.open(UniProtEntry.RW_FILE, 'wb') as file:
-        pickle.dump(parsed, file)
+    fill_cache(root)
+    UniProtEntry.export_cache()
 
-    keywords = extract_keywords(parsed)
+    keywords = extract_keywords()
     with open(KeyWord.RW_FILE, 'wb') as file:
         pickle.dump(keywords, file)
 
