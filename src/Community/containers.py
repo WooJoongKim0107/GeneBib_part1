@@ -20,8 +20,8 @@ class Community(metaclass=MetaCacheExt):
         self.cmnt_idx: int = cmnt_idx
         self.entries: list[str] = []
         self.keywords: set[str] = set()
-        self.pmids: set[int] = set()
-        self.pub_numbers: set[str] = set()
+        self.pmids: dict[str, set[int]] = {}
+        self.pub_numbers: dict[str, set[str]] = {}
 
     def __getnewargs__(self):
         """__getnewargs__ must not be deleted - Assertion of MetaCacheExt"""
@@ -30,13 +30,15 @@ class Community(metaclass=MetaCacheExt):
     def merge(self, cmnt):
         """Method to merge another Community instance to itself
         This method must not be deleted or renamed - Assertion of MetaCacheExt"""
-        self.pmids.update(cmnt.pmids)
-        self.pub_numbers.update(cmnt.pub_numbers)
+        for k, v in cmnt.pmids.items():
+            self.pmids.setdefault(k, set()).update(v)
+        for k, v in cmnt.pub_numbers.items():
+            self.pub_numbers.setdefault(k, set()).update(v)
 
     @classmethod
     def from_parse(cls, cmnt_idx: int, entries: tuple[str], unified_keywords: set[str]):
         new = cls(cmnt_idx)
-        new.entries = [cls.ENTRIES[ent] for ent in entries]
+        new.entries = list(entries)
         new.keywords = UnifyEqKeys.all_equivalents(unified_keywords)
 
     @classmethod
@@ -44,12 +46,14 @@ class Community(metaclass=MetaCacheExt):
         with gzip.open(cls.R_FILE, 'rb') as file:  # Read
             cls.ENTRIES = pickle.load(file)
 
+    """
     def get_keywords(self):
-        entries = [self.ENTRIES[ent] for ent in self.entries]
+        entries = [self.ENTRIES[ent] for ent in self.entries if ent in self.ENTRIES]
         keywords = {k for ent in entries for k in ent.keywords}
         tobe_added = set().union(*(ent.added_keywords for ent in entries))
         tobe_removed = set().union(*(ent.removed_keywords for ent in entries))
         return keywords | tobe_added - tobe_removed
+    """
 
 
 class Key2Cmnt(dict, metaclass=MetaLoad):
@@ -62,8 +66,8 @@ class Key2Cmnt(dict, metaclass=MetaLoad):
         Community.import_cache_if_empty(verbose=True)  # Read0
         Community.load_entries()  # Read1
         for cmnt in Community.values():
-            for key in cmnt.get_keywords():
-                yield key, cmnt
+            for key in cmnt.keywords:
+                yield key, cmnt.cmnt_idx
 
 
 class UnifyEqKeys(metaclass=MetaDisposal):
@@ -74,14 +78,14 @@ class UnifyEqKeys(metaclass=MetaDisposal):
     def load(cls):
         """.load() or .safe_load() must be called before .all_equivalents()"""
         with open(cls.R_FILE, 'rb') as file:  # Read
-            for keyw in pickle.load(file).values():
+            for keyw in pickle.load(file):
                 match_key = unify(keyw)
                 cls.DATA.setdefault(match_key, set()).add(str(keyw))
 
     @classmethod
     def all_equivalents(cls, keywords: Iterable[str]):
         """.load() or .safe_load() must be called before .all_equivalents()"""
-        it = (cls.DATA[k] for k in keywords)
+        it = (cls.DATA.get(k, k) for k in keywords)  # TODO run UniProt & StringMatching again with modification
         return set().union(*it)
 
 
@@ -121,16 +125,17 @@ class Manager:
     def assign(self, key, attr, *matches):
         already = set()
         for match in matches:
-            for cmnt in self.which_cmnts(match):
-                if cmnt.cmnt_idx not in already:
-                    already.add(cmnt.cmnt_idx)
-                    getattr(cmnt, attr).append(key)
+            for keyword, cmnt_idx in self.which(match):
+                if cmnt_idx not in already:
+                    already.add(cmnt_idx)
+                    getattr(Community[cmnt_idx], attr).setdefault(keyword, set()).add(key)
         return already
 
-    def which_cmnts(self, match: Match):
+    def which(self, match: Match):
         if TextFilter.isvalid(match.text):
             for keyword in match.keywords:
-                yield self.k2c[keyword]
+                if keyword in self.k2c:
+                    yield keyword, self.k2c[keyword]
 
     def all_cmnts_in(self, *matches):
-        return {cmnt for match in matches for cmnt in self.which_cmnts(match)}
+        return {cmnt for match in matches for key, cmnt in self.which(match)}

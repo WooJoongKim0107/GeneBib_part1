@@ -22,19 +22,21 @@ _RW_FILE = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitu
 def assign_paper_match(js, manager):
     for j in js:
         for pmid, (title_matches, abstract_matches) in j.get_matches().items():  # Read1
-            manager.assign(pmid, 'pmid', *title_matches, *abstract_matches)
+            manager.assign(pmid, 'pmids', *title_matches, *abstract_matches)
     return Community.CACHE
 
 
-def assign_patent_match(index, selected, manager):
+def assign_patent_match(arg):
+    index, selected, manager = arg
     for pub_number, (title_matches, abstract_matches) in load_patent_matches(index, selected):
-        manager.assign(pub_number, 'pub_number', *title_matches, *abstract_matches)
+        manager.assign(pub_number, 'pub_numbers', *title_matches, *abstract_matches)
     return Community.CACHE
 
 
 def load_patent_matches(index, selected):
     with gzip.open(R_FILE['patent_matches'].substitute(index=index), 'rb') as file:
         res = pickle.load(file)
+
     for pub_number, (title_matches, abstract_matches) in res.items():
         if pub_number in selected:
             yield pub_number, (title_matches, abstract_matches)
@@ -48,9 +50,9 @@ def get_p_args():
 def get_t_args():
     manager = Manager()  # RW(R), Read2,3
     cpc = CPCTree(load=True)  # Read5,6
-    for index in range(112):
-        selected = get_selected_patents(index, cpc)
-        yield index, selected, manager
+    with Pool(10) as p:
+        selected_patents = p.starmap(get_selected_patents, iter((i, cpc) for i in range(112)))
+    return [(i, selected, manager) for i, selected in enumerate(selected_patents)]
 
 
 def get_selected_patents(index, cpc: CPCTree):
@@ -66,9 +68,9 @@ def main():
     Community.merge_caches(*caches)
 
     t_args = get_t_args()
-    with Pool(50) as p:
-        caches = p.starmap(assign_patent_match, t_args)
-    Community.merge_caches(*caches)
+    with Pool(10) as p:
+        for cache in p.imap_unordered(assign_patent_match, t_args):
+            Community.merge_caches(cache)
     Community.export_cache()
 
 

@@ -23,7 +23,7 @@ def match_entire_journal(medline_ta):
         if title or abstract:
             res[art.pmid] = title, abstract
 
-    with gzip.open(journal.match_path(), 'wb') as file:
+    with gzip.open(journal.match_path, 'wb') as file:
         pickle.dump(res, file)
     print(medline_ta)
 

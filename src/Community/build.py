@@ -3,8 +3,8 @@ from mypathlib import PathTemplate
 from Community.containers import Community, Key2Cmnt, UnifyEqKeys
 
 
-R_FILES = {'c2e': PathTemplate('$data/community/update_curated_cmnt_map_220914.pkl').substitute(),
-           'c2k': PathTemplate('$data/community/cmnt_to_keyw_matchform_220915.pkl').substitute()}
+R_FILES = {'c2e': PathTemplate('$rsrc/data/community/update_curated_cmnt_map_220914.pkl').substitute(),
+           'c2k': PathTemplate('$rsrc/data/community/cmnt_to_keyw_matchform_220915.pkl').substitute()}
 _R_FILE0 = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
 _R_FILE1 = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()
 _W_FILE0 = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
