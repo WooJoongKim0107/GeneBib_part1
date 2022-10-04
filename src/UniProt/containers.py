@@ -149,16 +149,14 @@ class KeyWord(str):
     def type_tuple(self):
         return self.INV_TAGS[self.type]
 
-    def get_all_tokens(self):
-        match self.greek_exist(), self.is_protein():
-            case False, False:
-                return [self.tokenize()]
-            case False, True:
-                return [self.tokenize(), self.as_plural()]
-            case True, False:
-                return [self.tokenize(), self.as_greek()]
-            case True, True:
-                return [self.tokenize(), self.as_greek(), self.as_plural(), self.as_greek_plural()]
+    def get_all_alternatives(self):
+        yield self.tokenize()
+        if g := self.greek_exist():
+            yield self.as_greek()
+        if p := self.is_protein():
+            yield self.as_plural()
+        if g and p:
+            yield self.as_greek_plural()
 
     @classmethod
     def load_keywords(cls):
@@ -256,18 +254,10 @@ class Nested(dict, metaclass=MetaLoad):
     LOAD_PATH = PathTemplate('$rsrc/pdata/uniprot/nested.pkl').substitute()
 
     def match_and_filter(self, target_text):
-        target_match_list = list(self.strict_matches(target_text))
+        target_match_list = list(self.find_matches(target_text))
         target_match_list.sort(key=_sort_key)
         filter_smaller(target_match_list)
         return target_match_list
-
-    def extend(self, lower_tokens, joined, key_accs, keywords):
-        cur = self
-        for lower_token in lower_tokens:
-            cur = cur.setdefault(lower_token, {})
-        val = cur.setdefault(-1, {}).setdefault(joined, [set(), set()])
-        val[0].update(key_accs)
-        val[1].add(keywords)
 
     def get_from_tuple(self, tuple_of_keys):
         cur = self
@@ -287,28 +277,23 @@ class Nested(dict, metaclass=MetaLoad):
     def deep_items(self):
         return deep_items(self)
 
-    def strict_matches(self, text):
+    def find_matches(self, text):
         indices, tokens = tokenize(text)
         for i, (start, _) in enumerate(indices):  # i=token index, idx=location on target_text
-            for unified, (entries, keywords), matched_tokens in self._strict_matches(tokens[i:]):
+            for matched_tokens, (entries, keywords) in self._matches(tokens[i:]):
                 _, end = indices[i + len(matched_tokens) - 1]
                 matched_text = text[start:end]
-                yield Match(matched_tokens, unified, entries, keywords, (start, end), matched_text)
+                yield Match(matched_tokens, entries, keywords, (start, end), matched_text)
 
-    def _strict_matches(self, tokens):
-        for joined2ents_keyws, matched_tokens in self._matches(tuple(token.lower() for token in tokens)):
-            raw_joined = unify(''.join(tokens[:len(matched_tokens)]))
-            if raw_joined in joined2ents_keyws:
-                yield raw_joined, joined2ents_keyws[raw_joined], matched_tokens
-
-    def _matches(self, lower_tokens):
-        i = 0
-        cur = self
-        while i < len(lower_tokens) and (lower_token := lower_tokens[i]) in cur:
+    def _matches(self, tokens):
+        i, cur = 0, self
+        while i < len(tokens) and (lower := tokens[i].lower()) in cur:
             i += 1
-            cur = cur[lower_token]
+            cur = cur[lower]
             if -1 in cur:
-                yield cur[-1], lower_tokens[:i]
+                matched = tokens[:i]
+                if origins := cur[-1].get(Token.join(matched)):
+                    yield matched, origins
 
     @classmethod
     def generate(cls):
@@ -318,13 +303,21 @@ class Nested(dict, metaclass=MetaLoad):
         nested = super().__new__(cls)
         for kw, key_accs in keywords.items():
             if kw.is_valid():
-                for tokens, joined in kw.get_all_tokens():
+                for tokens, joined in kw.get_all_alternatives():
                     lower_tokens = tuple(token.lower() for token in tokens)
                     nested.extend(lower_tokens, joined, key_accs, str(kw))
         return nested
 
+    def extend(self, lower_tokens, joined, key_accs, keywords):
+        cur = self
+        for lower_token in lower_tokens:
+            cur = cur.setdefault(lower_token, {})
+        val = cur.setdefault(-1, {}).setdefault(joined, [set(), set()])
+        val[0].update(key_accs)
+        val[1].add(keywords)
 
-Match = namedtuple('Match', ['tokens', 'unified', 'entries', 'keywords', 'spans', 'text'])
+
+Match = namedtuple('Match', ['tokens', 'entries', 'keywords', 'spans', 'text'])
 
 
 def _sort_key(match: Match):
