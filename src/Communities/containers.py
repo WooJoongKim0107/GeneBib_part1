@@ -1,4 +1,5 @@
 from collections.abc import Iterable
+from textwrap import dedent
 from myclass import MetaCacheExt, MetaLoad, MetaDisposal
 from mypathlib import PathTemplate
 from UniProt.containers import Match, KeyWord
@@ -7,6 +8,9 @@ from StringMatching.base import unify
 
 class Community(metaclass=MetaCacheExt):
     CACHE_PATH = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
+
+    def __repr__(self):
+        return f"Community({self.cmnt_idx})"
 
     def __new__(cls, cmnt_idx: int, caching=True):
         """__new__ method must not be skipped - Assertion of MetaCacheExt"""
@@ -36,6 +40,16 @@ class Community(metaclass=MetaCacheExt):
         new = cls(cmnt_idx)
         new.entries = list(entries)
         new.keywords = UnifyEqKeys.all_equivalents(unified_keywords)
+
+    @property
+    def info(self):
+        return dedent(f"""\
+        {self}
+               Entries: {_print_set(self.entries)}
+              Keywords: {_print_set(self.keywords)}
+            Paper_hits: {sum(v for v in self.pmids.values())}
+           Patent_hits: {sum(v for v in self.pub_numbers.values())}
+        """)
 
 
 class Key2Cmnt(dict, metaclass=MetaLoad):
@@ -118,3 +132,12 @@ class Manager:
 
     def all_cmnts_in(self, *matches):
         return {cmnt for match in matches for key, cmnt in self.which(match)}
+
+
+def _print_set(s):
+    if len(s) == 1:
+        return str(next(iter(s)))
+    elif s:
+        return s
+    else:
+        return ''
