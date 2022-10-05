@@ -47,8 +47,8 @@ class Community(metaclass=MetaCacheExt):
         {self}
                Entries: {_print_set(self.entries)}
               Keywords: {_print_set(self.keywords)}
-            Paper_hits: {sum(v for v in self.pmids.values())}
-           Patent_hits: {sum(v for v in self.pub_numbers.values())}
+            Paper_hits: {sum(len(v) for v in self.pmids.values())}
+           Patent_hits: {sum(len(v) for v in self.pub_numbers.values())}
         """)
 
 
