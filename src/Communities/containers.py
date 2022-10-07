@@ -78,7 +78,8 @@ class UnifyEqKeys(metaclass=MetaDisposal):
     @classmethod
     def all_equivalents(cls, keywords: Iterable[str]):
         """.load() or .safe_load() must be called before .all_equivalents()"""
-        it = (cls.DATA.get(k, k) for k in keywords)  # TODO run UniProt & StringMatching again with modification
+        # it = (cls.DATA.get(k, {k}) for k in keywords)  # if you want to include old-DB-only keywords
+        it = (cls.DATA[k] for k in keywords if k in cls.DATA)
         return set().union(*it)
 
 
