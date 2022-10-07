@@ -4,7 +4,6 @@ from textwrap import dedent
 from itertools import chain
 from collections import namedtuple
 from dataclasses import dataclass, field
-from more_itertools import nth
 from myclass import MetaLoad, MetaCacheExt
 from mypathlib import PathTemplate
 from StringMatching.base import pluralize, tokenize, unify
@@ -345,34 +344,6 @@ def deep_items(x, keys=()):
             yield keys, v
         else:
             yield from deep_items(v, keys=(*keys, k))
-
-
-class Unip(dict):
-    """
-    {lower_token -> index; for all tokens from UniProtKB entries}
-    Index is an integer assigned to each token in insertion order.
-
-    This class is not used anymore, but left for future debugging.
-    """
-    def append(self, lower_token):
-        return self.setdefault(lower_token, len(self))
-
-    def extend(self, lower_tokens):
-        for lower_token in lower_tokens:
-            self.append(lower_token)
-
-    def find(self, index):
-        return nth(self.values(), index)
-
-
-class Unif(dict):
-    """
-    {index chain -> joined tokens; for all chains from UniProtKB entries}
-
-    This class is not used anymore, but left for future debugging.
-    """
-    def extend(self, lower_tokens, value):
-        self.setdefault(lower_tokens, set()).add(value)
 
 
 def _print_set(s):
