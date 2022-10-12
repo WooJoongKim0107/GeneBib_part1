@@ -1,5 +1,6 @@
 import pickle
 import tarfile
+from collections.abc import Iterable
 from pathlib import Path
 
 
@@ -9,6 +10,10 @@ class TarWrite:
         self.mode = mode
         self.tar_file: None | tarfile.TarFile = None
         self.paths = []
+
+    def extend(self, paths: Iterable[Path]):
+        for path in paths:
+            self.add(path)
 
     def add(self, path: Path):
         self.tar_file.add(path, arcname=path.name)
@@ -55,11 +60,10 @@ if __name__ == '__main__':
         return pt.substitute(n=x)
 
     with Pool(5) as p:
-        paths = p.map(main, range(5, 10))
+        paths_ = p.map(main, range(5, 10))
 
     with TarWrite('TarWriteMpTest.tar', 'w') as q:
-        for path in paths:
-            q.add(path)
+        q.extend(paths_)
 
     # Usage 3rd: With multiprocessing.Pool.imap
     with TarWrite('TarWriteMpTest.tar', 'a') as q:
