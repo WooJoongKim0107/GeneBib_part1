@@ -11,7 +11,7 @@ def main():
     Community.import_cache()
     q = {}
     for k, v in Community.items():
-        for pmid in chain(*c.pmids.values()):
+        for pmid in chain(*v.pmids.values()):
             q.setdefault(pmid, set()).add(k)
 
     with open(W_FILE, 'wb') as file:

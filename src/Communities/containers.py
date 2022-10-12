@@ -42,13 +42,21 @@ class Community(metaclass=MetaCacheExt):
         new.keywords = UnifyEqKeys.all_equivalents(unified_keywords)
 
     @property
+    def paper_hits(self):
+        return sum(len(v) for v in self.pmids.values())
+
+    @property
+    def patent_hits(self):
+        return sum(len(v) for v in self.pub_numbers.values())
+
+    @property
     def info(self):
         return dedent(f"""\
         {self}
                Entries: {_print_set(self.entries)}
               Keywords: {_print_set(self.keywords)}
-            Paper_hits: {sum(len(v) for v in self.pmids.values())}
-           Patent_hits: {sum(len(v) for v in self.pub_numbers.values())}
+            Paper_hits: {self.paper_hits}
+           Patent_hits: {self.patent_hits}
         """)
 
 
@@ -119,17 +127,17 @@ class Manager:
     def assign(self, key, attr, *matches):
         already = set()
         for match in matches:
-            for keyword, cmnt_idx in self.which(match):
+            for text, cmnt_idx in self.which(match):
                 if cmnt_idx not in already:
                     already.add(cmnt_idx)
-                    getattr(Community[cmnt_idx], attr).setdefault(keyword, set()).add(key)
+                    getattr(Community[cmnt_idx], attr).setdefault(text, set()).add(key)
         return already
 
     def which(self, match: Match):
         if TextFilter.isvalid(match.text):
             for keyword in match.keywords:
                 if keyword in self.k2c:
-                    yield keyword, self.k2c[keyword]
+                    yield match.text, self.k2c[keyword]
 
     def all_cmnts_in(self, *matches):
         return {cmnt for match in matches for key, cmnt in self.which(match)}
