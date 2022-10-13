@@ -26,8 +26,7 @@ def assign_paper_match(js, manager):
     return Community.CACHE
 
 
-def assign_patent_match(arg):
-    index, selected, manager = arg
+def assign_patent_match(index, selected, manager):
     for pub_number, (title_matches, abstract_matches) in load_patent_matches(index, selected):
         manager.assign(pub_number, 'pub_numbers', *title_matches, *abstract_matches)
     return Community.CACHE
@@ -65,12 +64,12 @@ def main():
     p_args = get_p_args()
     with Pool(50) as p:
         caches = p.starmap(assign_paper_match, p_args)
-    Community.merge_caches(*caches)
+    Community.replace_cache(caches)
 
     t_args = get_t_args()
     with Pool(10) as p:
-        for cache in p.imap_unordered(assign_patent_match, t_args):
-            Community.merge_caches(cache)
+        caches = p.starmap(assign_patent_match, t_args)
+    Community.replace_cache(caches)
     Community.export_cache()
 
 

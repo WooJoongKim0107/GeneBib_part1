@@ -59,8 +59,9 @@ class MetaCache(type):
             with gzip.open(path, 'rb') as file:
                 self.CACHE.update(pickle.load(file))
 
-    def merge_caches(self, *caches):
+    def replace_cache(self, caches: list | tuple):
         assert 'merge' in dir(self), f'Merging {self.__name__} cache failed: {self.__name__}.merge does not exist.'
+        assert isinstance(caches, (list, tuple)), f'Argument of {type(self)}.replace_cache() must be list or tuple'
         anchor = caches[0].copy()
         for cache in caches[1:]:
             self._update_cache(anchor, cache)
@@ -146,11 +147,11 @@ if __name__ == '__main__':
         with Pool(5) as p:
             caches = p.map(part1, range(100))
         # Foo(i).x == {i} in main process, but caches[i][i].x == {i, i**2}
-        Foo.merge_caches(*caches)
+        Foo.replace_cache(caches)
         # Foo(i).x == {i, i**2}
         with Pool(5) as p:
             caches = p.map(part2, range(100))
         # Foo(i).x == {i, i**2} in main process, but caches[i][i].x == {i, i**2, i**3}
-        Foo.merge_caches(*caches)
+        Foo.replace_cache(caches)
         # Foo(i).x == {i, i**2, i**3}
         Foo.export_cache()

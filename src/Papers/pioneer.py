@@ -30,7 +30,7 @@ class Pioneer:
     def main(cls):
         with Pool(50) as p:
             caches = p.map(cls.read_and_explore, range(cls.START, cls.STOP))
-        cls.JNL.merge_caches(*caches)
+        cls.JNL.replace_cache(caches)
         cls.JNL.CACHE = merge(cls.JNL.CACHE)
         cls.JNL.export_cache()  # Write
 
