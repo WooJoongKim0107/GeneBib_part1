@@ -157,7 +157,7 @@ class Journal(metaclass=MetaCacheExt):
 
     def get_matches(self):
         with gzip.open(self.match_path) as f:
-            return pickle.load(f)
+            return pickle.load(f)  # {pmid -> (title_matches, abstract_matches)}
 
     @property
     def info(self):

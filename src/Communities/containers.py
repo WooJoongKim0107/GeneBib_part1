@@ -1,5 +1,5 @@
 from collections.abc import Iterable
-from textwrap import dedent
+from textwrap import dedent, indent
 from myclass import MetaCacheExt, MetaLoad, MetaDisposal
 from mypathlib import PathTemplate
 from UniProt.containers import Match, KeyWord
@@ -43,11 +43,26 @@ class Community(metaclass=MetaCacheExt):
 
     @property
     def paper_hits(self):
-        return sum(len(v) for v in self.pmids.values())
+        return {k: len(v) for k, v in self.pmids.items()}
 
     @property
     def patent_hits(self):
-        return sum(len(v) for v in self.pub_numbers.values())
+        return {k: len(v) for k, v in self.pub_numbers.items()}
+
+    @property
+    def total_paper_hits(self):
+        return sum(self.paper_hits.values())
+
+    @property
+    def total_patent_hits(self):
+        return sum(self.patent_hits.values())
+
+    def count_hits(self, text: str):
+        return self.paper_hits.get(text, 0), self.patent_hits.get(text, 0)
+
+    def hit_summary(self):
+        keys = sorted(self.paper_hits | self.patent_hits, key=self.count_hits, reverse=True)
+        return {k: self.count_hits(k) for k in keys}
 
     @property
     def info(self):
@@ -55,9 +70,27 @@ class Community(metaclass=MetaCacheExt):
         {self}
                Entries: {_print_set(self.entries)}
               Keywords: {_print_set(self.keywords)}
-            Paper_hits: {self.paper_hits}
-           Patent_hits: {self.patent_hits}
+            Total hits:
+                        {self.total_paper_hits:>7,} hits (paper)
+                        {self.total_patent_hits:>7,} hits (patent)
         """)
+
+    @property
+    def more_info(self):
+        summary = self.hit_summary()
+        form = '{:,}'.format
+        ps, ts = zip(*(map(form, x) for x in summary.values()))
+        details = indent(col_prints(summary, ps, ts, sep=' '), ' '*16)
+
+        return dedent(f"""\
+        {self}
+               Entries: {_print_set(self.entries)}
+              Keywords: {_print_set(self.keywords)}
+            Total hits: 
+                        {self.total_paper_hits:>7,} hits (paper)
+                        {self.total_patent_hits:>7,} hits (patent)
+               Details:
+        """) + details + '\n'
 
 
 class Key2Cmnt(dict, metaclass=MetaLoad):
@@ -150,3 +183,9 @@ def _print_set(s):
         return s
     else:
         return ''
+
+
+def col_prints(*cols, sep=':'):
+    sep += ' '
+    ms = [max(len(str(x)) for x in col) for col in cols]
+    return '\n'.join((sep.join(f'{x:>{m}}' for x, m in zip(nth, ms))) for nth in zip(*cols))
