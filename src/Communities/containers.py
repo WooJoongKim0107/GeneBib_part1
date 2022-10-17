@@ -3,7 +3,7 @@ from textwrap import dedent, indent
 from myclass import MetaCacheExt, MetaLoad, MetaDisposal
 from mypathlib import PathTemplate
 from UniProt.containers import Match, KeyWord
-from StringMatching.base import unify
+from StringMatching.base import unify, tokenize
 
 
 class Community(metaclass=MetaCacheExt):
@@ -151,11 +151,13 @@ class Manager:
     _R_FILE0 = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
     _R_FILE1 = PathTemplate('$rsrc/data/filtered/filtered.txt').substitute()
     _R_FILE2 = PathTemplate('$rsrc/lite/community/key2cmnt.pkl').substitute()
+    _R_FILE3 = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
 
     def __init__(self):
         Community.import_cache_if_empty(verbose=True)  # Read0
         TextFilter.load()  # Read1
         self.k2c = Key2Cmnt.load()  # Read2
+        self.keywords = {k: k for k in KeyWord.load()}  # Read3
 
     def assign(self, key, attr, *matches):
         already = set()
@@ -167,10 +169,19 @@ class Manager:
         return already
 
     def which(self, match: Match):
-        if TextFilter.isvalid(match.text):
-            for keyword in match.keywords:
-                if keyword in self.k2c:
-                    yield match.text, self.k2c[keyword]
+        if not TextFilter.isvalid(match.text):
+            return  # returns empty generator rather than None, so don't worry
+        elif match.text in self.k2c:
+            yield match.text, self.k2c[match.text]
+        else:
+            _, ut = tokenize(unify(match.text))
+            for key in match.keywords:
+                variations = self.keywords[key].get_alts_for_assign()
+                if len(ut) == 1 and len(variations) == 1:
+                    pass
+                elif ut in variations and key in self.k2c:
+                    print(variations)
+                    yield match.text, self.k2c[key]
 
     def all_cmnts_in(self, *matches):
         return {cmnt for match in matches for key, cmnt in self.which(match)}

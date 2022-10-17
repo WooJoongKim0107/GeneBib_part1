@@ -156,6 +156,10 @@ class KeyWord(str):
         if g and p:
             yield self.as_greek_plural()
 
+    def get_alts_for_assign(self):
+        new = KeyWord(self.type, str(self))
+        return {tokens for tokens, _ in new.get_all_alternatives()}
+
     @classmethod
     def load(cls):
         """dict[KeyWord, set[Entry]]"""
