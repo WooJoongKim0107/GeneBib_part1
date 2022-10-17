@@ -1,3 +1,4 @@
+import pickle
 from collections.abc import Iterable
 from textwrap import dedent, indent
 from myclass import MetaCacheExt, MetaLoad, MetaDisposal
@@ -8,6 +9,8 @@ from StringMatching.base import unify, tokenize
 
 class Community(metaclass=MetaCacheExt):
     CACHE_PATH = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
+    MATCH_PATH = PathTemplate('$rsrc/pdata/community/${cmnt_idx}.pkl')
+    MATCHES_PATH = PathTemplate('$rsrc/pdata/community/community_matches.tar.gz').substitute()
 
     def __repr__(self):
         return f"Community({self.cmnt_idx})"
@@ -92,6 +95,15 @@ class Community(metaclass=MetaCacheExt):
                Details:
         """) + details + '\n'
 
+    @classmethod
+    def assign(cls, cmnt_idx, attr, key, match):
+        self = cls(cmnt_idx)
+        getattr(self, attr).setdefault(match, set()).add(key)
+
+    @property
+    def match_path(self):
+        return self.MATCH_PATH.substitute(cmnt_idx=self.cmnt_idx)
+
 
 class Key2Cmnt(dict, metaclass=MetaLoad):
     _R_FILE0 = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
@@ -162,17 +174,17 @@ class Manager:
     def assign(self, key, attr, *matches):
         already = set()
         for match in matches:
-            for text, cmnt_idx in self.which(match):
+            for cmnt_idx in self.which(match):
                 if cmnt_idx not in already:
                     already.add(cmnt_idx)
-                    getattr(Community[cmnt_idx], attr).setdefault(text, set()).add(key)
+                    Community.assign(cmnt_idx, attr, key, match)
         return already
 
     def which(self, match: Match):
         if not TextFilter.isvalid(match.text):
             return  # returns empty generator rather than None, so don't worry
         elif match.text in self.k2c:
-            yield match.text, self.k2c[match.text]
+            yield self.k2c[match.text]
         else:
             _, ut = tokenize(unify(match.text))
             for key in match.keywords:
@@ -181,7 +193,7 @@ class Manager:
                     pass
                 elif ut in variations and key in self.k2c:
                     print(variations)
-                    yield match.text, self.k2c[key]
+                    yield self.k2c[key]
 
     def all_cmnts_in(self, *matches):
         return {cmnt for match in matches for key, cmnt in self.which(match)}
