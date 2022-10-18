@@ -1,7 +1,7 @@
 import pickle
 from collections.abc import Iterable
 from textwrap import dedent, indent
-from myclass import MetaCacheExt, MetaLoad, MetaDisposal
+from myclass import MetaCacheExt, MetaLoad, MetaDisposal, TarRW
 from mypathlib import PathTemplate
 from UniProt.containers import Match, KeyWord
 from StringMatching.base import unify, tokenize
@@ -9,8 +9,8 @@ from StringMatching.base import unify, tokenize
 
 class Community(metaclass=MetaCacheExt):
     CACHE_PATH = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
-    MATCH_PATH = PathTemplate('$rsrc/pdata/community/${cmnt_idx}.pkl')
-    MATCHES_PATH = PathTemplate('$rsrc/pdata/community/community_matches.tar.gz').substitute()
+    ARTICLE_PATH = PathTemplate('$rsrc/pdata/paper/sorted/community.tar.gz').substitute()
+    PATENT_PATH = PathTemplate('$rsrc/pdata/patent/sorted/community.tar.gz').substitute()
 
     def __repr__(self):
         return f"Community({self.cmnt_idx})"
@@ -98,23 +98,15 @@ class Community(metaclass=MetaCacheExt):
     @classmethod
     def assign(cls, cmnt_idx, attr, key, match):
         self = cls(cmnt_idx)
-        getattr(self, attr).setdefault(match, set()).add(key)
+        getattr(self, attr).setdefault(match.text, set()).add(key)
 
-    @property
-    def match_path(self):
-        return self.MATCH_PATH.substitute(cmnt_idx=self.cmnt_idx)
+    def get_articles(self):
+        with TarRW(self.ARTICLE_PATH, 'r:gz') as tf:
+            return tf.load(f'{self.cmnt_idx}.pkl')  # list[Article]
 
-
-class Key2Cmnt(dict, metaclass=MetaLoad):
-    _R_FILE0 = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
-    LOAD_PATH = PathTemplate('$rsrc/lite/community/key2cmnt.pkl').substitute()
-
-    @classmethod
-    def generate(cls):
-        Community.import_cache_if_empty(verbose=True)  # Read0
-        for cmnt in Community.values():
-            for key in cmnt.keywords:
-                yield key, cmnt.cmnt_idx
+    def get_patents(self):
+        with TarRW(self.PATENT_PATH, 'r:gz') as tf:
+            return tf.load(f'{self.cmnt_idx}.pkl')  # list[Patent]
 
 
 class UnifyEqKeys(metaclass=MetaDisposal):
@@ -159,6 +151,22 @@ class TextFilter(metaclass=MetaDisposal):
         return False
 
 
+class UniKey2Cmnt:
+    R_FILE = PathTemplate('$rsrc/data/community/cmnt_to_keyw_matchform_221018.pkl').substitute()
+
+    @classmethod
+    def load(cls):
+        data = {}
+        with open(cls.R_FILE, 'rb') as file:
+            for cmnt_idx, uni_keys in pickle.load(file).items():
+                for uni_key in uni_keys:
+                    if uni_key in data:
+                        assert data[uni_key] == cmnt_idx
+                    else:
+                        data[uni_key] = cmnt_idx
+        return data
+
+
 class Manager:
     _R_FILE0 = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
     _R_FILE1 = PathTemplate('$rsrc/data/filtered/filtered.txt').substitute()
@@ -168,7 +176,7 @@ class Manager:
     def __init__(self):
         Community.import_cache_if_empty(verbose=True)  # Read0
         TextFilter.load()  # Read1
-        self.k2c = Key2Cmnt.load()  # Read2
+        self.uk2c = UniKey2Cmnt.load()  # Read2
         self.keywords = {k: k for k in KeyWord.load()}  # Read3
 
     def assign(self, key, attr, *matches):
@@ -183,17 +191,16 @@ class Manager:
     def which(self, match: Match):
         if not TextFilter.isvalid(match.text):
             return  # returns empty generator rather than None, so don't worry
-        elif match.text in self.k2c:
-            yield self.k2c[match.text]
+        elif x := self.uk2c.get(unify(match.text)):
+            yield x
         else:
             _, ut = tokenize(unify(match.text))
             for key in match.keywords:
                 variations = self.keywords[key].get_alts_for_assign()
                 if len(ut) == 1 and len(variations) == 1:
                     pass
-                elif ut in variations and key in self.k2c:
-                    print(variations)
-                    yield self.k2c[key]
+                elif ut in variations and (y := self.uk2c.get(unify(str(key)))):
+                    yield y
 
     def all_cmnts_in(self, *matches):
         return {cmnt for match in matches for key, cmnt in self.which(match)}

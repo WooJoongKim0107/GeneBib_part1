@@ -1,13 +1,12 @@
 import pickle
 from mypathlib import PathTemplate
-from Communities.containers import Community, Key2Cmnt, UnifyEqKeys
+from Communities.containers import Community, UnifyEqKeys
 
 
 R_FILES = {'c2e': PathTemplate('$rsrc/data/community/update_curated_cmnt_map_220914.pkl').substitute(),
-           'c2k': PathTemplate('$rsrc/data/community/cmnt_to_keyw_matchform_221005.pkl').substitute()}
+           'c2k': PathTemplate('$rsrc/data/community/cmnt_to_keyw_matchform_221018.pkl').substitute()}
 _R_FILE0 = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
-_W_FILE0 = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
-_W_FILE1 = PathTemplate('$rsrc/lite/community/key2cmnt.pkl').substitute()
+_W_FILE = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
 
 
 def build_cmnts():
@@ -26,7 +25,6 @@ def build_cmnts():
 
 def main():
     build_cmnts()
-    Key2Cmnt.build()  # Write1
 
 
 if __name__ == '__main__':

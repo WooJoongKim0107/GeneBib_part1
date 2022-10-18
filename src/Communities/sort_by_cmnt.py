@@ -1,17 +1,24 @@
 import gzip
 import pickle
 from multiprocessing import Pool
+from functools import partial
 from mypathlib import PathTemplate
 from myclass.tar import TarWrite
 
-R_FILE0 = PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz')
-R_FILE1 = PathTemplate('$rsrc/lite/paper/pmid2cmnt.pkl').substitute()
-W_FILE0 = PathTemplate('$rsrc/pdata/paper/sorted/${cmnt_idx}.pkl')
-W_FILE1 = PathTemplate('$rsrc/pdata/paper/sorted/community.tar.gz').substitute()
+
+R_FILE0s = {'paper': PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz'),
+            'patent': PathTemplate('$rsrc/pdata/patent/patent_$index.pkl.gz')}
+R_FILE1s = {'paper': PathTemplate('$rsrc/lite/paper/pmid2cmnt.pkl').substitute(),
+            'patent': PathTemplate('$rsrc/lite/patent/pubnum2cmnt.pkl').substitute()}
+
+W_FILE0s = {'paper': PathTemplate('$rsrc/pdata/paper/sorted/${cmnt_idx}.pkl'),
+            'patent': PathTemplate('$rsrc/pdata/patent/sorted/${cmnt_idx}.pkl')}
+W_FILE1s = {'paper': PathTemplate('$rsrc/pdata/paper/sorted/community.tar.gz'),
+            'patent': PathTemplate('$rsrc/pdata/patent/sorted/community.tar.gz')}
 
 
-def foo(pmid2cmnt, index):
-    with gzip.open(R_FILE0.substitute(index=index), 'rb') as file:
+def foo(mode, pmid2cmnt, index):
+    with gzip.open(R_FILE0s[mode].substitute(index=index), 'rb') as file:
         chain_map = pickle.load(file)
 
     res = {}
@@ -29,26 +36,30 @@ def merge(results):
     return anc
 
 
-def write(cmnt_idx, articles):
-    fn = W_FILE0.substitute(cmnt_idx=cmnt_idx)
+def write(mode, cmnt_idx, articles):
+    fn = W_FILE0s[mode].substitute(cmnt_idx=cmnt_idx)
     with open(fn, 'wb') as file:
         pickle.dump(articles, file)
     return fn
 
 
-def main():
-    with open(R_FILE1, 'rb') as file:
+def _main(mode):
+    with open(R_FILE1s[mode], 'rb') as file:
         pmid2cmnt = pickle.load(file)
     args = [(pmid2cmnt, index) for index in range(112)]
 
     with Pool(50) as p:
-        results = p.starmap(foo, args)
+        results = p.starmap(partial(foo, mode), args)
     result = merge(results)
 
     with Pool(50) as p:
-        paths = p.starmap(write, result.items())
+        paths = p.starmap(partial(write, mode), result.items())
 
-    with TarWrite(W_FILE1, 'w:gz') as q:
+    with TarWrite(W_FILE1s[mode], 'w:gz') as q:
         for path in paths:
             q.add(path)
 
+
+def main():
+    for mode in ['paper', 'patent']:
+        _main(mode)
