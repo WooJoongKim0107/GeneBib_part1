@@ -121,11 +121,30 @@ class UnifyEqKeys(metaclass=MetaDisposal):
             cls.DATA.setdefault(match_key, set()).add(str(keyw))
 
     @classmethod
-    def all_equivalents(cls, keywords: Iterable[str]):
+    def all_equivalents(cls, keywords: Iterable[str], filtered=True):
         """.load() or .safe_load() must be called before .all_equivalents()"""
         # it = (cls.DATA.get(k, {k}) for k in keywords)  # if you want to include old-DB-only keywords
         it = (cls.DATA[k] for k in keywords if k in cls.DATA)
+        if filtered:
+            it = (x for x in it if all(KeyFilter.isvalid(v) for v in x))
         return set().union(*it)
+
+
+class KeyFilter(metaclass=MetaDisposal):
+    R_FILE = PathTemplate('$rsrc/data/filtered/filtered_key.txt').substitute()
+    DATA = set()
+
+    @classmethod
+    def load(cls):
+        with open(cls.R_FILE, 'r') as file:  # Read
+            lines = (line.partition('#')[0].rstrip() for line in file)
+            lines = (line for line in lines if line)
+            for line in lines:
+                cls.DATA.add(line)
+
+    @classmethod
+    def isvalid(cls, k: str):
+        return k not in cls.DATA
 
 
 class TextFilter(metaclass=MetaDisposal):
@@ -135,8 +154,10 @@ class TextFilter(metaclass=MetaDisposal):
     @classmethod
     def load(cls):
         with open(cls.R_FILE, 'r') as file:  # Read
-            for x in file.read().splitlines():
-                cls.DATA.add(x)
+            lines = (line.partition('#')[0].rstrip() for line in file)
+            lines = (line for line in lines if line)
+            for line in lines:
+                cls.DATA.add(line)
 
     @classmethod
     def isvalid(cls, x: str):
