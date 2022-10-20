@@ -285,7 +285,7 @@ def _get_partition(x, n, key=None):
 
 
 if Journal.CACHE_PATH.is_file():
-    Journal.import_cache(verbose=True)
+    Journal.import_cache_if_empty(verbose=True)
 
 
 class Article:

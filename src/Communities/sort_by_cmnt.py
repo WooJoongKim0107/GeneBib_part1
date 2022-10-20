@@ -11,10 +11,10 @@ R_FILE0s = {'paper': PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz'),
 R_FILE1s = {'paper': PathTemplate('$rsrc/lite/paper/pmid2cmnt.pkl').substitute(),
             'patent': PathTemplate('$rsrc/lite/patent/pubnum2cmnt.pkl').substitute()}
 
-W_FILE0s = {'paper': PathTemplate('$rsrc/pdata/paper/sorted/${cmnt_idx}.pkl'),
-            'patent': PathTemplate('$rsrc/pdata/patent/sorted/${cmnt_idx}.pkl')}
-W_FILE1s = {'paper': PathTemplate('$rsrc/pdata/paper/sorted/community.tar.gz'),
-            'patent': PathTemplate('$rsrc/pdata/patent/sorted/community.tar.gz')}
+W_FILE0s = {'paper': PathTemplate('$rsrc/pdata/paper/sorted/${cmnt_idx}.pkl.gz'),
+            'patent': PathTemplate('$rsrc/pdata/patent/sorted/${cmnt_idx}.pkl.gz')}
+W_FILE1s = {'paper': PathTemplate('$rsrc/pdata/paper/sorted/community.tar').substitute(),
+            'patent': PathTemplate('$rsrc/pdata/patent/sorted/community.tar').substitute()}
 
 
 def foo(mode, pmid2cmnt, index):
@@ -38,7 +38,7 @@ def merge(results):
 
 def write(mode, cmnt_idx, articles):
     fn = W_FILE0s[mode].substitute(cmnt_idx=cmnt_idx)
-    with open(fn, 'wb') as file:
+    with gzip.open(fn, 'wb') as file:
         pickle.dump(articles, file)
     return fn
 

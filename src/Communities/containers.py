@@ -8,8 +8,8 @@ from StringMatching.base import unify, tokenize
 
 class Community(metaclass=MetaCacheExt):
     CACHE_PATH = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
-    ARTICLE_PATH = PathTemplate('$rsrc/pdata/paper/sorted/community.tar.gz').substitute()
-    PATENT_PATH = PathTemplate('$rsrc/pdata/patent/sorted/community.tar.gz').substitute()
+    ARTICLE_PATH = PathTemplate('$rsrc/pdata/paper/sorted/community.tar').substitute()
+    PATENT_PATH = PathTemplate('$rsrc/pdata/patent/sorted/community.tar').substitute()
 
     def __repr__(self):
         return f"Community({self.cmnt_idx})"
@@ -62,6 +62,10 @@ class Community(metaclass=MetaCacheExt):
     def count_hits(self, text: str):
         return self.paper_hits.get(text, 0), self.patent_hits.get(text, 0)
 
+    @property
+    def total_hits(self):
+        return self.total_paper_hits + self.total_patent_hits
+
     def hit_summary(self):
         keys = sorted(self.paper_hits | self.patent_hits, key=self.count_hits, reverse=True)
         return {k: self.count_hits(k) for k in keys}
@@ -79,7 +83,7 @@ class Community(metaclass=MetaCacheExt):
 
     @property
     def more_info(self):
-        if self.total_paper_hits + self.total_patent_hits == 0:
+        if not self.total_hits:
             return self.info
         summary = self.hit_summary()
         form = '{:,}'.format
@@ -102,12 +106,16 @@ class Community(metaclass=MetaCacheExt):
         getattr(self, attr).setdefault(match.text, set()).add(key)
 
     def get_articles(self):
-        with TarRW(self.ARTICLE_PATH, 'r:gz') as tf:
-            return tf.load(f'{self.cmnt_idx}.pkl')  # list[Article]
+        if not self.total_paper_hits:
+            return []
+        with TarRW(self.ARTICLE_PATH, 'r') as tf:
+            return tf.gzip_load(f'{self.cmnt_idx}.pkl.gz')  # list[Article]
 
     def get_patents(self):
-        with TarRW(self.PATENT_PATH, 'r:gz') as tf:
-            return tf.load(f'{self.cmnt_idx}.pkl')  # list[Patent]
+        if not self.total_patent_hits:
+            return []
+        with TarRW(self.PATENT_PATH, 'r') as tf:
+            return tf.gzip_load(f'{self.cmnt_idx}.pkl.gz')  # list[Patent]
 
 
 class UnifyEqKeys(metaclass=MetaDisposal):

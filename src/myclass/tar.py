@@ -1,3 +1,4 @@
+import gzip
 import pickle
 import tarfile
 from collections.abc import Iterable
@@ -22,6 +23,12 @@ class TarWrite:
     def dump(self, obj, path: Path):
         assert isinstance(path, Path), 'TarWrite.dump(path) only takes pathlib.Path object'
         with open(path, mode='wb') as f:
+            pickle.dump(obj, f)
+        self.add(path)
+
+    def gzip_dump(self, obj, path: Path):
+        assert isinstance(path, Path), 'TarWrite.gzip_dump(path) only takes pathlib.Path object'
+        with gzip.open(path, mode='wb') as f:
             pickle.dump(obj, f)
         self.add(path)
 
@@ -60,6 +67,11 @@ class TarRead:
     def load(self, name):
         f = self.extractfile(name)
         return pickle.load(f)
+
+    def gzip_load(self, name):
+        f = self.extractfile(name)
+        with gzip.open(f, 'rb') as file:
+            return pickle.load(file)
 
     def close(self):
         self.tar_file.close()
