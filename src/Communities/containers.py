@@ -1,7 +1,6 @@
-import pickle
 from collections.abc import Iterable
 from textwrap import dedent, indent
-from myclass import MetaCacheExt, MetaLoad, MetaDisposal, TarRW
+from myclass import MetaCacheExt, MetaDisposal, TarRW
 from mypathlib import PathTemplate
 from UniProt.containers import Match, KeyWord
 from StringMatching.base import unify, tokenize
@@ -80,6 +79,8 @@ class Community(metaclass=MetaCacheExt):
 
     @property
     def more_info(self):
+        if self.total_paper_hits + self.total_patent_hits == 0:
+            return self.info
         summary = self.hit_summary()
         form = '{:,}'.format
         ps, ts = zip(*(map(form, x) for x in summary.values()))
@@ -119,6 +120,7 @@ class UnifyEqKeys(metaclass=MetaDisposal):
         for keyw in KeyWord.load():  # Read
             match_key = unify(keyw)
             cls.DATA.setdefault(match_key, set()).add(str(keyw))
+        KeyFilter.load()
 
     @classmethod
     def all_equivalents(cls, keywords: Iterable[str], filtered=True):
@@ -173,18 +175,17 @@ class TextFilter(metaclass=MetaDisposal):
 
 
 class UniKey2Cmnt:
-    R_FILE = PathTemplate('$rsrc/data/community/cmnt_to_keyw_matchform_221018.pkl').substitute()
+    R_FILE = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
 
     @classmethod
     def load(cls):
         data = {}
-        with open(cls.R_FILE, 'rb') as file:
-            for cmnt_idx, uni_keys in pickle.load(file).items():
-                for uni_key in uni_keys:
-                    if uni_key in data:
-                        assert data[uni_key] == cmnt_idx
-                    else:
-                        data[uni_key] = cmnt_idx
+        for cmnt_idx, cmnt in Community.items():
+            for key in cmnt.keywords:
+                if (uni_key := unify(key)) in data:
+                    assert data[uni_key] == cmnt_idx
+                else:
+                    data[uni_key] = cmnt_idx
         return data
 
 
@@ -231,7 +232,7 @@ def _print_set(s):
     if len(s) == 1:
         return str(next(iter(s)))
     elif s:
-        return s
+        return sorted(s)
     else:
         return ''
 
