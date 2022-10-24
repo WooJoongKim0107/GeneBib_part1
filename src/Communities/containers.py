@@ -133,8 +133,8 @@ class UnifyEqKeys(metaclass=MetaDisposal):
     @classmethod
     def all_equivalents(cls, keywords: Iterable[str], filtered=True):
         """.load() or .safe_load() must be called before .all_equivalents()"""
-        # it = (cls.DATA.get(k, {k}) for k in keywords)  # if you want to include old-DB-only keywords
-        it = (cls.DATA[k] for k in keywords if k in cls.DATA)
+        it = (cls.DATA.get(k, {k}) for k in keywords)  # if you want to include old-DB-only keywords
+        # it = (cls.DATA[k] for k in keywords if k in cls.DATA)  # if you want to exclude old-DB-only keywords
         if filtered:
             it = (x for x in it if all(KeyFilter.isvalid(v) for v in x))
         return set().union(*it)
