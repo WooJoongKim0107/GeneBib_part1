@@ -2,8 +2,8 @@ import gzip
 import pickle
 from multiprocessing import Pool
 from functools import partial
+from myclass import TarRW
 from mypathlib import PathTemplate
-from myclass.tar import TarWrite
 
 
 R_FILE0s = {'paper': PathTemplate('$pdata/paper/paper_$index.pkl.gz'),
@@ -55,9 +55,8 @@ def _main(mode):
     with Pool(50) as p:
         paths = p.starmap(partial(write, mode), result.items())
 
-    with TarWrite(W_FILE1s[mode], 'w:gz') as q:
-        for path in paths:
-            q.add(path)
+    with TarRW(W_FILE1s[mode], 'w') as q:
+        q.extend(paths)
 
 
 def main():

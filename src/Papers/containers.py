@@ -6,7 +6,7 @@ from functools import cache
 from collections import Counter
 from operator import eq, contains, itemgetter, attrgetter
 import webbrowser
-from myclass import MetaCacheExt
+from myclass import MetaCacheExt, TarRW
 from mypathlib import PathTemplate
 
 
@@ -54,8 +54,8 @@ class Journal(metaclass=MetaCacheExt):
         as assigned to the journal's catalog record by NLM.
     """
     CACHE_PATH = PathTemplate('$pdata/paper/journal_cache.pkl.gz').substitute()
-    ARTICLE_PATH = PathTemplate('$pdata/paper/sorted/$journal.pkl.gz')
-    MATCH_PATH = PathTemplate('$pdata/paper/matched/$journal.pkl.gz')
+    ARTICLE_PATH = PathTemplate('$pdata/paper/sorted/journal.tar').substitute()
+    MATCH_PATH = PathTemplate('$pdata/paper/matched/journal.tar').substitute()
     SELECTED_PATH = PathTemplate('$lite/paper/jnls_selected.pkl').substitute()
     _PATTERN = re.compile(r'[^a-zA-Z0-9_]+')
     _FINDER_PATTERN = re.compile(r'\W')
@@ -140,24 +140,25 @@ class Journal(metaclass=MetaCacheExt):
 
     @property
     def art_path(self):
-        return self.ARTICLE_PATH.substitute(journal=self._simple_title)
+        return PathTemplate('$pdata/paper/sorted/$journal.pkl.gz').substitute(journal=self._simple_title)
 
     def get_articles(self):
-        with gzip.open(self.art_path) as f:
-            counts = pickle.load(f) - 1
-            key = pickle.load(f)
-            assert counts == self.counts
-            assert key == self.medline_ta
-            for _ in range(counts):
-                yield pickle.load(f)
+        with TarRW(self.ARTICLE_PATH, 'r') as tf:
+            with gzip.open(tf.extractfile(self.art_path.name)) as f:
+                counts = pickle.load(f) - 1
+                key = pickle.load(f)
+                assert counts == self.counts
+                assert key == self.medline_ta
+                for _ in range(counts):
+                    yield pickle.load(f)
 
     @property
     def match_path(self):
-        return self.MATCH_PATH.substitute(journal=self._simple_title)
+        return PathTemplate('$pdata/paper/matched/$journal.pkl.gz').substitute(journal=self._simple_title)
 
     def get_matches(self):
-        with gzip.open(self.match_path) as f:
-            return pickle.load(f)  # {pmid -> (title_matches, abstract_matches)}
+        with TarRW(self.MATCH_PATH, 'r') as tf:
+            return tf.gzip_load(self.match_path.name)  # {pmid -> (title_matches, abstract_matches)}
 
     @property
     def info(self):
