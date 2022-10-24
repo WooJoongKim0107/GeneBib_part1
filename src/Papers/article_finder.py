@@ -6,17 +6,17 @@ from mypathlib import PathTemplate
 from . import Journal  # RW(R)
 
 
-_R_FILE = PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz')
-_W_FILES = {'PmidToIdx': PathTemplate('$rsrc/lite/paper/article_to_index.pkl').substitute(),
-            'JnlToPmids': PathTemplate('$rsrc/lite/paper/journal_to_article.pkl').substitute(),
-            '': PathTemplate('$rsrc/lite/paper/journal_to_article$index.txt')}
-_RW_FILE0 = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
+_R_FILE = PathTemplate('$pdata/paper/paper_$index.pkl.gz')
+_W_FILES = {'PmidToIdx': PathTemplate('$lite/paper/article_to_index.pkl').substitute(),
+            'JnlToPmids': PathTemplate('$lite/paper/journal_to_article.pkl').substitute(),
+            '': PathTemplate('$lite/paper/journal_to_article$index.txt')}
+_RW_FILE0 = PathTemplate('$pdata/paper/journal_cache.pkl.gz').substitute()
 
 
 class PmidToIdx(dict, metaclass=MetaLoad):
     """{pmid -> index}"""
-    R_FILE = PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz')
-    LOAD_PATH = PathTemplate('$rsrc/lite/paper/article_to_index.pkl').substitute()
+    R_FILE = PathTemplate('$pdata/paper/paper_$index.pkl.gz')
+    LOAD_PATH = PathTemplate('$lite/paper/article_to_index.pkl').substitute()
     STOP = 112
 
     @classmethod
@@ -39,10 +39,10 @@ class PmidToIdx(dict, metaclass=MetaLoad):
 
 class JnlToPmids(dict, metaclass=MetaLoad):
     """{medline_ta -> *pmids}"""
-    R_FILE = PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz')
-    _R_FILE0 = PathTemplate('$rsrc/lite/paper/article_to_index.pkl').substitute()
-    LOAD_PATH = PathTemplate('$rsrc/lite/paper/journal_to_article.pkl').substitute()
-    RW_FILE = PathTemplate('$rsrc/lite/paper/journal_to_article$index.txt')
+    R_FILE = PathTemplate('$pdata/paper/paper_$index.pkl.gz')
+    _R_FILE0 = PathTemplate('$lite/paper/article_to_index.pkl').substitute()
+    LOAD_PATH = PathTemplate('$lite/paper/journal_to_article.pkl').substitute()
+    RW_FILE = PathTemplate('$lite/paper/journal_to_article$index.txt')
     STOP = 112
 
     def __getitem__(self, item):
@@ -104,9 +104,9 @@ class JnlToPmids(dict, metaclass=MetaLoad):
 
 
 class ArticleFinder:
-    R_FILE = PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz')
-    _R_FILE0 = PathTemplate('$rsrc/lite/paper/journal_to_article.pkl').substitute()
-    _R_FILE1 = PathTemplate('$rsrc/lite/paper/article_to_index.pkl').substitute()
+    R_FILE = PathTemplate('$pdata/paper/paper_$index.pkl.gz')
+    _R_FILE0 = PathTemplate('$lite/paper/journal_to_article.pkl').substitute()
+    _R_FILE1 = PathTemplate('$lite/paper/article_to_index.pkl').substitute()
     J2A = None
 
     @classmethod

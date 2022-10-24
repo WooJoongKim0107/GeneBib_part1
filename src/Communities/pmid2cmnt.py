@@ -3,9 +3,9 @@ from itertools import chain
 from mypathlib import PathTemplate
 from Communities import Community
 
-_R_FILE = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz')
-W_FILE0 = PathTemplate('$rsrc/lite/paper/pmid2cmnt.pkl').substitute()
-W_FILE1 = PathTemplate('$rsrc/lite/patent/pubnum2cmnt.pkl').substitute()
+_R_FILE = PathTemplate('$pdata/community/community_cache.pkl.gz')
+W_FILE0 = PathTemplate('$lite/paper/pmid2cmnt.pkl').substitute()
+W_FILE1 = PathTemplate('$lite/patent/pubnum2cmnt.pkl').substitute()
 
 
 def main():

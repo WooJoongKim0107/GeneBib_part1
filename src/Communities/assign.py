@@ -7,16 +7,16 @@ from Patents.cpc import CPCTree
 from Communities.containers import Community, Manager
 
 
-R_FILE = {'patent_matches': PathTemplate('$rsrc/pdata/patent/matched/patent_$index.pkl.gz'),
-          'patent': PathTemplate('$rsrc/pdata/patent/patent_$index.pkl.gz')}
-_R_FILE0 = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
-_R_FILE1 = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
-_R_FILE2 = PathTemplate('$rsrc/data/filtered/filtered.txt').substitute()
-_R_FILE3 = PathTemplate('$rsrc/lite/community/key2cmnt.pkl').substitute()
-_R_FILE4 = PathTemplate('$rsrc/lite/paper/jnls_selected.pkl').substitute()
-_R_FILE5 = PathTemplate('$rsrc/lite/patent/cpc_tree.pkl').substitute()
-_R_FILE6 = PathTemplate('$rsrc/lite/patent/cpc_selected.pkl').substitute()
-_RW_FILE = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
+R_FILE = {'patent_matches': PathTemplate('$pdata/patent/matched/patent_$index.pkl.gz'),
+          'patent': PathTemplate('$pdata/patent/patent_$index.pkl.gz')}
+_R_FILE0 = PathTemplate('$pdata/paper/journal_cache.pkl.gz').substitute()
+_R_FILE1 = PathTemplate('$pdata/paper/matched/$journal.pkl.gz')
+_R_FILE2 = PathTemplate('$data/filtered/filtered.txt').substitute()
+_R_FILE3 = PathTemplate('$lite/community/key2cmnt.pkl').substitute()
+_R_FILE4 = PathTemplate('$lite/paper/jnls_selected.pkl').substitute()
+_R_FILE5 = PathTemplate('$lite/patent/cpc_tree.pkl').substitute()
+_R_FILE6 = PathTemplate('$lite/patent/cpc_selected.pkl').substitute()
+_RW_FILE = PathTemplate('$pdata/community/community_cache.pkl.gz').substitute()
 
 
 def assign_paper_match(js, manager):

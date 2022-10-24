@@ -8,13 +8,13 @@ from .parse import parse_journal
 from .merge_journals import merge
 
 
-R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
-_W_FILE = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz')
+R_FILE = PathTemplate('$data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
+_W_FILE = PathTemplate('$pdata/paper/journal_cache.pkl.gz')
 
 
 class Pioneer:
-    R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
-    _W_FILE = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz')
+    R_FILE = PathTemplate('$data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
+    _W_FILE = PathTemplate('$pdata/paper/journal_cache.pkl.gz')
     START = START
     STOP = STOP
     JNL = Journal

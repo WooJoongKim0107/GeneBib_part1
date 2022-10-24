@@ -22,14 +22,14 @@ from mypathlib import PathTemplate
 from Papers import Journal  # Read0
 
 
-_R_FILE0 = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
-_R_FILE1 = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
-_R_FILE2 = PathTemplate('$rsrc/lite/paper/jnls_selected.pkl').substitute()
-_W_FILE = PathTemplate('$base/match_key_finder/${target}.logs')
+_R_FILE0 = PathTemplate('$pdata/paper/journal_cache.pkl.gz').substitute()
+_R_FILE1 = PathTemplate('$pdata/paper/matched/$journal.pkl.gz')
+_R_FILE2 = PathTemplate('$lite/paper/jnls_selected.pkl').substitute()
+_W_FILE = PathTemplate('$lite/match_key_finder/${target}.logs')
 
 
 class MatchedKeywordFinder:
-    W_FILE = PathTemplate('$base/match_key_finder/${target}.logs')
+    W_FILE = PathTemplate('$lite/match_key_finder/${target}.logs')
 
     def __init__(self, *targets):
         self.targets = set(targets)

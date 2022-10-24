@@ -7,9 +7,9 @@ from StringMatching.base import unify, tokenize
 
 
 class Community(metaclass=MetaCacheExt):
-    CACHE_PATH = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
-    ARTICLE_PATH = PathTemplate('$rsrc/pdata/paper/sorted/community.tar').substitute()
-    PATENT_PATH = PathTemplate('$rsrc/pdata/patent/sorted/community.tar').substitute()
+    CACHE_PATH = PathTemplate('$pdata/community/community_cache.pkl.gz').substitute()
+    ARTICLE_PATH = PathTemplate('$pdata/paper/sorted/community.tar').substitute()
+    PATENT_PATH = PathTemplate('$pdata/patent/sorted/community.tar').substitute()
 
     def __repr__(self):
         return f"Community({self.cmnt_idx})"
@@ -119,7 +119,7 @@ class Community(metaclass=MetaCacheExt):
 
 
 class UnifyEqKeys(metaclass=MetaDisposal):
-    _R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
+    _R_FILE = PathTemplate('$pdata/uniprot/uniprot_keywords.pkl').substitute()
     DATA = {}
 
     @classmethod
@@ -141,7 +141,7 @@ class UnifyEqKeys(metaclass=MetaDisposal):
 
 
 class KeyFilter(metaclass=MetaDisposal):
-    R_FILE = PathTemplate('$rsrc/data/filtered/filtered_key.txt').substitute()
+    R_FILE = PathTemplate('$data/filtered/filtered_key.txt').substitute()
     DATA = set()
 
     @classmethod
@@ -158,7 +158,7 @@ class KeyFilter(metaclass=MetaDisposal):
 
 
 class TextFilter(metaclass=MetaDisposal):
-    R_FILE = PathTemplate('$rsrc/data/filtered/filtered.txt').substitute()
+    R_FILE = PathTemplate('$data/filtered/filtered.txt').substitute()
     DATA = set()
 
     @classmethod
@@ -183,7 +183,7 @@ class TextFilter(metaclass=MetaDisposal):
 
 
 class UniKey2Cmnt:
-    R_FILE = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
+    R_FILE = PathTemplate('$pdata/community/community_cache.pkl.gz').substitute()
 
     @classmethod
     def load(cls):
@@ -198,10 +198,10 @@ class UniKey2Cmnt:
 
 
 class Manager:
-    _R_FILE0 = PathTemplate('$rsrc/pdata/community/community_cache.pkl.gz').substitute()
-    _R_FILE1 = PathTemplate('$rsrc/data/filtered/filtered.txt').substitute()
-    _R_FILE2 = PathTemplate('$rsrc/lite/community/key2cmnt.pkl').substitute()
-    _R_FILE3 = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
+    _R_FILE0 = PathTemplate('$pdata/community/community_cache.pkl.gz').substitute()
+    _R_FILE1 = PathTemplate('$data/filtered/filtered.txt').substitute()
+    _R_FILE2 = PathTemplate('$lite/community/key2cmnt.pkl').substitute()
+    _R_FILE3 = PathTemplate('$pdata/uniprot/uniprot_keywords.pkl').substitute()
 
     def __init__(self):
         Community.import_cache_if_empty(verbose=True)  # Read0

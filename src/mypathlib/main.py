@@ -11,11 +11,18 @@ _sentinel_dict = {}
 class PathTemplate(Template):
     _base = Path(__file__).parents[2]
     _rsrc = _base / 'rsrc'
+    _constants = dict(
+        base=_base,
+        rsrc=_rsrc,
+        data=_rsrc/'data',
+        pdata=_rsrc/'pdata',
+        lite=_rsrc/'lite',
+    )
 
     def __init__(self, template, key=None):
         self._template = template
         self._key = key
-        new_template = Template(template).safe_substitute(base=self._base, rsrc=self._rsrc)
+        new_template = Template(template).safe_substitute(**self._constants)
         super().__init__(new_template)
 
     def __repr__(self):

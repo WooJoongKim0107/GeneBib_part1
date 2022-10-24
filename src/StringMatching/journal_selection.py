@@ -4,9 +4,9 @@ from Papers import Journal  # Read
 from mypathlib import PathTemplate
 
 
-R_FILE = PathTemplate('$rsrc/data/wos-core_SCIE_2022-April-19_selected.csv').substitute()
-_R_FILE = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
-_W_FILE = PathTemplate('$rsrc/lite/paper/jnls_selected.pkl').substitute()
+R_FILE = PathTemplate('$data/wos-core_SCIE_2022-April-19_selected.csv').substitute()
+_R_FILE = PathTemplate('$pdata/paper/journal_cache.pkl.gz').substitute()
+_W_FILE = PathTemplate('$lite/paper/jnls_selected.pkl').substitute()
 
 
 def find_from_Journal(wos_title, info):

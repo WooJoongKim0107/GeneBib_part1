@@ -5,11 +5,11 @@ from mypathlib import PathTemplate
 from . import START, STOP
 
 
-_R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
+_R_FILE = PathTemplate('$data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
 
 
 class RawFinder:
-    R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
+    R_FILE = PathTemplate('$data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
     START = START
     STOP = STOP
 

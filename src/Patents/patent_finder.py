@@ -5,14 +5,14 @@ from myclass import MetaLoad
 from mypathlib import PathTemplate
 
 
-_R_FILE = PathTemplate('$rsrc/pdata/patent/patent_index.pkl.gz')
-_W_FILES = {'PmidToIdx': PathTemplate('$rsrc/lite/patent/pubnum_to_index.pkl').substitute()}
+_R_FILE = PathTemplate('$pdata/patent/patent_index.pkl.gz')
+_W_FILES = {'PmidToIdx': PathTemplate('$lite/patent/pubnum_to_index.pkl').substitute()}
 
 
 class PubToIdx(dict, metaclass=MetaLoad):
     """{pub_number -> index}"""
-    R_FILE = PathTemplate('$rsrc/pdata/paper/patent_$index.pkl.gz')
-    LOAD_PATH = PathTemplate('$rsrc/lite/paper/pubnum_to_index.pkl').substitute()
+    R_FILE = PathTemplate('$pdata/paper/patent_$index.pkl.gz')
+    LOAD_PATH = PathTemplate('$lite/paper/pubnum_to_index.pkl').substitute()
     STOP = 112
 
     @classmethod
@@ -34,8 +34,8 @@ class PubToIdx(dict, metaclass=MetaLoad):
 
 
 class PatentFinder:
-    R_FILE = PathTemplate('$rsrc/pdata/patent/patent_$index.pkl.gz')
-    _R_FILE1 = PathTemplate('$rsrc/lite/patent/pubnum_to_index.pkl').substitute()
+    R_FILE = PathTemplate('$pdata/patent/patent_$index.pkl.gz')
+    _R_FILE1 = PathTemplate('$lite/patent/pubnum_to_index.pkl').substitute()
 
     @classmethod
     def from_pmids(cls, *pub_nums):

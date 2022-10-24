@@ -6,12 +6,12 @@ from Papers import Journal  # Read0
 from mypathlib import PathTemplate
 
 
-_R_FILE0 = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
-_R_FILE1 = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
-W_FILES = {'counts': PathTemplate('$rsrc/lite/match/match_counts.pkl').substitute(),
-           'paths': PathTemplate('$rsrc/lite/match/matched_paths.pkl').substitute(),
-           'parents': PathTemplate('$rsrc/lite/match/matched_parents.pkl').substitute(),
-           'double_check': PathTemplate('$rsrc/lite/match/matched_double_check.pkl').substitute()}
+_R_FILE0 = PathTemplate('$pdata/paper/journal_cache.pkl.gz').substitute()
+_R_FILE1 = PathTemplate('$pdata/paper/matched/$journal.pkl.gz')
+W_FILES = {'counts': PathTemplate('$lite/match/match_counts.pkl').substitute(),
+           'paths': PathTemplate('$lite/match/matched_paths.pkl').substitute(),
+           'parents': PathTemplate('$lite/match/matched_parents.pkl').substitute(),
+           'double_check': PathTemplate('$lite/match/matched_double_check.pkl').substitute()}
 
 
 def get_matched_texts(j):

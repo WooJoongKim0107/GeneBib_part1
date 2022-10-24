@@ -3,12 +3,12 @@ from functools import cached_property
 from mypathlib import PathTemplate
 
 
-R_FILE = PathTemplate('$rsrc/data/cpc_updated_220525/cpc-keywsrch-total.txt').substitute()
-_R_FILE0 = PathTemplate('$rsrc/data/cpc_updated_220525/cpc-section-${sec}_20220501.txt')
-_R_FILE1 = PathTemplate('$rsrc/data/cpc_updated_220525/cpc-level${i}-titles-filtered_220524.txt')
+R_FILE = PathTemplate('$data/cpc_updated_220525/cpc-keywsrch-total.txt').substitute()
+_R_FILE0 = PathTemplate('$data/cpc_updated_220525/cpc-section-${sec}_20220501.txt')
+_R_FILE1 = PathTemplate('$data/cpc_updated_220525/cpc-level${i}-titles-filtered_220524.txt')
 
-_W_FILES = {'tree': PathTemplate('$rsrc/lite/patent/cpc_tree.pkl').substitute(),
-            'selected': PathTemplate('$rsrc/lite/patent/cpc_selected.pkl').substitute()}
+_W_FILES = {'tree': PathTemplate('$lite/patent/cpc_tree.pkl').substitute(),
+            'selected': PathTemplate('$lite/patent/cpc_selected.pkl').substitute()}
 
 
 def read_cpc(f):
@@ -44,10 +44,10 @@ def get_greped():
 
 
 class CPCTree(dict):
-    R_FILE = PathTemplate('$rsrc/data/cpc_updated_220525/cpc-section-${sec}_20220501.txt')
-    R_FILE_SELECTED = PathTemplate('$rsrc/data/cpc_updated_220525/cpc-level${i}-titles-filtered_220524.txt')
-    W_FILE = PathTemplate('$rsrc/lite/patent/cpc_tree.pkl').substitute()
-    W_FILE_SELECTED = PathTemplate('$rsrc/lite/patent/cpc_selected.pkl').substitute()
+    R_FILE = PathTemplate('$data/cpc_updated_220525/cpc-section-${sec}_20220501.txt')
+    R_FILE_SELECTED = PathTemplate('$data/cpc_updated_220525/cpc-level${i}-titles-filtered_220524.txt')
+    W_FILE = PathTemplate('$lite/patent/cpc_tree.pkl').substitute()
+    W_FILE_SELECTED = PathTemplate('$lite/patent/cpc_selected.pkl').substitute()
 
     def __init__(self, load=True):
         if load:

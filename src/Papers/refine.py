@@ -9,16 +9,16 @@ from .containers import Article, Journal  # Read0
 from .parse import parse_article, find_journal_key
 
 
-_R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
-_R_FILE0 = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
-_W_FILES = {'refined': PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format),
-            'message': PathTemplate('$rsrc/pdata/paper/article22n$number.txt', key='{:0>4}'.format)}
+_R_FILE = PathTemplate('$data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
+_R_FILE0 = PathTemplate('$pdata/paper/journal_cache.pkl.gz').substitute()
+_W_FILES = {'refined': PathTemplate('$pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format),
+            'message': PathTemplate('$pdata/paper/article22n$number.txt', key='{:0>4}'.format)}
 
 
 class Refine:
-    R_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
-    W_FILES = {'refined': PathTemplate('$rsrc/pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format),
-               'message': PathTemplate('$rsrc/pdata/paper/article22n$number.txt', key='{:0>4}'.format)}
+    R_FILE = PathTemplate('$data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
+    W_FILES = {'refined': PathTemplate('$pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format),
+               'message': PathTemplate('$pdata/paper/article22n$number.txt', key='{:0>4}'.format)}
     START = START
     STOP = STOP
     JNL = Journal

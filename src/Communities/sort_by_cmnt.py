@@ -6,15 +6,15 @@ from mypathlib import PathTemplate
 from myclass.tar import TarWrite
 
 
-R_FILE0s = {'paper': PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz'),
-            'patent': PathTemplate('$rsrc/pdata/patent/patent_$index.pkl.gz')}
-R_FILE1s = {'paper': PathTemplate('$rsrc/lite/paper/pmid2cmnt.pkl').substitute(),
-            'patent': PathTemplate('$rsrc/lite/patent/pubnum2cmnt.pkl').substitute()}
+R_FILE0s = {'paper': PathTemplate('$pdata/paper/paper_$index.pkl.gz'),
+            'patent': PathTemplate('$pdata/patent/patent_$index.pkl.gz')}
+R_FILE1s = {'paper': PathTemplate('$lite/paper/pmid2cmnt.pkl').substitute(),
+            'patent': PathTemplate('$lite/patent/pubnum2cmnt.pkl').substitute()}
 
-W_FILE0s = {'paper': PathTemplate('$rsrc/pdata/paper/sorted/${cmnt_idx}.pkl.gz'),
-            'patent': PathTemplate('$rsrc/pdata/patent/sorted/${cmnt_idx}.pkl.gz')}
-W_FILE1s = {'paper': PathTemplate('$rsrc/pdata/paper/sorted/community.tar').substitute(),
-            'patent': PathTemplate('$rsrc/pdata/patent/sorted/community.tar').substitute()}
+W_FILE0s = {'paper': PathTemplate('$pdata/paper/sorted/${cmnt_idx}.pkl.gz'),
+            'patent': PathTemplate('$pdata/patent/sorted/${cmnt_idx}.pkl.gz')}
+W_FILE1s = {'paper': PathTemplate('$pdata/paper/sorted/community.tar').substitute(),
+            'patent': PathTemplate('$pdata/patent/sorted/community.tar').substitute()}
 
 
 def foo(mode, pmid2cmnt, index):

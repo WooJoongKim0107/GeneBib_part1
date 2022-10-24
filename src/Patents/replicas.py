@@ -3,15 +3,15 @@ from . import START, STOP
 from Papers.replicas import Replica
 
 
-_R_FILE = PathTemplate('$rsrc/pdata/patent/patent_202111_$number.pkl.gz', key='{:0>12}'.format)
-_W_FILES = {'replica': PathTemplate('$rsrc/pdata/patent/patent_replicas.pkl'),
-            'prints': PathTemplate('$rsrc/pdata/patent/patent_replicas.txt')}
+_R_FILE = PathTemplate('$pdata/patent/patent_202111_$number.pkl.gz', key='{:0>12}'.format)
+_W_FILES = {'replica': PathTemplate('$pdata/patent/patent_replicas.pkl'),
+            'prints': PathTemplate('$pdata/patent/patent_replicas.txt')}
 
 
 class PatentReplica(Replica):
-    R_FILE = PathTemplate('$rsrc/pdata/patent/patent_202111_$number.pkl.gz', key='{:0>12}'.format)
-    LOAD_PATH = PathTemplate('$rsrc/pdata/patent/patent_replicas.pkl').substitute()
-    W_FILE = PathTemplate('$rsrc/pdata/patent/patent_replicas.txt').substitute()
+    R_FILE = PathTemplate('$pdata/patent/patent_202111_$number.pkl.gz', key='{:0>12}'.format)
+    LOAD_PATH = PathTemplate('$pdata/patent/patent_replicas.pkl').substitute()
+    W_FILE = PathTemplate('$pdata/patent/patent_replicas.txt').substitute()
     START = START
     STOP = STOP
     KEY_ATTR = 'pub_number'

@@ -6,11 +6,11 @@ from Papers import Journal  # Read0
 from Papers.article_finder import ArticleFinder
 
 
-_R_FILE0 = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
-_R_FILE1 = PathTemplate('$rsrc/pdata/paper/paper_$index.pkl.gz')
-_R_FILE2 = PathTemplate('$rsrc/lite/paper/journal_to_article.pkl')
-_R_FILE3 = PathTemplate('$rsrc/lite/paper/article_to_index.pkl')
-_W_FILE = PathTemplate('$rsrc/pdata/paper/sorted/$journal.pkl.gz')
+_R_FILE0 = PathTemplate('$pdata/paper/journal_cache.pkl.gz').substitute()
+_R_FILE1 = PathTemplate('$pdata/paper/paper_$index.pkl.gz')
+_R_FILE2 = PathTemplate('$lite/paper/journal_to_article.pkl')
+_R_FILE3 = PathTemplate('$lite/paper/article_to_index.pkl')
+_W_FILE = PathTemplate('$pdata/paper/sorted/$journal.pkl.gz')
 
 
 def already_written(journal: Journal):

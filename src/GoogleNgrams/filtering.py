@@ -4,13 +4,13 @@ from collections import ChainMap
 from mypathlib import PathTemplate
 
 
-R_FILES = {'ngrams': PathTemplate('$rsrc/data/wc_ngram_curation/1903182220KPO.${n}gramOnSort'),
-           'nonME': PathTemplate('$rsrc/data/wc_ngram_curation/1908272135ZKO.ngramSorted_nonME').substitute(),
-           'answered': PathTemplate('$rsrc/data/papat_hit_phrase_200517.pkl').substitute(),
-           'ngram_counts': PathTemplate('$rsrc/pdata/ngram/google_ngram_counts.pkl.gz').substitute(),
-           'paths': PathTemplate('$rsrc/lite/match/matched_paths.pkl').substitute(),
-           'parents': PathTemplate('$rsrc/lite/match/matched_parents.pkl').substitute(),
-           'counts': PathTemplate('$rsrc/lite/match/match_counts.pkl').substitute()}
+R_FILES = {'ngrams': PathTemplate('$data/wc_ngram_curation/1903182220KPO.${n}gramOnSort'),
+           'nonME': PathTemplate('$data/wc_ngram_curation/1908272135ZKO.ngramSorted_nonME').substitute(),
+           'answered': PathTemplate('$data/papat_hit_phrase_200517.pkl').substitute(),
+           'ngram_counts': PathTemplate('$pdata/ngram/google_ngram_counts.pkl.gz').substitute(),
+           'paths': PathTemplate('$lite/match/matched_paths.pkl').substitute(),
+           'parents': PathTemplate('$lite/match/matched_parents.pkl').substitute(),
+           'counts': PathTemplate('$lite/match/match_counts.pkl').substitute()}
 W_FILE = PathTemplate('/home/data/01_data/google_ngrams/to_filter/${n}grams4filter.txt')
 
 

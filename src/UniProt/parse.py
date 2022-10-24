@@ -6,9 +6,9 @@ from mypathlib import PathTemplate
 from UniProt.containers import Entry, KeyWord
 
 
-R_FILE = PathTemplate('$rsrc/data/uniprot/uniprot_sprot.xml.gz')
-_W_FILES = {'keywords': PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute(),
-            'entries': PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()}
+R_FILE = PathTemplate('$data/uniprot/uniprot_sprot.xml.gz')
+_W_FILES = {'keywords': PathTemplate('$pdata/uniprot/uniprot_keywords.pkl').substitute(),
+            'entries': PathTemplate('$pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()}
 
 HEADER = '{http://uniprot.org/uniprot}'
 LEN_HEADER = len(HEADER)

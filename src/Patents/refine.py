@@ -8,13 +8,13 @@ from .containers import Patent
 from .parse import parse_patent
 
 
-_R_FILE = PathTemplate('$rsrc/data/patent/patent_202111_$number.json.gz', key='{:0>12}'.format)
-_W_FILE = PathTemplate('$rsrc/pdata/patent/patent_202111_$number.pkl.gz', key='{:0>12}'.format)
+_R_FILE = PathTemplate('$data/patent/patent_202111_$number.json.gz', key='{:0>12}'.format)
+_W_FILE = PathTemplate('$pdata/patent/patent_202111_$number.pkl.gz', key='{:0>12}'.format)
 
 
 class Refine:
-    R_FILE = PathTemplate('$rsrc/data/patent/patent_202111_$number.json.gz', key='{:0>12}'.format)
-    W_FILE = PathTemplate('$rsrc/pdata/patent/patent_202111_$number.pkl.gz', key='{:0>12}'.format)
+    R_FILE = PathTemplate('$data/patent/patent_202111_$number.json.gz', key='{:0>12}'.format)
+    W_FILE = PathTemplate('$pdata/patent/patent_202111_$number.pkl.gz', key='{:0>12}'.format)
     START = START
     STOP = STOP
 

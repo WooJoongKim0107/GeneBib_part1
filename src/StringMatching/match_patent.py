@@ -5,9 +5,9 @@ from mypathlib import PathTemplate
 from UniProt.containers import Nested
 
 
-R_FILE = PathTemplate('$rsrc/pdata/patent/patent_$index.pkl.gz')
-_R_FILE0 = PathTemplate('$rsrc/pdata/uniprot/nested.pkl')
-W_FILE = PathTemplate('$rsrc/pdata/patent/matched/patent_$index.pkl.gz')
+R_FILE = PathTemplate('$pdata/patent/patent_$index.pkl.gz')
+_R_FILE0 = PathTemplate('$pdata/uniprot/nested.pkl')
+W_FILE = PathTemplate('$pdata/patent/matched/patent_$index.pkl.gz')
 
 NESTED = Nested.load()  # Read0
 

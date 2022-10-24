@@ -132,7 +132,7 @@ class Token:
 
 
 class KeyWord(str):
-    RW_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
+    RW_FILE = PathTemplate('$pdata/uniprot/uniprot_keywords.pkl').substitute()
     NAME_TAGS = NAME_TAGS
     INV_TAGS = INV_TAGS
     BLACK_LIST = BLACK_LIST
@@ -208,7 +208,7 @@ class Reference:
 
 class Entry(metaclass=MetaCacheExt):
     __slots__ = ['key_acc', 'name', 'accessions', '_keywords', '_references']
-    CACHE_PATH = PathTemplate('$rsrc/pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()
+    CACHE_PATH = PathTemplate('$pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()
 
     def __new__(cls, key_acc, caching=True):
         return super().__new__(cls)
@@ -258,8 +258,8 @@ class Entry(metaclass=MetaCacheExt):
 
 
 class Nested(dict, metaclass=MetaLoad):
-    _R_FILE = PathTemplate('$rsrc/pdata/uniprot/uniprot_keywords.pkl').substitute()
-    LOAD_PATH = PathTemplate('$rsrc/pdata/uniprot/nested.pkl').substitute()
+    _R_FILE = PathTemplate('$pdata/uniprot/uniprot_keywords.pkl').substitute()
+    LOAD_PATH = PathTemplate('$pdata/uniprot/nested.pkl').substitute()
 
     def match_and_filter(self, target_text):
         target_match_list = list(self.find_matches(target_text))

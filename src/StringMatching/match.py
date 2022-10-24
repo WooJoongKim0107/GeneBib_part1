@@ -6,10 +6,10 @@ from Papers import Journal  # Read0
 from UniProt.containers import Nested
 
 
-_R_FILE0 = PathTemplate('$rsrc/pdata/paper/journal_cache.pkl.gz').substitute()
-_R_FILE1 = PathTemplate('$rsrc/pdata/uniprot/nested.pkl')
-_R_FILE2 = PathTemplate('$rsrc/pdata/paper/sorted/$journal.pkl.gz')
-_W_FILE = PathTemplate('$rsrc/pdata/paper/matched/$journal.pkl.gz')
+_R_FILE0 = PathTemplate('$pdata/paper/journal_cache.pkl.gz').substitute()
+_R_FILE1 = PathTemplate('$pdata/uniprot/nested.pkl')
+_R_FILE2 = PathTemplate('$pdata/paper/sorted/$journal.pkl.gz')
+_W_FILE = PathTemplate('$pdata/paper/matched/$journal.pkl.gz')
 
 NESTED = Nested.load()  # Read1
 

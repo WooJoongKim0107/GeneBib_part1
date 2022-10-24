@@ -6,7 +6,7 @@ from . import START, STOP
 
 
 R_FILE = Template('https://ftp.ncbi.nlm.nih.gov/pubmed/baseline/pubmed22n$number.xml.gz')
-W_FILE = PathTemplate('$rsrc/data/paper/pubmed22n$number.xml.gz')
+W_FILE = PathTemplate('$data/paper/pubmed22n$number.xml.gz')
 
 
 def download(n):
