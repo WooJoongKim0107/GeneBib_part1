@@ -1,6 +1,7 @@
 from random import choices
 from collections.abc import Iterable
 from textwrap import dedent, indent
+from myfunc import read_commented
 from myclass import MetaCacheExt, MetaDisposal, TarRW
 from mypathlib import PathTemplate
 from UniProt.containers import Match, KeyWord
@@ -20,15 +21,6 @@ class Community(metaclass=MetaCacheExt):
         self.keywords: set[str] = set()
         self.pmids: dict[str, set[int]] = {}
         self.pub_numbers: dict[str, set[str]] = {}
-
-    def choices(self, k, *texts):
-        if texts:
-            pmids = [pmid for text in texts for pmid in self.pmids[text]]
-            pubs = [pub for text in texts for pub in self.pub_numbers[text]]
-        else:
-            pmids = [x for v in self.pmids.values() for x in v]
-            pubs = [x for v in self.pub_numbers.values() for x in v]
-        return choices(pmids, k=k), choices(pubs, k=k)
 
     def random_materials(self, k, *texts):
         pmids, pubs = map(set, self.choices(k, *texts))
@@ -132,6 +124,15 @@ class Community(metaclass=MetaCacheExt):
         ps, ts = zip(*(map(form, x) for x in summary.values()))
         return indent(col_prints(summary, ps, ts, sep=' '), ' '*16)
 
+    def choices(self, k, *texts):
+        if texts:
+            pmids = [pmid for text in texts for pmid in self.pmids[text]]
+            pubs = [pub for text in texts for pub in self.pub_numbers[text]]
+        else:
+            pmids = [x for v in self.pmids.values() for x in v]
+            pubs = [x for v in self.pub_numbers.values() for x in v]
+        return choices(pmids, k=k), choices(pubs, k=k)
+
     # Generation of instances & cache
     def __new__(cls, cmnt_idx: int, caching=True):
         """__new__ method must not be skipped - Assertion of MetaCacheExt"""
@@ -175,12 +176,10 @@ class UnifyEqKeys(metaclass=MetaDisposal):
         KeyFilter.load()
 
     @classmethod
-    def all_equivalents(cls, keywords: Iterable[str], filtered=True):
+    def all_equivalents(cls, keywords: Iterable[str]):
         """.load() or .safe_load() must be called before .all_equivalents()"""
-        # it = (cls.DATA.get(k, {k}) for k in keywords)  # if you want to include old-DB-only keywords
-        it = (cls.DATA[k] for k in keywords if k in cls.DATA)  # if you want to exclude old-DB-only keywords
-        if filtered:
-            it = (x for x in it if all(KeyFilter.isvalid(v) for v in x))
+        it = (cls.DATA[k] for k in keywords if k in cls.DATA)  # Remove keywords not in parsed UniProtDB
+        it = (x for x in it if all(KeyFilter.isvalid(v) for v in x))  # Remove filtered
         return set().union(*it)
 
 
@@ -191,9 +190,7 @@ class KeyFilter(metaclass=MetaDisposal):
     @classmethod
     def load(cls):
         with open(cls.R_FILE, 'r') as file:  # Read
-            lines = (line.partition('#')[0].rstrip() for line in file)
-            lines = (line for line in lines if line)
-            for line in lines:
+            for line in read_commented(file):
                 cls.DATA.add(line)
 
     @classmethod
@@ -208,9 +205,7 @@ class TextFilter(metaclass=MetaDisposal):
     @classmethod
     def load(cls):
         with open(cls.R_FILE, 'r') as file:  # Read
-            lines = (line.partition('#')[0].rstrip() for line in file)
-            lines = (line for line in lines if line)
-            for line in lines:
+            for line in read_commented(file):
                 cls.DATA.add(line)
 
     @classmethod

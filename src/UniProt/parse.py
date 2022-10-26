@@ -2,11 +2,13 @@ import gzip
 import pickle
 from xml.etree.ElementTree import Element
 from xml.etree.ElementTree import parse as etree_parse
+from myfunc import read_commented
 from mypathlib import PathTemplate
 from UniProt.containers import Entry, KeyWord
 
 
-R_FILE = PathTemplate('$data/uniprot/uniprot_sprot.xml.gz')
+R_FILE0 = PathTemplate('$data/uniprot/uniprot_sprot.xml.gz').substitute()
+R_FILE1 = PathTemplate('$data/curations/added/added_key.txt').substitute()
 _W_FILES = {'keywords': PathTemplate('$pdata/uniprot/uniprot_keywords.pkl').substitute(),
             'entries': PathTemplate('$pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()}
 
@@ -83,6 +85,17 @@ def fill_cache(x: Element):
         Entry.from_parse(simple_parse(elt))
 
 
+def add_cache():
+    with open(R_FILE1, 'r') as file:
+        typ = ('protein', 'alternativeName', 'fullName')
+        for i, key in enumerate(read_commented(file)):
+            Entry.from_parse(dict(name=f'Pseudo_Entry{i}',  # no real entry named such
+                                  accessions=[f'PE{i:0>4}'],  # real entry never starts with "PE"
+                                  proteins=[(typ, key)],
+                                  genes=[],
+                                  refs=[],))
+
+
 def extract_keywords():
     keywords = {}
     for key_acc, entry in Entry.items():
@@ -92,10 +105,11 @@ def extract_keywords():
 
 
 def main():
-    with gzip.open(R_FILE.substitute(), 'rb') as file:
+    with gzip.open(R_FILE0, 'rb') as file:
         root = etree_parse(file).getroot()[:-1]
 
     fill_cache(root)
+    add_cache()
     Entry.export_cache()
 
     keywords = extract_keywords()
