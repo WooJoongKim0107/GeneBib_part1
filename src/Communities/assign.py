@@ -11,7 +11,7 @@ R_FILE = {'patent_matches': PathTemplate('$pdata/patent/matched/patent_$index.pk
           'patent': PathTemplate('$pdata/patent/patent_$index.pkl.gz')}
 _R_FILE0 = PathTemplate('$pdata/paper/journal_cache.pkl.gz').substitute()
 _R_FILE1 = PathTemplate('$pdata/paper/matched/$journal.pkl.gz')
-_R_FILE2 = PathTemplate('$data/filtered/filtered.txt').substitute()
+_R_FILE2 = PathTemplate('$data/curations/filtered/filtered.txt').substitute()
 _R_FILE3 = PathTemplate('$lite/community/key2cmnt.pkl').substitute()
 _R_FILE4 = PathTemplate('$lite/paper/jnls_selected.pkl').substitute()
 _R_FILE5 = PathTemplate('$lite/patent/cpc_tree.pkl').substitute()

@@ -185,7 +185,7 @@ class UnifyEqKeys(metaclass=MetaDisposal):
 
 
 class KeyFilter(metaclass=MetaDisposal):
-    R_FILE = PathTemplate('$data/filtered/filtered_key.txt').substitute()
+    R_FILE = PathTemplate('$data/curations/filtered/filtered_key.txt').substitute()
     DATA = set()
 
     @classmethod
@@ -202,7 +202,7 @@ class KeyFilter(metaclass=MetaDisposal):
 
 
 class TextFilter(metaclass=MetaDisposal):
-    R_FILE = PathTemplate('$data/filtered/filtered.txt').substitute()
+    R_FILE = PathTemplate('$data/curations/filtered/filtered.txt').substitute()
     DATA = set()
 
     @classmethod
@@ -243,7 +243,7 @@ class UniKey2Cmnt:
 
 class Manager:
     _R_FILE0 = PathTemplate('$pdata/community/community_cache.pkl.gz').substitute()
-    _R_FILE1 = PathTemplate('$data/filtered/filtered.txt').substitute()
+    _R_FILE1 = PathTemplate('$data/curations/filtered/filtered.txt').substitute()
     _R_FILE2 = PathTemplate('$lite/community/key2cmnt.pkl').substitute()
     _R_FILE3 = PathTemplate('$pdata/uniprot/uniprot_keywords.pkl').substitute()
 
