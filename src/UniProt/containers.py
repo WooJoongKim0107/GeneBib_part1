@@ -206,9 +206,31 @@ class Reference:
         return f'Reference(type={self.type}, pub_date={self.pub_date})'
 
 
+class EntryFinder:
+    @classmethod
+    def keyword(cls, *keys, strict=True):
+        return cls._keyword_strict(*keys) if strict else cls._keyword_loose(*keys)
+
+    @staticmethod
+    def _keyword_strict(*keys):
+        keys = set(keys)
+        for e in Entry.values():
+            _, ks = zip(*e._keywords)
+            if not keys.isdisjoint(ks):
+                yield e
+
+    @staticmethod
+    def _keyword_loose(*keys):
+        keys = {key.lower() for key in keys}
+        for e in Entry.values():
+            if any(key.lower() in keys for _, key in e._keywords):
+                yield e
+
+
 class Entry(metaclass=MetaCacheExt):
     __slots__ = ['key_acc', 'name', 'accessions', '_keywords', '_references']
     CACHE_PATH = PathTemplate('$pdata/uniprot/uniprot_sprot_parsed.pkl.gz').substitute()
+    finder = EntryFinder
 
     def __new__(cls, key_acc, caching=True):
         return super().__new__(cls)

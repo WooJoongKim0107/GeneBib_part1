@@ -10,10 +10,53 @@ from Papers.containers import Article
 from Patents.containers import Patent
 
 
+class CmntFinder:
+    @staticmethod
+    def entry(*key_accs):
+        key_accs = set(key_accs)
+        for c in Community.values():
+            if not key_accs.isdisjoint(c.entries):
+                yield c
+
+    @classmethod
+    def keyword(cls, *keys, strict=True):
+        return cls._keyword_strict(*keys) if strict else cls._keyword_loose(*keys)
+
+    @staticmethod
+    def article(*pmids):
+        pmids = set(pmids)
+        for c in Community.values():
+            if not all(pmids.isdisjoint(v) for v in c.pmids.values()):
+                yield c
+
+    @staticmethod
+    def patent(*pub_numbers):
+        pub_numbers = set(pub_numbers)
+        for c in Community.values():
+            if not all(pub_numbers.isdisjoint(v) for v in c.pub_numbers.values()):
+                yield c
+
+    @staticmethod
+    def _keyword_strict(*keys):
+        keys = set(keys)
+        for c in Community.values():
+            if not keys.isdisjoint(c.keywords):
+                yield c
+
+    @staticmethod
+    def _keyword_loose(*keys):
+        keys = {key.lower() for key in keys}
+        for c in Community.values():
+            c: Community
+            if any(key.lower() in keys for key in c.keywords):
+                yield c
+
+
 class Community(metaclass=MetaCacheExt):
     CACHE_PATH = PathTemplate('$pdata/community/community_cache.pkl.gz').substitute()
     ARTICLE_PATH = PathTemplate('$pdata/paper/sorted/community.tar').substitute()
     PATENT_PATH = PathTemplate('$pdata/patent/sorted/community.tar').substitute()
+    finder = CmntFinder  # Community.finder.entry('P0C9F0')
 
     def __init__(self, cmnt_idx: int, caching=True):
         self.cmnt_idx: int = cmnt_idx
