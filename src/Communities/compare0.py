@@ -4,7 +4,7 @@ from Communities import Community
 
 
 Community.import_cache()
-with open(PathTemplate('$rsrc/data/community/cmnt_to_keyw_matchform_221022.pkl').substitute(), 'rb') as file:
+with open(PathTemplate('$rsrc/data/community/cmnt_to_keyw_matchform_221027.pkl').substitute(), 'rb') as file:
     c2k = pickle.load(file)
 with open(PathTemplate('$rsrc/data/community/cmnt_to_keyw_matchform_200500.pkl').substitute(), 'rb') as file:
     old = pickle.load(file)
