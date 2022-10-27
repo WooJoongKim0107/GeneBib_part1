@@ -67,8 +67,10 @@ class Community(metaclass=MetaCacheExt):
 
     def random_materials(self, k, *texts):
         pmids, pubs = map(set, self.choices(k, *texts))
-        arts = [art for art in self.get_articles() if art.pmid in pmids]
-        pats = [pat for pat in self.get_patents() if pat.pub_number in pubs]
+        x = self.get_articles()
+        arts = [x[pmid] for pmid in pmids]
+        x = self.get_patents()
+        pats = [x[pub] for pub in pubs]
         return arts, pats
 
     @property
@@ -133,11 +135,11 @@ class Community(metaclass=MetaCacheExt):
         keys = sorted(self.paper_hits | self.patent_hits, key=self.hits, reverse=True)
         return {k: self.hits(k) for k in keys}
 
-    def get_articles(self) -> list[Article]:
+    def get_articles(self) -> dict[int, Article]:
         if not self.total_paper_hits:
-            return []
+            return {}
         with TarRW(self.ARTICLE_PATH, 'r') as tf:
-            return tf.gzip_load(f'{self.cmnt_idx}.pkl.gz')  # list[Article]
+            return tf.gzip_load(f'{self.cmnt_idx}.pkl.gz')  # dict[pmid, Article]
 
     @property
     def patent_hits(self) -> dict[str, int]:
@@ -148,11 +150,11 @@ class Community(metaclass=MetaCacheExt):
     def total_patent_hits(self) -> int:
         return sum(self.patent_hits.values())
 
-    def get_patents(self) -> list[Patent]:
+    def get_patents(self) -> dict[str, Patent]:
         if not self.total_patent_hits:
-            return []
+            return {}
         with TarRW(self.PATENT_PATH, 'r') as tf:
-            return tf.gzip_load(f'{self.cmnt_idx}.pkl.gz')  # list[Patent]
+            return tf.gzip_load(f'{self.cmnt_idx}.pkl.gz')  # dict[pub_number, Patent]
 
     # Fine-details
     def __repr__(self):
@@ -264,6 +266,21 @@ class TextFilter(metaclass=MetaDisposal):
         return False
 
 
+class CmntFilter(metaclass=MetaDisposal):
+    R_FILE = PathTemplate('$data/curations/filtered/filtered_cmnt.txt').substitute()
+    DATA = set()
+
+    @classmethod
+    def load(cls):
+        with open(cls.R_FILE, 'r') as file:  # Read
+            for line in read_commented(file):
+                cls.DATA.add(int(line))
+
+    @classmethod
+    def isvalid(cls, x: str):
+        return x not in cls.DATA
+
+
 class UniKey2Cmnt:
     R_FILE = PathTemplate('$pdata/community/community_cache.pkl.gz').substitute()
 
@@ -282,20 +299,22 @@ class UniKey2Cmnt:
 class Manager:
     _R_FILE0 = PathTemplate('$pdata/community/community_cache.pkl.gz').substitute()
     _R_FILE1 = PathTemplate('$data/curations/filtered/filtered.txt').substitute()
-    _R_FILE2 = PathTemplate('$lite/community/key2cmnt.pkl').substitute()
-    _R_FILE3 = PathTemplate('$pdata/uniprot/uniprot_keywords.pkl').substitute()
+    _R_FILE2 = PathTemplate('$data/curations/filtered/filtered_cmnt.txt').substitute()
+    _R_FILE3 = PathTemplate('$lite/community/key2cmnt.pkl').substitute()
+    _R_FILE4 = PathTemplate('$pdata/uniprot/uniprot_keywords.pkl').substitute()
 
     def __init__(self):
         Community.import_cache_if_empty(verbose=True)  # Read0
         TextFilter.load()  # Read1
-        self.uk2c = UniKey2Cmnt.load()  # Read2
-        self.keywords = {k: k for k in KeyWord.load()}  # Read3
+        CmntFilter.load()  # Read2
+        self.uk2c = UniKey2Cmnt.load()  # Read3
+        self.keywords = {k: k for k in KeyWord.load()}  # Read4
 
     def assign(self, key, attr, *matches):
         already = set()
         for match in matches:
             for cmnt_idx in self.which(match):
-                if cmnt_idx not in already:
+                if cmnt_idx not in already and CmntFilter.isvalid(cmnt_idx):
                     already.add(cmnt_idx)
                     Community.assign(cmnt_idx, attr, key, match)
         return already
