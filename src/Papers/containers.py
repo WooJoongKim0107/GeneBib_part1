@@ -6,6 +6,7 @@ from functools import cache
 from collections import Counter
 from operator import eq, contains, itemgetter, attrgetter
 import webbrowser
+from myfunc.modtxt import capture
 from myclass import MetaCacheExt, TarRW
 from mypathlib import PathTemplate
 
@@ -315,6 +316,18 @@ class Article:
     @property
     def journal(self):
         return Journal[self._journal_title]
+
+    def info_with(self, *txts):
+        return dedent(f"""\
+        {self}
+            Journal: {self._journal_title}
+            PubDate: {self.pub_date}
+           Location: {self.location}
+               PMID: {self.pmid}
+                URL: {self.url}
+              Title: {capture(self.title, *txts)}
+           Abstract: {capture(self.abstract, *txts)}
+        """)
 
     @property
     def info(self):

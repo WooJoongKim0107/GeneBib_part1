@@ -1,4 +1,5 @@
 from textwrap import dedent
+from myfunc.modtxt import capture
 
 
 class Patent:
@@ -73,6 +74,22 @@ class Patent:
                Number: publication={self.pub_number}, application={self.app_number}
                 Title: {self.title}
              Abstract: {self.abstract}
+        """)
+
+    def info_with(self, *txts):
+        return dedent(f"""\
+        {self}
+          application: {self.app_number}  {self.filing_date}
+          publication: {self.pub_number}  {self.pub_date}
+                grant: {self.grant_date if self.is_granted else 'Not granted'}
+                      
+             Citation: total {len(self.citations)}; {_print_set(self.citations)}
+            CPC codes: {_print_set(self.cpcs)}
+            
+             Location: {self.location}
+               Number: publication={self.pub_number}, application={self.app_number}
+                Title: {capture(self.title, *txts)}
+             Abstract: {capture(self.abstract, *txts)}
         """)
 
     def __repr__(self):

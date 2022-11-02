@@ -73,6 +73,12 @@ class Community(metaclass=MetaCacheExt):
         pats = [x[pub] for pub in pubs]
         return arts, pats
 
+    def random_infos(self, k, *texts):
+        arts, pats = self.random_materials(k, *texts)
+        arts_info = [art.info_with(*texts) for art in arts]
+        pats_info = [pat.info_with(*texts) for pat in pats]
+        return arts_info, pats_info
+
     @property
     def best_known_as(self):
         hs = self.hit_summary()
