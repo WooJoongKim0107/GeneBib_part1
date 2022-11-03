@@ -191,7 +191,12 @@ class Journal(metaclass=MetaCacheExt):
         return bool(self.medline_ta)
 
     def __eq__(self, other):
-        return (self.info == other.info) or (Counter(self.info) == Counter(other.info))
+        if isinstance(other, str):
+            return self.medline_ta == other
+        elif isinstance(other, Journal):
+            return (self.info == other.info) or (Counter(self.info) == Counter(other.info))
+        else:
+            return False
 
     def __hash__(self):
         return hash(self.medline_ta)
