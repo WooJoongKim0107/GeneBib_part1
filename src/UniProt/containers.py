@@ -166,6 +166,10 @@ class KeyWord(str):
         with open(cls.RW_FILE, 'rb') as file:
             return pickle.load(file)
 
+    @classmethod
+    def load_k2k(cls):
+        return {k: k for k in cls.load()}
+
     def tokenize(self):
         return Token.tokenize(self)
 
