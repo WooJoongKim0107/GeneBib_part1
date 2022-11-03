@@ -1,13 +1,11 @@
 import pickle
 from mypathlib import PathTemplate
-from Communities import Community
+from Communities import Community, C2K
 
 
 Community.import_cache()
-with open(PathTemplate('$rsrc/data/community/cmnt_to_keyw_matchform_221027.pkl').substitute(), 'rb') as file:
-    c2k = pickle.load(file)
-with open(PathTemplate('$rsrc/data/community/cmnt_to_keyw_matchform_200500.pkl').substitute(), 'rb') as file:
-    old = pickle.load(file)
+c2k = C2K.load()
+old = C2K.load(0)
 with open(PathTemplate('$base/old_paper_by_ranks.pkl').substitute(), 'rb') as file:
     old_ps = pickle.load(file)
 with open(PathTemplate('$base/old_patent_by_ranks.pkl').substitute(), 'rb') as file:

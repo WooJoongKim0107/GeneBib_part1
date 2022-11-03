@@ -1,3 +1,4 @@
+import pickle
 from random import choices
 from collections.abc import Iterable
 from textwrap import dedent, indent
@@ -8,6 +9,54 @@ from UniProt.containers import Match, KeyWord
 from StringMatching.base import unify, tokenize
 from Papers.containers import Article
 from Patents.containers import Patent
+
+
+class C2K(dict):
+    """
+    C2K.load() -> dict[int, set[str]]
+    , or {cmnt_idx: int -> {unify(keyword): str}}
+    """
+    PATH = PathTemplate('$data/community/cmnt_to_keyw_matchform_${date}.pkl')
+    DATES = ['200500', '220915', '221005', '221018', '221022', '221027']
+
+    @classmethod
+    def load(cls, date: str | int = -1) -> dict[int, set[str]]:
+        """
+        :param date: (str), load from $data/community/cmnt_to_keyw_matchform_${date}.pkl
+                     (int), load from cls.DATES[date], so must be -len(cls.DATES) <= date < len(cls.DATES)
+        """
+        if isinstance(date, int):
+            date = cls.DATES[date]
+        with open(cls.PATH.substitute(date=date), 'rb') as file:
+            return pickle.load(file)
+
+    @classmethod
+    def load_k2c(cls, date: str | int = -1) -> dict[str, int]:
+        return {v: k for k, vs in cls.load(date).items() for v in vs}
+
+
+class C2E(dict):
+    """
+    C2E.load() -> dict[int, tuple[str]]
+    , or {cmnt_idx: int -> (key_accession: str)}
+    """
+    PATH = PathTemplate('$data/community/update_curated_cmnt_map_${date}.pkl')
+    DATES = ['220914']
+
+    @classmethod
+    def load(cls, date: str | int = -1) -> dict[int, tuple[str]]:
+        """
+        :param date: (str), load from $data/community/update_curated_cmnt_map_${date}.pkl
+                     (int), load from cls.DATES[date], so must be -len(cls.DATES) <= date < len(cls.DATES)
+        """
+        if isinstance(date, int):
+            date = cls.DATES[date]
+        with open(cls.PATH.substitute(date=date), 'rb') as file:
+            return pickle.load(file)
+
+    @classmethod
+    def load_e2c(cls, date: str | int = -1) -> dict[str, int]:
+        return {v: k for k, vs in cls.load(date).items() for v in vs}
 
 
 class CmntFinder:
