@@ -74,6 +74,10 @@ class Community(metaclass=MetaCacheExt):
         return arts, pats
 
     def random_infos(self, k, *texts):
+        """
+        Capturing text here is simple str.replace(), none of our StringMatching algorithms.
+        So, some captures might not be matched.
+        """
         arts, pats = self.random_materials(k, *texts)
         arts_info = [art.info_with(*texts) for art in arts]
         pats_info = [pat.info_with(*texts) for pat in pats]
