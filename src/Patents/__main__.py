@@ -7,3 +7,5 @@ if __name__ == '__main__':
     main2()
     from .cpc import main as main3
     main3()
+    from .list_granted import main as main4
+    main4()
