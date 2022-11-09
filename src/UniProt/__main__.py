@@ -3,3 +3,5 @@ if __name__ == '__main__':
     main0()
     from .build import main as main1
     main1()
+    from .get_annual_entries import main as main2
+    main2()

@@ -11,9 +11,9 @@ R_FILES1 = {'paper': PathTemplate('$lite/paper/pmid2cmnt.pkl').substitute(),
             'patent': PathTemplate('$lite/patent/pubnum2cmnt.pkl').substitute(),
             'patent_gon': PathTemplate('$lite/patent/pubnum2cmnt.pkl').substitute()}
 R_FILE2 = PathTemplate('$lite/patent/granted.pkl').substitute()
-W_FILES = {'paper': PathTemplate('$pdata/lohl/paper_hitgene_list.txt').substitute(),
-           'patent': PathTemplate('$pdata/lohl/patent_hitgene_list.txt').substitute(),
-           'patent_gon': PathTemplate('$pdata/lohl/patent_hitgene_list_gon.txt').substitute()}
+W_FILES = {'paper': PathTemplate('$pdata/to_part2/paper_hitgene_list.txt').substitute(),
+           'patent': PathTemplate('$pdata/to_part2/patent_hitgene_list.txt').substitute(),
+           'patent_gon': PathTemplate('$pdata/to_part2/patent_hitgene_list_gon.txt').substitute()}
 
 
 def write(mtype: str):
