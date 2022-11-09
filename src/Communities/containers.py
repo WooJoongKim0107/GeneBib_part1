@@ -39,6 +39,8 @@ class C2E(dict):
     """
     C2E.load() -> dict[int, tuple[str]]
     , or {cmnt_idx: int -> (key_accession: str)}
+
+    Sorted by its key
     """
     PATH = PathTemplate('$data/community/update_curated_cmnt_map_${date}.pkl')
     DATES = ['220914']
@@ -105,6 +107,9 @@ class Community(metaclass=MetaCacheExt):
     CACHE_PATH = PathTemplate('$pdata/community/community_cache.pkl.gz').substitute()
     ARTICLE_PATH = PathTemplate('$pdata/paper/sorted/community.tar').substitute()
     PATENT_PATH = PathTemplate('$pdata/patent/sorted/community.tar').substitute()
+    PUB_YEAR_PATHS = {'paper': PathTemplate('$lite/paper/pmid2year.pkl').substitute(),
+                      'patent': PathTemplate('$lite/patent/pubnum2year.pkl').substitute()}
+    _PUB_YEARS_ = {}
     finder = CmntFinder  # Community.finder.entry('P0C9F0')
 
     def __init__(self, cmnt_idx: int, caching=True):
@@ -113,6 +118,38 @@ class Community(metaclass=MetaCacheExt):
         self.keywords: set[str] = set()
         self.pmids: dict[str, set[int]] = {}
         self.pub_numbers: dict[str, set[str]] = {}
+
+    def get_first(self, load=True):
+        """set load=True if you want to call Community.get_first_pubs() repeatedly"""
+        if not self._PUB_YEARS_:
+            for mode, path in self.PUB_YEAR_PATHS.items():
+                with open(path, 'rb') as file:
+                    self._PUB_YEARS_[mode] = pickle.load(file)
+        pmid2year = self._PUB_YEARS_['paper']
+        pubnum2year = self._PUB_YEARS_['patent']
+
+        pmids = ((key, pmid) for key, pmids in self.pmids.items() for pmid in pmids)
+        pubnums = ((key, pub) for key, pubs in self.pub_numbers.items() for pub in pubs)
+        pmids = ((key, pmid, pmid2year[pmid]) for key, pmid in pmids if pmid in pmid2year)
+        pubnums = ((key, pub, pubnum2year[pub]) for key, pub in pubnums if pub in pubnum2year)
+
+        p_key, pmid, p_year = min(pmids, key=lambda x: x[-1], default=('', -1, 9999))
+        t_key, pubnum, t_year = min(pubnums, key=lambda x: x[-1], default=('', '', 9999))
+
+        if not load:
+            self._PUB_YEARS_.clear()
+        return (p_key, pmid, p_year), (t_key, pubnum, t_year)
+
+    def get_first_materials(self, load=True):
+        """set load=True if you want to call Community.get_first_materials() repeatedly"""
+        (p_key, pmid, _), (t_key, pubnum, _) = self.get_first(load=load)
+        return self.get_articles()[pmid], self.get_patents()[pubnum]
+
+    def get_first_infos(self, load=True):
+        """set load=True if you want to call Community.get_first_infos() repeatedly"""
+        (p_key, pmid, _), (t_key, pubnum, _) = self.get_first(load=load)
+        art, pat = self.get_articles()[pmid], self.get_patents()[pubnum]
+        return art.info_with(p_key), pat.info_with(t_key)
 
     def random_materials(self, k, *texts):
         pmids, pubs = map(set, self.choices(k, *texts))

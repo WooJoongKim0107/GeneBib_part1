@@ -246,6 +246,20 @@ class Entry(metaclass=MetaCacheExt):
         self._keywords: list[tuple[str, str]] = []
         self._references: list[dict] = []
 
+    @property
+    def first_pub_year(self):
+        """
+        return == 9999 indicates that the Entry has no valid publication yet
+        """
+        min_year = 9999
+        for ref in self._references:
+            match ref:
+                case {'type': 'journal article' | 'online journal article',
+                      'pub_date': {'Year': int(year)}}:
+                    if year < min_year:
+                        min_year = year
+        return min_year
+
     @classmethod
     def from_parse(cls, dct):
         self = cls(dct['accessions'][0])
