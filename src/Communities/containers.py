@@ -121,10 +121,7 @@ class Community(metaclass=MetaCacheExt):
 
     def get_first(self, load=True):
         """set load=True if you want to call Community.get_first_pubs() repeatedly"""
-        if not self._PUB_YEARS_:
-            for mode, path in self.PUB_YEAR_PATHS.items():
-                with open(path, 'rb') as file:
-                    self._PUB_YEARS_[mode] = pickle.load(file)
+        self._load_pub_years()
         pmid2year = self._PUB_YEARS_['paper']
         pubnum2year = self._PUB_YEARS_['patent']
 
@@ -273,6 +270,13 @@ class Community(metaclass=MetaCacheExt):
             pmids = [x for v in self.pmids.values() for x in v]
             pubs = [x for v in self.pub_numbers.values() for x in v]
         return choices(pmids, k=k), choices(pubs, k=k)
+
+    @classmethod
+    def _load_pub_years(cls):
+        if not cls._PUB_YEARS_:
+            for mode, path in cls.PUB_YEAR_PATHS.items():
+                with open(path, 'rb') as file:
+                    cls._PUB_YEARS_[mode] = pickle.load(file)
 
     # Generation of instances & cache
     def __new__(cls, cmnt_idx: int, caching=True):
