@@ -12,19 +12,25 @@ _W_FILES = {'tree': PathTemplate('$lite/patent/cpc_tree.pkl').substitute(),
 
 
 def read_cpc(f):
-    x = [v.split('\t') for v in f.read().splitlines()]
-    code, _, text = x[0]
+    x = (v.split('\t') for v in f.read().splitlines())
+    code, _, text = next(x)
     yield code, 0, text
-    anc = '~!@#$%'
-    for code, depth, text in x[1:]:
-        if not depth:
-            if not code.startswith(anc):
-                anc = code
-                yield code, 1, text  # A01, A21, ...
-            else:
+
+    lv1code = '~!@#$%'
+    for v in x:
+        match v:
+            case (code, depth, text) if depth:
+                yield code, int(depth) + 3, text
+
+            case (code, '', text) if code.startswith(lv1code):
                 yield code, 2, text  # A01B, A01C, ...
-        else:
-            yield code, int(depth)+3, text
+
+            case (code, '', text):
+                lv1code = code
+                yield code, 1, text  # A01, A21, ...
+
+            case _:
+                raise ValueError(f'{f.name} is not valid!')
 
 
 def parse_hier(f):
@@ -59,7 +65,7 @@ class CPCTree(dict):
 
     @cached_property
     def all_selected_descendant(self):
-        return set(v for x in self.selected for v in self.descendant(x))
+        return set(v for x in self.selected for v in self.descendant(x)) | set(self.selected)
 
     def any_selected(self, cpcs):
         return not self.all_selected_descendant.isdisjoint(cpcs)
