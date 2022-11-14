@@ -3,7 +3,7 @@ import pickle
 from multiprocessing import Pool
 from mypathlib import PathTemplate
 from Papers import Journal  # Read0
-from Patents.cpc import CPCTree
+from Patents import Patent
 from Communities.containers import Community, Manager
 
 
@@ -48,16 +48,7 @@ def get_p_args():
 
 def get_t_args():
     manager = Manager()  # RW(R), Read2,3
-    cpc = CPCTree(load=True)  # Read5,6
-    with Pool(10) as p:
-        selected_patents = p.starmap(get_selected_patents, iter((i, cpc) for i in range(112)))
-    return [(i, selected, manager) for i, selected in enumerate(selected_patents)]
-
-
-def get_selected_patents(index, cpc: CPCTree):
-    with gzip.open(R_FILE['patent'].substitute(index=index), 'rb') as file:
-        chain = pickle.load(file)
-    return {pub_number for pub_number, patent in chain.items() if cpc.any_selected(patent.cpcs)}
+    return [(i, Patent.load_selected(i), manager) for i in range(112)]  # Read5,6
 
 
 def main():

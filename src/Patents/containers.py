@@ -1,8 +1,15 @@
+import gzip
+import pickle
 from textwrap import dedent
+from mypathlib import PathTemplate
 from myfunc.modtxt import capture
 
 
 class Patent:
+    PARSED_PATH = PathTemplate('$pdata/patent/patent_$index.pkl.gz')
+    _CPC_PATH = PathTemplate('$lite/patent/cpc_tree.pkl').substitute()
+    _TREE_PATH = PathTemplate('$lite/patent/cpc_selected.pkl').substitute()
+
     def __init__(self, pub_number: str):
         self.pub_number: str = pub_number
         self.app_number: str = ''
@@ -16,6 +23,21 @@ class Patent:
         self.cpcs: set[str] = set()
         self.citations: set[str] = set()
         self.location: int = -1
+
+    @classmethod
+    def load(cls, index):
+        """0 <= index < 112"""
+        with gzip.open(cls.PARSED_PATH.substitute(index=index), 'rb') as file:
+            return pickle.load(file)
+
+    @classmethod
+    def load_selected(cls, index):
+        from .cpc import CPCTree
+        cpc_tree = CPCTree(load=True)
+        chain = cls.load(index)
+        res = {pub_number for pub_number, patent in chain.items() if cpc_tree.any_selected(patent.cpcs)}
+        del cpc_tree
+        return res
 
     @property
     def is_granted(self):

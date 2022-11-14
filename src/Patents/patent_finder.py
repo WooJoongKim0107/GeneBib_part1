@@ -1,8 +1,7 @@
-import gzip
-import pickle
 from multiprocessing import Pool
 from myclass import MetaLoad
 from mypathlib import PathTemplate
+from Patents import Patent
 
 
 _R_FILE = PathTemplate('$pdata/patent/patent_index.pkl.gz')
@@ -11,15 +10,13 @@ _W_FILES = {'PmidToIdx': PathTemplate('$lite/patent/pubnum_to_index.pkl').substi
 
 class PubToIdx(dict, metaclass=MetaLoad):
     """{pub_number -> index}"""
-    R_FILE = PathTemplate('$pdata/paper/patent_$index.pkl.gz')
+    _R_FILE = PathTemplate('$pdata/paper/patent_$index.pkl.gz')
     LOAD_PATH = PathTemplate('$lite/paper/pubnum_to_index.pkl').substitute()
     STOP = 112
 
     @classmethod
     def list_up(cls, index):
-        with gzip.open(cls.R_FILE.substitute(index=index), 'rb') as file:
-            chain = pickle.load(file)
-        res = sorted(art.pmid for art in chain.values())
+        res = sorted(art.pmid for art in Patent.load(index).values())
         print(index)
         return res
 
@@ -34,14 +31,13 @@ class PubToIdx(dict, metaclass=MetaLoad):
 
 
 class PatentFinder:
-    R_FILE = PathTemplate('$pdata/patent/patent_$index.pkl.gz')
+    _R_FILE = PathTemplate('$pdata/patent/patent_$index.pkl.gz')
     _R_FILE1 = PathTemplate('$lite/patent/pubnum_to_index.pkl').substitute()
 
     @classmethod
     def from_pmids(cls, *pub_nums):
         for idx, pub_nums in cls._quick_recipe(*pub_nums).items():
-            with gzip.open(cls.R_FILE.substitute(index=idx), 'rb') as file:
-                chain = pickle.load(file)
+            chain = Patent.load(idx)
             patents = [chain[pub_num] for pub_num in pub_nums]
             del chain
 

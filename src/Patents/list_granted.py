@@ -1,17 +1,15 @@
-import gzip
 import pickle
 from mypathlib import PathTemplate
 from multiprocessing import Pool
+from Patents import Patent
 
 
-R_FILE = PathTemplate('$pdata/patent/patent_$index.pkl.gz')
+_R_FILE = PathTemplate('$pdata/patent/patent_$index.pkl.gz')
 W_FILE = PathTemplate('$lite/patent/granted.pkl').substitute()
 
 
 def do(index):
-    with gzip.open(R_FILE.substitute(index=index), 'rb') as file:
-        chain = pickle.load(file)
-    return {pat.pub_number: pat.is_granted for pubnum, pat in chain.items()}
+    return {pat.pub_number: pat.is_granted for pubnum, pat in Patent.load(index).items()}
 
 
 def main():
