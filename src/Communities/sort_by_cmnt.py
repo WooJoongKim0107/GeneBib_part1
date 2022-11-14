@@ -4,10 +4,12 @@ from multiprocessing import Pool
 from functools import partial
 from myclass import TarRW
 from mypathlib import PathTemplate
+from Papers import Article
+from Patents import Patent
 
 
-R_FILE0s = {'paper': PathTemplate('$pdata/paper/paper_$index.pkl.gz'),
-            'patent': PathTemplate('$pdata/patent/patent_$index.pkl.gz')}
+_R_FILE0s = {'paper': PathTemplate('$pdata/paper/paper_$index.pkl.gz'),
+             'patent': PathTemplate('$pdata/patent/patent_$index.pkl.gz')}
 R_FILE1s = {'paper': PathTemplate('$lite/paper/pmid2cmnt.pkl').substitute(),
             'patent': PathTemplate('$lite/patent/pubnum2cmnt.pkl').substitute()}
 
@@ -18,11 +20,9 @@ W_FILE1s = {'paper': PathTemplate('$pdata/paper/sorted/community.tar').substitut
 
 
 def foo(mode, pmid2cmnt, index):
-    with gzip.open(R_FILE0s[mode].substitute(index=index), 'rb') as file:
-        chain_map = pickle.load(file)
-
+    cls = Article if mode == 'paper' else Patent
     res = {}
-    for pmid, article in chain_map.items():
+    for pmid, article in cls.load(index).items():
         for cmnt in pmid2cmnt.get(pmid, set()):
             res.setdefault(cmnt, {})[pmid] = article
     return res

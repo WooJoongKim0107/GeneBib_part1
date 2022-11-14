@@ -1,9 +1,7 @@
-import gzip
-import pickle
 from multiprocessing import Pool
 from myclass import MetaLoad
 from mypathlib import PathTemplate
-from . import Journal  # RW(R)
+from Papers import Article, Journal  # RW(R)
 
 
 _R_FILE = PathTemplate('$pdata/paper/paper_$index.pkl.gz')
@@ -15,15 +13,13 @@ _RW_FILE0 = PathTemplate('$pdata/paper/journal_cache.pkl.gz').substitute()
 
 class PmidToIdx(dict, metaclass=MetaLoad):
     """{pmid -> index}"""
-    R_FILE = PathTemplate('$pdata/paper/paper_$index.pkl.gz')
+    _R_FILE = PathTemplate('$pdata/paper/paper_$index.pkl.gz')
     LOAD_PATH = PathTemplate('$lite/paper/article_to_index.pkl').substitute()
     STOP = 112
 
     @classmethod
     def list_up(cls, index):
-        with gzip.open(cls.R_FILE.substitute(index=index), 'rb') as file:
-            chain = pickle.load(file)
-        res = sorted(art.pmid for art in chain.values())
+        res = sorted(art.pmid for art in Article.load(index).values())
         print(index)
         return res
 
@@ -39,7 +35,7 @@ class PmidToIdx(dict, metaclass=MetaLoad):
 
 class JnlToPmids(dict, metaclass=MetaLoad):
     """{medline_ta -> *pmids}"""
-    R_FILE = PathTemplate('$pdata/paper/paper_$index.pkl.gz')
+    _R_FILE = PathTemplate('$pdata/paper/paper_$index.pkl.gz')
     _R_FILE0 = PathTemplate('$lite/paper/article_to_index.pkl').substitute()
     LOAD_PATH = PathTemplate('$lite/paper/journal_to_article.pkl').substitute()
     RW_FILE = PathTemplate('$lite/paper/journal_to_article$index.txt')
@@ -72,13 +68,10 @@ class JnlToPmids(dict, metaclass=MetaLoad):
 
     @classmethod
     def _write(cls, index):
-        with gzip.open(cls.R_FILE.substitute(index=index), 'rb') as file:
-            chain = pickle.load(file)
-
         j2a = {}
         for k, v in Journal.items():
             j2a.setdefault(k, j2a.setdefault(v.medline_ta, []))
-        for art in chain.values():
+        for art in Article.load(index).values():
             j2a[art._journal_title].append(art.pmid)
         for arts in j2a.values():
             arts.sort()
@@ -104,7 +97,7 @@ class JnlToPmids(dict, metaclass=MetaLoad):
 
 
 class ArticleFinder:
-    R_FILE = PathTemplate('$pdata/paper/paper_$index.pkl.gz')
+    _R_FILE = PathTemplate('$pdata/paper/paper_$index.pkl.gz')
     _R_FILE0 = PathTemplate('$lite/paper/journal_to_article.pkl').substitute()
     _R_FILE1 = PathTemplate('$lite/paper/article_to_index.pkl').substitute()
     J2A = None
@@ -112,8 +105,7 @@ class ArticleFinder:
     @classmethod
     def from_pmids(cls, *pmids):
         for idx, pmids in cls._quick_recipe(*pmids).items():
-            with gzip.open(cls.R_FILE.substitute(index=idx), 'rb') as file:
-                chain = pickle.load(file)
+            chain = Article.load(idx)
             arts = [chain[pmid] for pmid in pmids]
             del chain
 

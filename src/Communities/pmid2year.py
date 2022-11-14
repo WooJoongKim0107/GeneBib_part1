@@ -1,23 +1,23 @@
-import gzip
 import pickle
 from mypathlib import PathTemplate
 from multiprocessing import Pool
 from functools import partial
+from Papers import Article
+from Patents import Patent
 
 
-R_FILES = {'paper': PathTemplate('$pdata/paper/paper_$index.pkl.gz'),
-           'patent': PathTemplate('$pdata/patent/patent_$index.pkl.gz')}
+_R_FILES = {'paper': PathTemplate('$pdata/paper/paper_$index.pkl.gz'),
+            'patent': PathTemplate('$pdata/patent/patent_$index.pkl.gz')}
 W_FILES = {'paper': PathTemplate('$lite/paper/pmid2year.pkl').substitute(),
            'patent': PathTemplate('$lite/patent/pubnum2year.pkl').substitute()}
 
 
 def do(mode, index):
-    with gzip.open(R_FILES[mode].substitute(index=index), 'rb') as file:
-        chain = pickle.load(file)
-    attr = {'paper': 'pub_date', 'patent': 'filing_date'}[mode]
+    cls, attr = {'paper': (Article, 'pub_date'),
+                 'patent': (Patent, 'filing_date')}[mode]
 
     res = {}
-    for pmid, art in chain.items():
+    for pmid, art in cls.load(index).items():
         if year := getattr(art, attr).get('Year'):
             res[pmid] = year
     return res

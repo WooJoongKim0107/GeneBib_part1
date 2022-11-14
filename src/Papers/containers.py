@@ -296,14 +296,22 @@ if Journal.CACHE_PATH.is_file():
 
 
 class Article:
+    PARSED_PATH = PathTemplate('$pdata/paper/paper_$index.pkl.gz')
+
     def __init__(self, pmid: int):
         self.pmid: int = pmid
         self._journal_title: str = ''
-        self.pub_date: dict[str: str|int] = {}
+        self.pub_date: dict[str: str | int] = {}
 
         self.title: str = ''
         self.abstract: str = ''
         self.location: int = -1
+
+    @classmethod
+    def load(cls, index):
+        """0 <= index < 112"""
+        with gzip.open(cls.PARSED_PATH.substitute(index=index), 'rb') as file:
+            return pickle.load(file)
 
     @classmethod
     def from_parse(cls,
