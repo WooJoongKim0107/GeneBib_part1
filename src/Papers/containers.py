@@ -238,7 +238,7 @@ class Journal(metaclass=MetaCacheExt):
     def journals4mp(cls, n, selected=False):
         if selected:
             with open(cls.SELECTED_PATH, 'rb') as file:
-                journals = [Journal[medline_ta] for medline_ta in pickle.load(file).values()]
+                journals = list(set(Journal[medline_ta] for medline_ta in pickle.load(file).values()))
         else:
             journals = cls.unique_values()
         return _get_partition(journals, n, key=attrgetter('counts'))
