@@ -9,6 +9,7 @@ class Patent:
     PARSED_PATH = PathTemplate('$pdata/patent/patent_$index.pkl.gz')
     _CPC_PATH = PathTemplate('$lite/patent/cpc_tree.pkl').substitute()
     _TREE_PATH = PathTemplate('$lite/patent/cpc_selected.pkl').substitute()
+    _CPC_TREE_ = None
 
     def __init__(self, pub_number: str):
         self.pub_number: str = pub_number
@@ -31,12 +32,18 @@ class Patent:
             return pickle.load(file)
 
     @classmethod
-    def load_selected(cls, index):
-        from .cpc import CPCTree
-        cpc_tree = CPCTree(load=True)
+    def _load_cpc(cls):
+        if not cls._CPC_TREE_:
+            from .cpc import CPCTree
+            cls._CPC_TREE_ = CPCTree(load=True)
+
+    @classmethod
+    def load_selected(cls, index, load=True):
+        cls._load_cpc()
         chain = cls.load(index)
-        res = {pub_number for pub_number, patent in chain.items() if cpc_tree.any_selected(patent.cpcs)}
-        del cpc_tree
+        res = {pub_number for pub_number, patent in chain.items() if cls._CPC_TREE_.any_selected(patent.cpcs)}
+        if not load:
+            del cls._CPC_TREE_
         return res
 
     @property
