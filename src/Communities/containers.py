@@ -62,6 +62,19 @@ class C2E(dict):
 
 
 class CmntFinder:
+    @classmethod
+    def safe_keyword(cls, *keys, strict=True):
+        cmnts_of_interest = []
+        for key in keys:
+            match list(cls.keyword(key, strict=strict)):
+                case []:
+                    raise ValueError(f'No occurrences found for {key}, try another key')
+                case [c]:
+                    cmnts_of_interest.append(c)
+                case [c, *_]:
+                    raise ValueError(f'Multiple occurrences found for {key}, try another key with strict=True')
+        return cmnts_of_interest
+
     @staticmethod
     def entry(*key_accs):
         key_accs = set(key_accs)
@@ -118,6 +131,14 @@ class Community(metaclass=MetaCacheExt):
         self.keywords: set[str] = set()
         self.pmids: dict[str, set[int]] = {}
         self.pub_numbers: dict[str, set[str]] = {}
+
+    @classmethod
+    def random_infos_of_interest(cls, *keys, strict=True):
+        for c in cls.finder.safe_keyword(*keys, strict=strict):
+            ps, ts = c.random_materials(30)
+            ps = [p.info_with(*c.pmids) for p in ps]
+            ts = [t.info_with(*c.pub_numbers) for t in ts]
+            yield c, ps, ts
 
     def get_first(self, load=True):
         """set load=True if you want to call Community.get_first_pubs() repeatedly"""
