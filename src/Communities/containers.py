@@ -17,7 +17,7 @@ class C2K(dict):
     , or {cmnt_idx: int -> {unify(keyword): str}}
     """
     PATH = PathTemplate('$data/community/cmnt_to_keyw_matchform_${date}.pkl')
-    DATES = ['200500', '220915', '221005', '221018', '221022', '221027']
+    DATES = ['200500', '220915', '221005', '221018', '221022', '221027', '221122']
 
     @classmethod
     def load(cls, date: str | int = -1) -> dict[int, set[str]]:
@@ -133,9 +133,10 @@ class Community(metaclass=MetaCacheExt):
         self.pub_numbers: dict[str, set[str]] = {}
 
     @classmethod
-    def random_infos_of_interest(cls, *keys, strict=True):
+    def random_infos_of_interest(cls, k, *keys, strict=True):
+        """See random_infos_of_interest_easy  if you want to print it for curation"""
         for c in cls.finder.safe_keyword(*keys, strict=strict):
-            ps, ts = c.random_materials(30)
+            ps, ts = c.random_materials(k)
             ps = [p.info_with(*c.pmids) for p in ps]
             ts = [t.info_with(*c.pub_numbers) for t in ts]
             yield c, ps, ts
@@ -471,3 +472,22 @@ def col_prints(*cols, sep=':'):
     sep += ' '
     ms = [max(len(str(x)) for x in col) for col in cols]
     return '\n'.join((sep.join(f'{x:>{m}}' for x, m in zip(nth, ms))) for nth in zip(*cols))
+
+
+def random_infos_of_interest_easy(genes, fname_paper, fname_patent, k=30):
+    Community.import_cache_if_empty()
+    with open(fname_paper, 'w') as pfile:
+        with open(fname_patent, 'w') as tfile:
+            for c, ps, ts in Community.random_infos_of_interest(k, *genes, strict=True):
+                pfile.write(c.more_info)
+                tfile.write(c.more_info)
+                pfile.write('\n')
+                tfile.write('\n')
+                for p in ps:
+                    pfile.write(indent(p, '    '))
+                    pfile.write('\n')
+                pfile.write('================================\n')
+                for t in ts:
+                    tfile.write(indent(t, '    '))
+                    tfile.write('\n')
+                tfile.write('================================\n')
