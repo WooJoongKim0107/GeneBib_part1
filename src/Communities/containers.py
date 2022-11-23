@@ -17,7 +17,7 @@ class C2K(dict):
     , or {cmnt_idx: int -> {unify(keyword): str}}
     """
     PATH = PathTemplate('$data/community/cmnt_to_keyw_matchform_${date}.pkl')
-    DATES = ['200500', '220915', '221005', '221018', '221022', '221027', '221122']
+    DATES = ['200500', '220915', '221005', '221018', '221022', '221027', '221123']
 
     @classmethod
     def load(cls, date: str | int = -1) -> dict[int, set[str]]:
@@ -33,6 +33,16 @@ class C2K(dict):
     @classmethod
     def load_k2c(cls, date: str | int = -1) -> dict[str, int]:
         return {v: k for k, vs in cls.load(date).items() for v in vs}
+
+    @classmethod
+    def dump(cls, obj, date: str):
+        """YOU MUST ADD 'date' to C2K.DATES MANUALLY AFTER THIS"""
+        for c, ks in obj.items():
+            for k in ks:
+                if unify(k) != k:
+                    raise ValueError(f'{c} has invalid key: {k} != {unify(k) = }')
+        with open(cls.PATH.substitute(date=date), 'wb') as file:
+            return pickle.dump(obj, file)
 
 
 class C2E(dict):
