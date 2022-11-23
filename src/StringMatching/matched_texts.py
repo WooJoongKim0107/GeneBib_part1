@@ -48,7 +48,7 @@ def main():
 
     double_check = []
     with Pool(50) as p:
-        for count, path, parent, check in p.map(_main, args):
+        for count, path, parent, check in p.imap_unordered(_main, args):
             counts += count
             paths.update(path)
             parents.update(parent)
