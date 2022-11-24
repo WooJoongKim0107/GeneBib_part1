@@ -237,11 +237,16 @@ class Journal(metaclass=MetaCacheExt):
     @classmethod
     def journals4mp(cls, n, selected=False):
         if selected:
-            with open(cls.SELECTED_PATH, 'rb') as file:
-                journals = list(set(Journal[medline_ta] for medline_ta in pickle.load(file).values()))
+            journals = cls.get_selected()
         else:
             journals = cls.unique_values()
         return _get_partition(journals, n, key=attrgetter('counts'))
+
+    @classmethod
+    def get_selected(cls):
+        with open(cls.SELECTED_PATH, 'rb') as file:
+            journals = list(set(Journal[medline_ta] for medline_ta in pickle.load(file).values()))
+        return journals
 
 
 # TODO Too slow for small n
