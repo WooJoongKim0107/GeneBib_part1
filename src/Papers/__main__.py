@@ -11,3 +11,5 @@ if __name__ == '__main__':
     main4()
     from .sort import main as main5
     main5()
+    from .journal_selection import main as main6
+    main6()
