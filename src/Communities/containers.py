@@ -127,6 +127,13 @@ class CmntFinder:
                 yield c
 
     @staticmethod
+    def epo(*epo_pub_numbers):
+        epo_pub_numbers = set(epo_pub_numbers)
+        for c in Community.values():
+            if not all(epo_pub_numbers.isdisjoint(v) for v in c.epo_pub_numbers.values()):
+                yield c
+
+    @staticmethod
     def _keyword_strict(*keys):
         keys = set(keys)
         for c in Community.values():
@@ -146,8 +153,10 @@ class Community(metaclass=MetaCacheExt):
     CACHE_PATH = PathTemplate('$pdata/community/community_cache.pkl.gz').substitute()
     ARTICLE_PATH = PathTemplate('$pdata/paper/sorted/community.tar').substitute()
     PATENT_PATH = PathTemplate('$pdata/patent/sorted/community.tar').substitute()
+    EPO_PATH = PathTemplate('$pdata/epo/sorted/community.tar').substitute()
     PUB_YEAR_PATHS = {'paper': PathTemplate('$lite/paper/pmid2year.pkl').substitute(),
-                      'patent': PathTemplate('$lite/patent/pubnum2year.pkl').substitute()}
+                      'patent': PathTemplate('$lite/patent/pubnum2year.pkl').substitute(),
+                      'epo': PathTemplate('$lite/epo/pubnum2year.pkl').substitute()}
     _PUB_YEARS_ = {}
     finder = CmntFinder  # Community.finder.entry('P0C9F0')
 
@@ -157,62 +166,71 @@ class Community(metaclass=MetaCacheExt):
         self.keywords: set[str] = set()
         self.pmids: dict[str, set[int]] = {}
         self.pub_numbers: dict[str, set[str]] = {}
+        self.epo_pub_numbers: dict[str, set[str]] = {}  # pub_numbers from EPO PATSTAT
 
     @classmethod
     def random_infos_of_interest(cls, k, *keys, strict=True):
         """See random_infos_of_interest_easy  if you want to print it for curation"""
         for c in cls.finder.safe_keyword(*keys, strict=strict):
-            ps, ts = c.random_materials(k)
+            ps, ts, es = c.random_materials(k)
             ps = [p.info_with(*c.pmids) for p in ps]
             ts = [t.info_with(*c.pub_numbers) for t in ts]
-            yield c, ps, ts
+            es = [e.info_with(*c.epo_pub_numbers) for e in es]
+            yield c, ps, ts, es
 
     def get_first(self, load=True):
         """set load=True if you want to call Community.get_first_pubs() repeatedly"""
         self._load_pub_years()
         pmid2year = self._PUB_YEARS_['paper']
         pubnum2year = self._PUB_YEARS_['patent']
+        eponum2year = self._PUB_YEARS_['epo']
 
         pmids = ((key, pmid) for key, pmids in self.pmids.items() for pmid in pmids)
         pubnums = ((key, pub) for key, pubs in self.pub_numbers.items() for pub in pubs)
+        eponums = ((key, epo) for key, epos in self.epo_pub_numbers.items() for epo in epos)
         pmids = ((key, pmid, pmid2year[pmid]) for key, pmid in pmids if pmid in pmid2year)
         pubnums = ((key, pub, pubnum2year[pub]) for key, pub in pubnums if pub in pubnum2year)
+        eponums = ((key, epo, eponum2year[epo]) for key, epo in eponums if epo in eponum2year)
 
         p_key, pmid, p_year = min(pmids, key=lambda x: x[-1], default=('', -1, 9999))
         t_key, pubnum, t_year = min(pubnums, key=lambda x: x[-1], default=('', '', 9999))
+        e_key, eponum, e_year = min(eponums, key=lambda x: x[-1], default=('', '', 9999))
 
         if not load:
             self._PUB_YEARS_.clear()
-        return (p_key, pmid, p_year), (t_key, pubnum, t_year)
+        return (p_key, pmid, p_year), (t_key, pubnum, t_year), (e_key, eponum, e_year)
 
     def get_first_materials(self, load=True):
         """set load=True if you want to call Community.get_first_materials() repeatedly"""
-        (p_key, pmid, _), (t_key, pubnum, _) = self.get_first(load=load)
-        return self.get_articles()[pmid], self.get_patents()[pubnum]
+        (p_key, pmid, _), (t_key, pubnum, _), (e_key, eponum, _) = self.get_first(load=load)
+        return self.get_articles()[pmid], self.get_patents()[pubnum], self.get_epos()[eponum]
 
     def get_first_infos(self, load=True):
         """set load=True if you want to call Community.get_first_infos() repeatedly"""
-        (p_key, pmid, _), (t_key, pubnum, _) = self.get_first(load=load)
-        art, pat = self.get_articles()[pmid], self.get_patents()[pubnum]
-        return art.info_with(p_key), pat.info_with(t_key)
+        (p_key, pmid, _), (t_key, pubnum, _), (e_key, eponum, _) = self.get_first(load=load)
+        art, pat, epo = self.get_articles()[pmid], self.get_patents()[pubnum], self.get_epos()[eponum]
+        return art.info_with(p_key), pat.info_with(t_key), epo.info_with(e_key)
 
     def random_materials(self, k, *texts):
-        pmids, pubs = map(set, self.choices(k, *texts))
+        pmids, pubs, epos = map(set, self.choices(k, *texts))
         x = self.get_articles()
         arts = [x[pmid] for pmid in pmids]
         x = self.get_patents()
         pats = [x[pub] for pub in pubs]
-        return arts, pats
+        x = self.get_epos()
+        epos = [x[epo] for epo in epos]
+        return arts, pats, epos
 
     def random_infos(self, k, *texts):
         """
         Capturing text here is simple str.replace(), none of our StringMatching algorithms.
         So, some captures might not be matched.
         """
-        arts, pats = self.random_materials(k, *texts)
+        arts, pats, epos = self.random_materials(k, *texts)
         arts_info = [art.info_with(*texts) for art in arts]
         pats_info = [pat.info_with(*texts) for pat in pats]
-        return arts_info, pats_info
+        epos_info = [epo.info_with(*texts) for epo in epos]
+        return arts_info, pats_info, epos_info
 
     @property
     def best_known_as(self):
@@ -238,6 +256,7 @@ class Community(metaclass=MetaCacheExt):
             Total hits:
                         {self.total_paper_hits:>7,} hits (paper)
                         {self.total_patent_hits:>7,} hits (patent)
+                        {self.total_epo_hits:>7,} hits (epo)
         """)
 
     @property
@@ -249,6 +268,7 @@ class Community(metaclass=MetaCacheExt):
             Total hits: 
                         {self.total_paper_hits:>7,} hits (paper)
                         {self.total_patent_hits:>7,} hits (patent)
+                        {self.total_epo_hits:>7,} hits (epo)
                Details:
         """) + self._more_info() + '\n' if self else self.info
 
@@ -262,18 +282,18 @@ class Community(metaclass=MetaCacheExt):
         """return total number of paper hits"""
         return sum(self.paper_hits.values())
 
-    def hits(self, text: str) -> tuple[int, int]:
+    def hits(self, text: str) -> tuple[int, int, int]:
         """return (total_paper_hits, total_patent_hits)"""
-        return self.paper_hits.get(text, 0), self.patent_hits.get(text, 0)
+        return self.paper_hits.get(text, 0), self.patent_hits.get(text, 0), self.epo_hits.get(text, 0)
 
     @property
     def total_hits(self) -> int:
         """return total number of hits (regardless of material type)"""
-        return self.total_paper_hits + self.total_patent_hits
+        return self.total_paper_hits + self.total_patent_hits + self.total_epo_hits
 
-    def hit_summary(self) -> dict[str, tuple[int, int]]:
+    def hit_summary(self) -> dict[str, tuple[int, int, int]]:
         """{match.text -> (total_paper_hits, total_patent_hits)} sorted by paper_hits and patent_hits"""
-        keys = sorted(self.paper_hits | self.patent_hits, key=self.hits, reverse=True)
+        keys = sorted(self.paper_hits | self.patent_hits | self.epo_hits, key=self.hits, reverse=True)
         return {k: self.hits(k) for k in keys}
 
     def get_articles(self) -> dict[int, Article]:
@@ -297,6 +317,21 @@ class Community(metaclass=MetaCacheExt):
         with TarRW(self.PATENT_PATH, 'r') as tf:
             return tf.gzip_load(f'{self.cmnt_idx}.pkl.gz')  # dict[pub_number, Patent]
 
+    @property
+    def epo_hits(self) -> dict[str, int]:
+        """dict[match.text, num_hits]"""
+        return {k: len(v) for k, v in self.epo_pub_numbers.items()}
+
+    @property
+    def total_epo_hits(self) -> int:
+        return sum(self.epo_hits.values())
+
+    def get_epos(self) -> dict[str, Patent]:
+        if not self.total_epo_hits:
+            return {}
+        with TarRW(self.EPO_PATH, 'r') as tf:
+            return tf.gzip_load(f'{self.cmnt_idx}.pkl.gz')  # dict[pub_number, Patent]
+
     # Fine-details
     def __repr__(self):
         return f"Community({self.cmnt_idx})"
@@ -314,10 +349,12 @@ class Community(metaclass=MetaCacheExt):
         if texts:
             pmids = [pmid for text in texts for pmid in self.pmids[text]]
             pubs = [pub for text in texts for pub in self.pub_numbers[text]]
+            epos = [epo for text in texts for epo in self.epo_pub_numbers[text]]
         else:
             pmids = [x for v in self.pmids.values() for x in v]
             pubs = [x for v in self.pub_numbers.values() for x in v]
-        return choices(pmids, k=k), choices(pubs, k=k)
+            epos = [x for v in self.epo_pub_numbers.values() for x in v]
+        return choices(pmids, k=k), choices(pubs, k=k), choices(epos, k=k)
 
     @classmethod
     def _load_pub_years(cls):
@@ -342,6 +379,8 @@ class Community(metaclass=MetaCacheExt):
             self.pmids.setdefault(k, set()).update(v)
         for k, v in cmnt.pub_numbers.items():
             self.pub_numbers.setdefault(k, set()).update(v)
+        for k, v in cmnt.epo_pub_numbers.items():
+            self.epo_pub_numbers.setdefault(k, set()).update(v)
 
     @classmethod
     def from_parse(cls, cmnt_idx: int, entries: tuple[str], unified_keywords: set[str]):
@@ -500,20 +539,27 @@ def col_prints(*cols, sep=':'):
     return '\n'.join((sep.join(f'{x:>{m}}' for x, m in zip(nth, ms))) for nth in zip(*cols))
 
 
-def random_infos_of_interest_easy(genes, fname_paper, fname_patent, k=30):
+def random_infos_of_interest_easy(genes, fname_paper, fname_patent, fname_epo, k=30):
     Community.import_cache_if_empty()
     with open(fname_paper, 'w') as pfile:
         with open(fname_patent, 'w') as tfile:
-            for c, ps, ts in Community.random_infos_of_interest(k, *genes, strict=True):
-                pfile.write(c.more_info)
-                tfile.write(c.more_info)
-                pfile.write('\n')
-                tfile.write('\n')
-                for p in ps:
-                    pfile.write(indent(p, '    '))
+            with open(fname_epo, 'w') as efile:
+                for c, ps, ts, es in Community.random_infos_of_interest(k, *genes, strict=True):
+                    pfile.write(c.more_info)
+                    tfile.write(c.more_info)
+                    efile.write(c.more_info)
                     pfile.write('\n')
-                pfile.write('================================\n')
-                for t in ts:
-                    tfile.write(indent(t, '    '))
                     tfile.write('\n')
-                tfile.write('================================\n')
+                    efile.write('\n')
+                    for p in ps:
+                        pfile.write(indent(p, '    '))
+                        pfile.write('\n')
+                    pfile.write('================================\n')
+                    for t in ts:
+                        tfile.write(indent(t, '    '))
+                        tfile.write('\n')
+                    tfile.write('================================\n')
+                    for e in es:
+                        efile.write(indent(t, '    '))
+                        efile.write('\n')
+                    efile.write('================================\n')

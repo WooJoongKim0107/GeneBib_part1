@@ -14,7 +14,7 @@ W_FILE = PathTemplate('$pdata/to_part2/yearly_new_genes.csv').substitute()
 def get():
     c = Counter()
     for v in Community.values():
-        (_, _, p_year), (_, _, t_year) = v.get_first(load=True)
+        (_, _, p_year), (_, _, t_year), _ = v.get_first(load=True)  # We don't use EPO dataset here
         if (year := min(p_year, t_year)) != 9999:  # year==9999 indicates that the Community has no valid publication
             c[year] += 1
     return c

@@ -6,21 +6,34 @@ from myclass import TarRW
 from mypathlib import PathTemplate
 from Papers import Article
 from Patents import Patent
+from Epos import Epo
 
 
 _R_FILE0s = {'paper': PathTemplate('$pdata/paper/paper_$index.pkl.gz'),
-             'patent': PathTemplate('$pdata/patent/patent_$index.pkl.gz')}
+             'patent': PathTemplate('$pdata/patent/patent_$index.pkl.gz'),
+             'epo': PathTemplate('$pdata/epo/epo_$index.pkl.gz')}
 R_FILE1s = {'paper': PathTemplate('$lite/paper/pmid2cmnt.pkl').substitute(),
-            'patent': PathTemplate('$lite/patent/pubnum2cmnt.pkl').substitute()}
+            'patent': PathTemplate('$lite/patent/pubnum2cmnt.pkl').substitute(),
+            'epo': PathTemplate('$lite/epo/pubnum2cmnt.pkl').substitute()}
 
 W_FILE0s = {'paper': PathTemplate('$pdata/paper/sorted/${cmnt_idx}.pkl.gz'),
-            'patent': PathTemplate('$pdata/patent/sorted/${cmnt_idx}.pkl.gz')}
+            'patent': PathTemplate('$pdata/patent/sorted/${cmnt_idx}.pkl.gz'),
+            'epo': PathTemplate('$pdata/epo/sorted/${cmnt_idx}.pkl.gz')}
 W_FILE1s = {'paper': PathTemplate('$pdata/paper/sorted/community.tar').substitute(),
-            'patent': PathTemplate('$pdata/patent/sorted/community.tar').substitute()}
+            'patent': PathTemplate('$pdata/patent/sorted/community.tar').substitute(),
+            'epo': PathTemplate('$pdata/epo/sorted/community.tar').substitute()}
 
 
 def foo(mode, pmid2cmnt, index):
-    cls = Article if mode == 'paper' else Patent
+    if mode == 'paper':
+        cls = Article
+    elif mode == 'patent':
+        cls = Patent
+    elif mode == 'epo':
+        cls = Epo
+    else:
+        raise ValueError
+
     res = {}
     for pmid, article in cls.load(index).items():
         for cmnt in pmid2cmnt.get(pmid, set()):
@@ -58,7 +71,7 @@ def _main(mode):
     f = partial(foo, mode, pmid2cmnt)
 
     with Pool(8) as p:
-        results = p.map(f, range(112))
+        results = p.map(f, range(112))  # TODO EPO check
     result = merge(results)
 
     with Pool(8) as p:
@@ -69,7 +82,7 @@ def _main(mode):
 
 
 def main():
-    for mode in ['paper', 'patent']:
+    for mode in ['paper', 'patent', 'epo']:
         _main(mode)
 
 
