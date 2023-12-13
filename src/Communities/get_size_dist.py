@@ -3,7 +3,7 @@ from mypathlib import PathTemplate
 from Communities import C2E
 
 
-_R_FILE = PathTemplate('$data/community/update_curated_cmnt_map_220914.pkl').substitute()
+_R_FILE = PathTemplate('$data/community/update_curated_cmnt_map_231201.pkl').substitute()
 W_FILE = PathTemplate('$pdata/to_part2/clusters.json').substitute()
 
 

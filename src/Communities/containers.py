@@ -17,7 +17,7 @@ class C2K(dict):
     , or {cmnt_idx: int -> {unify(keyword): str}}
     """
     PATH = PathTemplate('$data/community/cmnt_to_keyw_matchform_${date}.pkl')
-    DATES = ['200500', '220915', '221005', '221018', '221022', '221027', '221123']
+    DATES = ['200500', '220915', '221005', '221018', '221022', '221027', '221123', '231201']
 
     @classmethod
     def load(cls, date: str | int = -1) -> dict[int, set[str]]:
@@ -41,6 +41,11 @@ class C2K(dict):
             for k in ks:
                 if unify(k) != k:
                     raise ValueError(f'{c} has invalid key: {k} != {unify(k) = }')
+        size0 = sum(len(es) for es in obj.values())
+        size1 = len(set().union(*obj.values()))
+        valid_partition = size0 == size1
+        if not valid_partition:
+            raise ValueError(f"Given obj is not a valid partition.\n{size0-size1} elements exist in more than 1 cmnts.")
         with open(cls.PATH.substitute(date=date), 'wb') as file:
             return pickle.dump(obj, file)
 
@@ -53,7 +58,7 @@ class C2E(dict):
     Sorted by its key
     """
     PATH = PathTemplate('$data/community/update_curated_cmnt_map_${date}.pkl')
-    DATES = ['220914']
+    DATES = ['220914', '231201']
 
     @classmethod
     def load(cls, date: str | int = -1) -> dict[int, tuple[str]]:
@@ -69,6 +74,17 @@ class C2E(dict):
     @classmethod
     def load_e2c(cls, date: str | int = -1) -> dict[str, int]:
         return {v: k for k, vs in cls.load(date).items() for v in vs}
+
+    @classmethod
+    def dump(cls, obj, date: str):
+        """YOU MUST ADD 'date' to C2E.DATES MANUALLY AFTER THIS"""
+        size0 = sum(len(es) for es in obj.values())
+        size1 = len(set().union(*obj.values()))
+        valid_partition = size0 == size1
+        if not valid_partition:
+            raise ValueError(f"Given obj is not a valid partition.\n{size0-size1} elements exist in more than 1 cmnts.")
+        with open(cls.PATH.substitute(date=date), 'wb') as file:
+            return pickle.dump(obj, file)
 
 
 class CmntFinder:
