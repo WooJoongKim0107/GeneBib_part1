@@ -7,7 +7,7 @@ from mypathlib import PathTemplate
 Community.import_cache()
 _R_FILE = PathTemplate('$pdata/community/community_cache.pkl.gz').substitute()
 _PUB_YEAR_PATHS = {'paper': PathTemplate('$lite/paper/pmid2year.pkl').substitute(),
-                   'patent': PathTemplate('$lite/patent/pubnum2year.pkl').substitute()}
+                   'us_patent': PathTemplate('$lite/us_patent/pubnum2year.pkl').substitute()}
 W_FILE = PathTemplate('$pdata/to_part2/yearly_new_genes.csv').substitute()
 
 

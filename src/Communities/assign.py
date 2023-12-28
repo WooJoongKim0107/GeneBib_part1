@@ -3,19 +3,19 @@ import pickle
 from multiprocessing import Pool
 from mypathlib import PathTemplate
 from Papers import Journal  # Read0
-from Patents import Patent
+from UsPatents import UsPatent
 from Communities.containers import Community, Manager
 
 
-R_FILE = {'patent_matches': PathTemplate('$pdata/patent/matched/patent_$index.pkl.gz'),
-          'patent': PathTemplate('$pdata/patent/patent_$index.pkl.gz')}
+R_FILE = {'patent_matches': PathTemplate('$pdata/us_patent/matched/patent_$index.pkl.gz'),
+          'patent': PathTemplate('$pdata/us_patent/patent_$index.pkl.gz')}
 _R_FILE0 = PathTemplate('$pdata/paper/journal_cache.pkl.gz').substitute()
 _R_FILE1 = PathTemplate('$pdata/paper/matched/$journal.pkl.gz')
 _R_FILE2 = PathTemplate('$data/curations/filtered/filtered.txt').substitute()
 _R_FILE3 = PathTemplate('$lite/community/key2cmnt.pkl').substitute()
 _R_FILE4 = PathTemplate('$lite/paper/jnls_selected.pkl').substitute()
-_R_FILE5 = PathTemplate('$lite/patent/cpc_tree.pkl').substitute()
-_R_FILE6 = PathTemplate('$lite/patent/cpc_selected.pkl').substitute()
+_R_FILE5 = PathTemplate('$lite/us_patent/cpc_tree.pkl').substitute()
+_R_FILE6 = PathTemplate('$lite/us_patent/cpc_selected.pkl').substitute()
 _RW_FILE = PathTemplate('$pdata/community/community_cache.pkl.gz').substitute()
 
 
@@ -48,7 +48,7 @@ def get_p_args():
 
 def get_t_args():
     manager = Manager()  # RW(R), Read2,3
-    return [(i, Patent.load_selected(i), manager) for i in range(112)]  # Read5,6
+    return [(i, UsPatent.load_selected(i), manager) for i in range(112)]  # Read5,6
 
 
 def main():

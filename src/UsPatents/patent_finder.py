@@ -1,11 +1,11 @@
 from multiprocessing import Pool
 from myclass import MetaLoad
 from mypathlib import PathTemplate
-from Patents import Patent
+from UsPatents import UsPatent
 
 
-_R_FILE = PathTemplate('$pdata/patent/patent_index.pkl.gz')
-_W_FILES = {'PmidToIdx': PathTemplate('$lite/patent/pubnum_to_index.pkl').substitute()}
+_R_FILE = PathTemplate('$pdata/us_patent/patent_index.pkl.gz')
+_W_FILES = {'PmidToIdx': PathTemplate('$lite/us_patent/pubnum_to_index.pkl').substitute()}
 
 
 class PubToIdx(dict, metaclass=MetaLoad):
@@ -16,7 +16,7 @@ class PubToIdx(dict, metaclass=MetaLoad):
 
     @classmethod
     def list_up(cls, index):
-        res = sorted(art.pmid for art in Patent.load(index).values())
+        res = sorted(art.pmid for art in UsPatent.load(index).values())
         print(index)
         return res
 
@@ -31,13 +31,13 @@ class PubToIdx(dict, metaclass=MetaLoad):
 
 
 class PatentFinder:
-    _R_FILE = PathTemplate('$pdata/patent/patent_$index.pkl.gz')
-    _R_FILE1 = PathTemplate('$lite/patent/pubnum_to_index.pkl').substitute()
+    _R_FILE = PathTemplate('$pdata/us_patent/patent_$index.pkl.gz')
+    _R_FILE1 = PathTemplate('$lite/us_patent/pubnum_to_index.pkl').substitute()
 
     @classmethod
     def from_pmids(cls, *pub_nums):
         for idx, pub_nums in cls._quick_recipe(*pub_nums).items():
-            chain = Patent.load(idx)
+            chain = UsPatent.load(idx)
             patents = [chain[pub_num] for pub_num in pub_nums]
             del chain
 

@@ -1,15 +1,15 @@
 import pickle
 from mypathlib import PathTemplate
 from multiprocessing import Pool
-from Patents import Patent
+from UsPatents import UsPatent
 
 
-_R_FILE = PathTemplate('$pdata/patent/patent_$index.pkl.gz')
-W_FILE = PathTemplate('$lite/patent/granted.pkl').substitute()
+_R_FILE = PathTemplate('$pdata/us_patent/patent_$index.pkl.gz')
+W_FILE = PathTemplate('$lite/us_patent/granted.pkl').substitute()
 
 
 def do(index):
-    return {pat.pub_number: pat.is_granted for pubnum, pat in Patent.load(index).items()}
+    return {pat.pub_number: pat.is_granted for pubnum, pat in UsPatent.load(index).items()}
 
 
 def main():

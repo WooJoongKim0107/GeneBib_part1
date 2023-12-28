@@ -1,12 +1,14 @@
 if __name__ == '__main__':
     # from .build import main as main0
     # main0()
-    # from .assign_paper import main as main1p
-    # main1p()
-    # from .assign_patent import main as main1t
-    # main1t()
-    from .assign_epo import main as main1e
-    main1e()
+    from .assign_paper import main as main1p
+    main1p()
+    from .assign_us_patent import main as main1us
+    main1us()
+    from .assign_cn_patent import main as main1cn
+    main1cn()
+    from .assign_ep_patent import main as main1ep
+    main1ep()
     from .pmid2cmnt import main as main2
     main2()
     from .pmid2year import main as main3

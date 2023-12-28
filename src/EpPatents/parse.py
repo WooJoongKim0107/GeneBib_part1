@@ -1,15 +1,13 @@
 def get_title(title_localized):
-    for title in title_localized:
-        if title['language'] == 'en':
-            return title['text']
+    if title_localized.get('language', '') == 'en':
+        return title_localized.get('text', '')
     else:
         return ''
 
 
 def get_abstract(abstract_localized):
-    for abstract in abstract_localized:
-        if abstract['language'] == 'en':
-            return abstract['text']
+    if abstract_localized.get('language', '') == 'en':
+        return abstract_localized.get('text', '')
     else:
         return ''
 
@@ -23,7 +21,7 @@ def parse_date(date):
 
 
 def collect_cpcs(cpcs):
-    return set(cpc['code'] for cpc in cpcs)
+    return set(cpcs)
 
 
 def collect_citations(citations):
@@ -39,7 +37,7 @@ def collect_citations(citations):
     return res
 
 
-def parse_patent(x):
+def parse_ep_patent(x):
     pub_number, app_number = x['publication_number'], x['application_number']
     title = get_title(x['title_localized'])
     abstract = get_abstract(x['abstract_localized'])

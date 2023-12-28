@@ -2,12 +2,12 @@ from multiprocessing import Pool
 from mypathlib import PathTemplate
 from merge import Merge
 from . import STARTS, STOPS
-from .replicas import EpoReplica
+from .replicas import EpPatentReplica
 
 
-R_FILE = PathTemplate('$pdata/epo/epoglobal_2023autumn_$number.pkl.gz')
-_R_FILE = PathTemplate('$pdata/epo/epo_replicas.pkl')
-W_FILE = PathTemplate('$pdata/epo/epo_$index.pkl.gz')
+R_FILE = PathTemplate('$pdata/ep_patent/epoglobal_2023autumn_$number.pkl.gz')
+_R_FILE = PathTemplate('$pdata/ep_patent/patent_replicas.pkl')
+W_FILE = PathTemplate('$pdata/ep_patent/patent_$index.pkl.gz')
 
 
 class Merge2(Merge):
@@ -20,7 +20,7 @@ class Merge2(Merge):
         cls.append_repeated(args[-1][0])
 
 
-Merge2.assign_constants(R_FILE, W_FILE, EpoReplica.load(), 'pub_number', 0, 0, 0)  # Read
+Merge2.assign_constants(R_FILE, W_FILE, EpPatentReplica.load(), 'pub_number', 0, 0, 0)  # Read
 main = Merge2.main
 
 

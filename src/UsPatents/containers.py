@@ -5,10 +5,10 @@ from mypathlib import PathTemplate
 from myfunc.modtxt import capture
 
 
-class Epo:
-    PARSED_PATH = PathTemplate('$pdata/epo/epo_$index.pkl.gz')
-    _CPC_PATH = PathTemplate('$lite/patent/cpc_tree.pkl').substitute()
-    _TREE_PATH = PathTemplate('$lite/patent/cpc_selected.pkl').substitute()
+class UsPatent:
+    PARSED_PATH = PathTemplate('$pdata/us_patent/patent_$index.pkl.gz')
+    _CPC_PATH = PathTemplate('$lite/us_patent/cpc_tree.pkl').substitute()
+    _TREE_PATH = PathTemplate('$lite/us_patent/cpc_selected.pkl').substitute()
     _CPC_TREE_ = None
 
     def __init__(self, pub_number: str):
@@ -34,14 +34,14 @@ class Epo:
     @classmethod
     def _load_cpc(cls):
         if not cls._CPC_TREE_:
-            from Patents.cpc import CPCTree
+            from .cpc import CPCTree
             cls._CPC_TREE_ = CPCTree(load=True)
 
     @classmethod
     def load_selected(cls, index, load=True):
         cls._load_cpc()
         chain = cls.load(index)
-        res = {pub_number for pub_number, epo in chain.items() if cls._CPC_TREE_.any_selected(epo.cpcs)}
+        res = {pub_number for pub_number, us_pat in chain.items() if cls._CPC_TREE_.any_selected(us_pat.cpcs)}
         if not load:
             del cls._CPC_TREE_
         return res
@@ -68,7 +68,7 @@ class Epo:
         elif app_number:
             new = cls(app_number)
         else:
-            print("Neither publication nor application number provided. Initiated with Epo('_Anonymous_')'")
+            print("Neither publication nor application number provided. Initiated with UsPatent('_Anonymous_')'")
             new = cls('_Anonymous_')
 
         new.app_number = app_number
@@ -95,10 +95,10 @@ class Epo:
           application: {self.app_number}  {self.filing_date}
           publication: {self.pub_number}  {self.pub_date}
                 grant: {self.grant_date if self.is_granted else 'Not granted'}
-
+                      
              Citation: total {len(self.citations)}; {_print_set(self.citations)}
             CPC codes: {_print_set(self.cpcs)}
-
+            
              Location: {self.location}
                Number: publication={self.pub_number}, application={self.app_number}
                 Title: {self.title}
@@ -111,10 +111,10 @@ class Epo:
           application: {self.app_number}  {self.filing_date}
           publication: {self.pub_number}  {self.pub_date}
                 grant: {self.grant_date if self.is_granted else 'Not granted'}
-
+                      
              Citation: total {len(self.citations)}; {_print_set(self.citations)}
             CPC codes: {_print_set(self.cpcs)}
-
+            
              Location: {self.location}
                Number: publication={self.pub_number}, application={self.app_number}
                 Title: {capture(self.title, *txts)}
@@ -122,7 +122,7 @@ class Epo:
         """)
 
     def __repr__(self):
-        return f"Epo({self.pub_number})"
+        return f"UsPatent({self.pub_number})"
 
 
 def _print_set(s: set):

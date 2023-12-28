@@ -1,5 +1,5 @@
-__all__ = ['Epo', 'START', 'STOP']
-from .containers import Epo
+__all__ = ['EpPatent', 'START', 'STOP']
+from .containers import EpPatent
 START = 0
 STOP = 290
 

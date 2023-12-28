@@ -3,22 +3,26 @@ from mypathlib import PathTemplate
 from multiprocessing import Pool
 from functools import partial
 from Papers import Article
-from Patents import Patent
-from Epos import Epo
+from UsPatents import UsPatent
+from CnPatents import CnPatent
+from EpPatents import EpPatent
 
 
 _R_FILES = {'paper': PathTemplate('$pdata/paper/paper_$index.pkl.gz'),
-            'patent': PathTemplate('$pdata/patent/patent_$index.pkl.gz'),
-            'epo': PathTemplate('$pdata/epo/epo_$index.pkl.gz')}
+            'us_patent': PathTemplate('$pdata/us_patent/patent_$index.pkl.gz'),
+            'cn_patent': PathTemplate('$pdata/cn_patent/patent_$index.pkl.gz'),
+            'ep_patent': PathTemplate('$pdata/ep_patent/patent_$index.pkl.gz'),}
 W_FILES = {'paper': PathTemplate('$lite/paper/pmid2year.pkl').substitute(),
-           'patent': PathTemplate('$lite/patent/pubnum2year.pkl').substitute(),
-           'epo': PathTemplate('$lite/epo/pubnum2year.pkl').substitute()}
+           'us_patent': PathTemplate('$lite/us_patent/pubnum2year.pkl').substitute(),
+           'cn_patent': PathTemplate('$lite/cn_patent/pubnum2year.pkl').substitute(),
+           'ep_patent': PathTemplate('$lite/ep_patent/pubnum2year.pkl').substitute(),}
 
 
 def do(mode, index):
     cls, attr = {'paper': (Article, 'pub_date'),
-                 'patent': (Patent, 'filing_date'),
-                 'epo': (Epo, 'filing_date')}[mode]
+                 'us_patent': (UsPatent, 'filing_date'),
+                 'cn_patent': (CnPatent, 'filing_date'),
+                 'ep_patent': (EpPatent, 'filing_date'),}[mode]
 
     res = {}
     for pmid, art in cls.load(index).items():
@@ -39,7 +43,7 @@ def _main(mode: str):
 
 
 def main():
-    for mode in ['paper', 'patent', 'epo']:
+    for mode in ['paper', 'us_patent', 'cn_patent', 'ep_patent']:
         _main(mode)
 
 
