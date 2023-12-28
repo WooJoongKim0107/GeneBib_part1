@@ -17,7 +17,7 @@ def main():
             q.setdefault(pmid, set()).add(k)
         for pub in chain(*v.pub_numbers.values()):
             w.setdefault(pub, set()).add(k)
-        for epo in chain(*v.epo_numbers.values()):
+        for epo in chain(*v.epo_pub_numbers.values()):
             e.setdefault(epo, set()).add(k)
 
     with open(W_FILES['paper'], 'wb') as file:

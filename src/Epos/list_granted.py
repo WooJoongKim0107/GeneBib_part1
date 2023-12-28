@@ -9,7 +9,7 @@ W_FILE = PathTemplate('$lite/epo/granted.pkl').substitute()
 
 
 def do(index):
-    return {epo.epo_number: epo.is_granted for eponum, epo in Epo.load(index).items()}
+    return {epo.pub_number: epo.is_granted for eponum, epo in Epo.load(index).items()}
 
 
 def main():

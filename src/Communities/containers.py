@@ -342,8 +342,8 @@ class Community(metaclass=MetaCacheExt):
     def _more_info(self):
         summary = self.hit_summary()
         form = '{:,}'.format
-        ps, ts = zip(*(map(form, x) for x in summary.values()))
-        return indent(col_prints(summary, ps, ts, sep=' '), ' '*16)
+        ps, ts, es = zip(*(map(form, x) for x in summary.values()))
+        return indent(col_prints(summary, ps, ts, es, sep=' '), ' '*16)
 
     def choices(self, k, *texts):
         if texts:

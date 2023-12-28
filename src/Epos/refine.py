@@ -5,16 +5,16 @@ from multiprocessing import Pool
 from mypathlib import PathTemplate
 from . import START, STOP
 from .containers import Epo
-from Patents.parse import parse_patent
+from .parse import parse_epo
 
 
-_R_FILE = PathTemplate('$data/epo/epoglobal_2023autumn_$number.json.gz', key='{:0>12}'.format)
-_W_FILE = PathTemplate('$pdata/epo/epoglobal_2023autumn_$number.pkl.gz', key='{:0>12}'.format)
+_R_FILE = PathTemplate('$data/epo/epoglobal_2023autumn_$number.json.gz')
+_W_FILE = PathTemplate('$pdata/epo/epoglobal_2023autumn_$number.pkl.gz')
 
 
 class Refine:
-    R_FILE = PathTemplate('$data/epo/epoglobal_2023autumn_$number.json.gz', key='{:0>12}'.format)
-    W_FILE = PathTemplate('$pdata/epo/epoglobal_2023autumn_$number.pkl.gz', key='{:0>12}'.format)
+    R_FILE = PathTemplate('$data/epo/epoglobal_2023autumn_$number.json.gz')
+    W_FILE = PathTemplate('$pdata/epo/epoglobal_2023autumn_$number.pkl.gz')
     START = START
     STOP = STOP
 
@@ -26,7 +26,7 @@ class Refine:
 
     @staticmethod
     def refine_epo(number, x):
-        epo = Epo.from_parse(*parse_patent(x))
+        epo = Epo.from_parse(*parse_epo(x))
         epo.location = number
         return epo
 

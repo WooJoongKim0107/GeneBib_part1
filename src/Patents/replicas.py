@@ -1,6 +1,6 @@
 from mypathlib import PathTemplate
 from . import START, STOP
-from Papers.replicas import Replica
+from replicas import Replica
 
 
 _R_FILE = PathTemplate('$pdata/patent/patent_202111_$number.pkl.gz', key='{:0>12}'.format)

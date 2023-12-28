@@ -31,7 +31,7 @@ def _main(mode: str):
     pmid2year = {}
     func = partial(do, mode)
     with Pool(10) as p:
-        for res in p.imap_unordered(func, range(112)):  # TODO EPO도 문제 없는지 확인
+        for res in p.imap_unordered(func, range(112)):
             pmid2year.update(res)
 
     with open(W_FILES[mode], 'wb') as file:

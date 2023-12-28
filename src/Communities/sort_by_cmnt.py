@@ -71,7 +71,7 @@ def _main(mode):
     f = partial(foo, mode, pmid2cmnt)
 
     with Pool(8) as p:
-        results = p.map(f, range(112))  # TODO EPO check
+        results = p.map(f, range(112))
     result = merge(results)
 
     with Pool(8) as p:

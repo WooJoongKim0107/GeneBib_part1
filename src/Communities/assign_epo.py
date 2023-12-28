@@ -18,7 +18,7 @@ _RW_FILE = PathTemplate('$pdata/community/community_cache.pkl.gz').substitute()
 
 def assign_epo_match(index, selected, manager):
     for pub_number, (title_matches, abstract_matches) in load_epo_matches(index, selected):
-        manager.assign(pub_number, 'pub_numbers', *title_matches, *abstract_matches)
+        manager.assign(pub_number, 'epo_pub_numbers', *title_matches, *abstract_matches)
     return Community.CACHE
 
 
