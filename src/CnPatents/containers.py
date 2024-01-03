@@ -8,8 +8,9 @@ from myfunc.modtxt import capture
 class CnPatent:
     PARSED_PATH = PathTemplate('$pdata/cn_patent/patent_$index.pkl.gz')
     _CPC_PATH = PathTemplate('$lite/us_patent/cpc_tree.pkl').substitute()
-    _TREE_PATH = PathTemplate('$lite/us_patent/cpc_selected.pkl').substitute()
-    _CPC_TREE_ = None
+    _CPC_TREE_PATH = PathTemplate('$lite/us_patent/cpc_selected.pkl').substitute()
+    _IPC_TREE_PATH = PathTemplate('$lite/us_patent/ipc_selected.pkl').substitute()
+    _TREE_ = None
 
     def __init__(self, pub_number: str):
         self.pub_number: str = pub_number
@@ -33,17 +34,23 @@ class CnPatent:
 
     @classmethod
     def _load_cpc(cls):
-        if not cls._CPC_TREE_:
+        if not cls._TREE_:
             from UsPatents.cpc import CPCTree
-            cls._CPC_TREE_ = CPCTree(load=True)
+            cls._TREE_ = CPCTree(load=True)
 
     @classmethod
-    def load_selected(cls, index, load=True):
-        cls._load_cpc()
+    def _load_ipc(cls):
+        if not cls._TREE_:
+            from UsPatents.cpc import IPCTree
+            cls._TREE_ = IPCTree(load=True)
+
+    @classmethod
+    def load_selected(cls, index, use_cpc: bool, load=True):
+        cls._load_cpc() if use_cpc else cls._load_ipc()
         chain = cls.load(index)
-        res = {pub_number for pub_number, cn_pat in chain.items() if cls._CPC_TREE_.any_selected(cn_pat.cpcs)}
+        res = {pub_number for pub_number, cn_pat in chain.items() if cls._TREE_.any_selected(cn_pat.cpcs)}
         if not load:
-            del cls._CPC_TREE_
+            del cls._TREE_
         return res
 
     @property

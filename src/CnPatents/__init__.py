@@ -1,7 +1,7 @@
 __all__ = ['CnPatent', 'START', 'STOP']
 from .containers import CnPatent
 START = 0
-STOP = 290
+STOP = 3619
 
-STARTS = [3*i for i in range(70)] + [3*70 + 2*i for i in range(38)] + [3*70+2*38 + 1*i for i in range(4)]
-STOPS = [3*i for i in range(1, 71)] + [3*70 + 2*i for i in range(1, 39)] + [3*70+2*38 + 1*i for i in range(1, 5)]
+STARTS = [int(3619/112*i) for i in range(112)]
+STOPS = [int(3619/112*(i+1)) for i in range(112)]

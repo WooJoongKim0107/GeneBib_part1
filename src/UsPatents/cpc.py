@@ -7,8 +7,8 @@ R_FILE = PathTemplate('$data/cpc_updated_220525/cpc-keywsrch-total.txt').substit
 _R_FILE0 = PathTemplate('$data/cpc_updated_220525/cpc-section-${sec}_20220501.txt')
 _R_FILE1 = PathTemplate('$data/cpc_updated_220525/cpc-level${i}-titles-filtered_220524.txt')
 
-_W_FILES = {'tree': PathTemplate('$lite/us_patent/cpc_tree.pkl').substitute(),
-            'selected': PathTemplate('$lite/us_patent/cpc_selected.pkl').substitute()}
+_RW_FILES = {'tree': PathTemplate('$lite/us_patent/cpc_tree.pkl').substitute(),
+             'selected': PathTemplate('$lite/us_patent/cpc_selected.pkl').substitute()}
 
 
 def read_cpc(f):
@@ -52,8 +52,8 @@ def get_greped():
 class CPCTree(dict):
     R_FILE = PathTemplate('$data/cpc_updated_220525/cpc-section-${sec}_20220501.txt')
     R_FILE_SELECTED = PathTemplate('$data/cpc_updated_220525/cpc-level${i}-titles-filtered_220524.txt')
-    W_FILE = PathTemplate('$lite/us_patent/cpc_tree.pkl').substitute()
-    W_FILE_SELECTED = PathTemplate('$lite/us_patent/cpc_selected.pkl').substitute()
+    RW_FILE = PathTemplate('$lite/us_patent/cpc_tree.pkl').substitute()
+    RW_FILE_SELECTED = PathTemplate('$lite/us_patent/cpc_selected.pkl').substitute()
 
     def __init__(self, load=True):
         if load:
@@ -111,15 +111,15 @@ class CPCTree(dict):
         return _deep_items(self)
 
     def dump(self):
-        with open(self.W_FILE, 'wb') as file:
+        with open(self.RW_FILE, 'wb') as file:
             pickle.dump(dict(self), file)
-        with open(self.W_FILE_SELECTED, 'wb') as file:
+        with open(self.RW_FILE_SELECTED, 'wb') as file:
             pickle.dump(self.selected, file)
 
     def load(self):
-        with open(self.W_FILE, 'rb') as file:
+        with open(self.RW_FILE, 'rb') as file:
             data = pickle.load(file)
-        with open(self.W_FILE_SELECTED, 'rb') as file:
+        with open(self.RW_FILE_SELECTED, 'rb') as file:
             selected = pickle.load(file)
         return data, selected
 
@@ -155,6 +155,91 @@ class CPCTree(dict):
             if (k in s) and not self.is_descendant(anc, k):
                 anc = k
                 yield k
+
+
+class IPCTree(CPCTree):
+    """
+    R_FILE
+    """
+    R_FILE = PathTemplate('$lite/us_patent/cpc_tree.pkl').substitute()  # NO TYPO HERE
+    R_FILE_SELECTED = PathTemplate('$lite/us_patent/ipc_selected.pkl').substitute()  # NO TYPO HERE
+
+    def __init__(self, load=True):
+        if load:
+            data, selected = self.load()
+        else:
+            raise NotImplementedError('IPCTree should not generate its contents, but only read those.')
+        super().__init__(data)
+        self.selected = selected
+
+    @cached_property
+    def all_selected_descendant(self):
+        return set(v for x in self.selected for v in self.descendant(x)) | set(self.selected)
+
+    def any_selected(self, cpcs):
+        return not self.all_selected_descendant.isdisjoint(cpcs)
+
+    def children(self, target):
+        if (path := self.where(target)) is None:
+            return None
+        return tuple(self.get_from(path))
+
+    def descendant(self, target):
+        if (path := self.where(target)) is None:
+            return None
+        return tuple(_deep_keys(self.get_from(path)))
+
+    def is_descendant(self, sup, inf):
+        descendant = self.descendant(sup)
+        if (descendant is not None) and inf in descendant:
+            return True
+        return False
+
+    def is_child(self, parent, child):
+        children = self.children(parent)
+        if (children is not None) and child in children:
+            return True
+        return False
+
+    def where(self, target):
+        res = tuple(_ascendant(self, target))
+        if res == () and target not in self:
+            return None
+        return res
+
+    def get_from(self, path):
+        cur = self
+        for key in path:
+            cur = cur[key]
+        return cur
+
+    def deep_keys(self):
+        return _deep_keys(self)
+
+    def deep_items(self):
+        return _deep_items(self)
+
+    def _find_highest(self, x):
+        s = set(x)
+        anc = '~!@#$%'
+        for k in self.deep_keys():
+            if (k in s) and not self.is_descendant(anc, k):
+                anc = k
+                yield k
+
+    def dump(self):
+        raise NotImplementedError('IPCTree should not generate its contents, but only read those.')
+
+    def load(self):
+        with open(self.R_FILE, 'rb') as file:
+            data = pickle.load(file)
+        with open(self.R_FILE_SELECTED, 'rb') as file:
+            selected = pickle.load(file)
+        return data, selected
+
+    @classmethod
+    def generate(cls):
+        raise NotImplementedError('IPCTree should not generate its contents, but only read those.')
 
 
 def _children(x, target):

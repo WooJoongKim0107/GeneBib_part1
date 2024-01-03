@@ -31,13 +31,13 @@ def load_us_patent_matches(index, selected):
             yield pub_number, (title_matches, abstract_matches)
 
 
-def get_us_args():
+def get_us_args(use_cpc):
     manager = Manager()  # RW(R), Read2,3
-    return [(i, UsPatent.load_selected(i), manager) for i in range(112)]  # Read5,6
+    return [(i, UsPatent.load_selected(i, use_cpc=use_cpc), manager) for i in range(112)]  # Read5,6
 
 
-def main():
-    us_args = get_us_args()
+def main(use_cpc):
+    us_args = get_us_args(use_cpc)
     with Pool(10) as p:
         caches = p.starmap(assign_us_patent_match, us_args)
     Community.replace_cache(caches)
@@ -45,4 +45,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(use_cpc=True)

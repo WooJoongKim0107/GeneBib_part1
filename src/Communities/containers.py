@@ -1,5 +1,6 @@
 import pickle
 from random import choices
+from itertools import zip_longest, chain
 from collections.abc import Iterable
 from textwrap import dedent, indent
 from myfunc import read_commented
@@ -277,10 +278,10 @@ class Community(metaclass=MetaCacheExt):
                Entries: {_print_set(self.entries)}
               Keywords: {_print_set(self.keywords)}
             Total hits:
-                        {self.total_paper_hits:>7,} hits (paper)
-                        {self.total_us_patent_hits:>7,} hits (US patent)
-                        {self.total_cn_patent_hits:>7,} hits (CN patent)
-                        {self.total_ep_patent_hits:>7,} hits (EP patent)
+                        {self.total_paper_hits:>7,} hits (Paper)
+                        {self.total_us_patent_hits:>7,} hits (US Patent)
+                        {self.total_cn_patent_hits:>7,} hits (CN Patent)
+                        {self.total_ep_patent_hits:>7,} hits (EP Patent)
         """)
 
     @property
@@ -290,10 +291,10 @@ class Community(metaclass=MetaCacheExt):
                Entries: {_print_set(self.entries)}
               Keywords: {_print_set(self.keywords)}
             Total hits: 
-                        {self.total_paper_hits:>7,} hits (paper)
-                        {self.total_us_patent_hits:>7,} hits (US patent)
-                        {self.total_cn_patent_hits:>7,} hits (CN patent)
-                        {self.total_ep_patent_hits:>7,} hits (EP patent)
+                        {self.total_paper_hits:>7,} hits (Paper)
+                        {self.total_us_patent_hits:>7,} hits (US Patent)
+                        {self.total_cn_patent_hits:>7,} hits (CN Patent)
+                        {self.total_ep_patent_hits:>7,} hits (EP Patent)
                Details:
         """) + self._more_info() + '\n' if self else self.info
 
@@ -384,8 +385,9 @@ class Community(metaclass=MetaCacheExt):
     def _more_info(self):
         summary = self.hit_summary()
         form = '{:,}'.format
-        ps, ts, es = zip(*(map(form, x) for x in summary.values()))
-        return indent(col_prints(summary, ps, ts, es, sep=' '), ' '*16)
+        ps, us_ts, cn_ts, ep_ts = zip(*(map(form, x) for x in summary.values()))
+        header = ('Keyword', 'Paper', 'US Patent', 'CN Patent', 'EP Patent')
+        return indent(col_wrap(summary, ps, us_ts, cn_ts, ep_ts, sep=' ', header=header), ' '*16)
 
     def choices(self, k, *texts):
         if texts:
@@ -579,10 +581,11 @@ def _print_set(s):
         return ''
 
 
-def col_prints(*cols, sep=':'):
+def col_wrap(*cols, sep=':', header: Iterable = ()):
     sep += ' '
-    ms = [max(len(str(x)) for x in col) for col in cols]
-    return '\n'.join((sep.join(f'{x:>{m}}' for x, m in zip(nth, ms))) for nth in zip(*cols))
+    headed_cols = [tuple(chain([h], col)) for h, col in zip_longest(header, cols, fillvalue='')]
+    ms = [max(len(str(x)) for x in col) for col in headed_cols]
+    return '\n'.join((sep.join(f'{x:>{m}}' for x, m in zip(row, ms))) for row in zip(*headed_cols))
 
 
 def random_infos_of_interest_easy(genes, fname_paper, fname_us_patent, fname_cn_patent, fname_ep_patent, k=30):

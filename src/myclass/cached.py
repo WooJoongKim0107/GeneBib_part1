@@ -37,8 +37,8 @@ class MetaCache(type):
         return self
 
     def export_cache(self, path=None):
-        print(self)
         path = path if path else self.CACHE_PATH
+        print(f'Export {self.__name__} cache to:', path)
         with gzip.open(path, 'wb') as file:
             pickle.dump(self.CACHE, file)
 

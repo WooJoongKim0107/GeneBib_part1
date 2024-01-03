@@ -1,4 +1,3 @@
-import pickle
 from mypathlib import PathTemplate
 from Communities.containers import Community, UnifyEqKeys, C2E, C2K
 

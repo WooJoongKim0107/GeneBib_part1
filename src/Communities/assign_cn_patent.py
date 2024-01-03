@@ -31,13 +31,13 @@ def load_cn_patent_matches(index, selected):
             yield pub_number, (title_matches, abstract_matches)
 
 
-def get_cn_args():
+def get_cn_args(use_cpc):
     manager = Manager()  # RW(R), Read2,3
-    return [(i, CnPatent.load_selected(i), manager) for i in range(112)]  # Read5,6
+    return [(i, CnPatent.load_selected(i, use_cpc=use_cpc), manager) for i in range(112)]  # Read5,6
 
 
-def main():
-    cn_args = get_cn_args()
+def main(use_cpc):
+    cn_args = get_cn_args(use_cpc)
     with Pool(10) as p:
         caches = p.starmap(assign_cn_patent_match, cn_args)
     Community.replace_cache(caches)
@@ -45,4 +45,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(use_cpc=False)
