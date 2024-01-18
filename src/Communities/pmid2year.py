@@ -25,7 +25,7 @@ def do(mode, index):
                  'ep_patent': (EpPatent, 'filing_date'),}[mode]
 
     res = {}
-    for pmid, art in cls.load(index).items():
+    for pmid, art in cls.load(index).items():  # R['cls']
         if year := getattr(art, attr).get('Year'):
             res[pmid] = year
     return res

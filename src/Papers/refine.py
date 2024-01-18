@@ -9,8 +9,8 @@ from .containers import Article, Journal  # Read0
 from .parse import parse_article, find_journal_key
 
 
-_R_FILE = PathTemplate('$data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
 _R_FILE0 = PathTemplate('$pdata/paper/journal_cache.pkl.gz').substitute()
+_R_FILE1 = PathTemplate('$data/paper/pubmed22n$number.xml.gz', key='{:0>4}'.format)
 _W_FILES = {'refined': PathTemplate('$pdata/paper/article22n$number.pkl.gz', key='{:0>4}'.format),
             'message': PathTemplate('$pdata/paper/article22n$number.txt', key='{:0>4}'.format)}
 

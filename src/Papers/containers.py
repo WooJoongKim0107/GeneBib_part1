@@ -11,6 +11,9 @@ from myclass import MetaCacheExt, TarRW
 from mypathlib import PathTemplate
 
 
+_R_FILE = PathTemplate('$pdata/paper/journal_cache.pkl.gz').substitute()
+
+
 class ISSN(str):
     _isvalid = re.compile('^[0-9]{4}-[0-9]{3}[0-9xX]$').match
 
@@ -297,7 +300,7 @@ def _get_partition(x, n, key=None):
 
 
 if Journal.CACHE_PATH.is_file():
-    Journal.import_cache_if_empty(verbose=True)
+    Journal.import_cache_if_empty(verbose=True)  # Read
 
 
 class Article:

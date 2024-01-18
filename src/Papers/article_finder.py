@@ -5,9 +5,9 @@ from Papers import Article, Journal  # RW(R)
 
 
 _R_FILE = PathTemplate('$pdata/paper/paper_$index.pkl.gz')
-_W_FILES = {'PmidToIdx': PathTemplate('$lite/paper/article_to_index.pkl').substitute(),
-            'JnlToPmids': PathTemplate('$lite/paper/journal_to_article.pkl').substitute(),
-            '': PathTemplate('$lite/paper/journal_to_article$index.txt')}
+_RW_FILES = {'PmidToIdx': PathTemplate('$lite/paper/article_to_index.pkl').substitute(),
+             'JnlToPmids': PathTemplate('$lite/paper/journal_to_article.pkl').substitute(),
+             '': PathTemplate('$lite/paper/journal_to_article$index.txt')}
 _RW_FILE0 = PathTemplate('$pdata/paper/journal_cache.pkl.gz').substitute()
 
 
@@ -19,7 +19,7 @@ class PmidToIdx(dict, metaclass=MetaLoad):
 
     @classmethod
     def list_up(cls, index):
-        res = sorted(art.pmid for art in Article.load(index).values())
+        res = sorted(art.pmid for art in Article.load(index).values())  # Read
         print(index)
         return res
 
@@ -36,7 +36,6 @@ class PmidToIdx(dict, metaclass=MetaLoad):
 class JnlToPmids(dict, metaclass=MetaLoad):
     """{medline_ta -> *pmids}"""
     _R_FILE = PathTemplate('$pdata/paper/paper_$index.pkl.gz')
-    _R_FILE0 = PathTemplate('$lite/paper/article_to_index.pkl').substitute()
     LOAD_PATH = PathTemplate('$lite/paper/journal_to_article.pkl').substitute()
     RW_FILE = PathTemplate('$lite/paper/journal_to_article$index.txt')
     STOP = 112
@@ -71,7 +70,7 @@ class JnlToPmids(dict, metaclass=MetaLoad):
         j2a = {}
         for k, v in Journal.items():
             j2a.setdefault(k, j2a.setdefault(v.medline_ta, []))
-        for art in Article.load(index).values():
+        for art in Article.load(index).values():  # Read
             j2a[art._journal_title].append(art.pmid)
         for arts in j2a.values():
             arts.sort()
@@ -105,7 +104,7 @@ class ArticleFinder:
     @classmethod
     def from_pmids(cls, *pmids):
         for idx, pmids in cls._quick_recipe(*pmids).items():
-            chain = Article.load(idx)
+            chain = Article.load(idx)  # Read
             arts = [chain[pmid] for pmid in pmids]
             del chain
 
@@ -129,8 +128,8 @@ class ArticleFinder:
 
 
 def main():
-    PmidToIdx.build()
-    JnlToPmids.build()
+    PmidToIdx.build()  # RW['PmidToIdx'](W)
+    JnlToPmids.build()  # RW['JnlToPmids'](W)
     Journal.export_cache()  # RW(W)
 
 

@@ -42,7 +42,7 @@ def foo(mode, pmid2cmnt, index):
         raise ValueError
 
     res = {}
-    for pmid, article in cls.load(index).items():
+    for pmid, article in cls.load(index).items():  # R0['cls']
         for cmnt in pmid2cmnt.get(pmid, set()):
             res.setdefault(cmnt, {})[pmid] = article
     return res

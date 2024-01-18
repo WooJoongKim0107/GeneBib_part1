@@ -13,6 +13,7 @@ _R_FILE2 = PathTemplate('$data/curations/filtered/filtered.txt').substitute()
 _R_FILE3 = PathTemplate('$lite/community/key2cmnt.pkl').substitute()
 _R_FILE5 = PathTemplate('$lite/us_patent/cpc_tree.pkl').substitute()
 _R_FILE6 = PathTemplate('$lite/us_patent/cpc_selected.pkl').substitute()
+_R_FILE7 = PathTemplate('$lite/us_patent/ipc_selected.pkl').substitute()
 _RW_FILE = PathTemplate('$pdata/community/community_cache.pkl.gz').substitute()
 
 
@@ -33,7 +34,7 @@ def load_us_patent_matches(index, selected):
 
 def get_us_args(use_cpc):
     manager = Manager()  # RW(R), Read2,3
-    return [(i, UsPatent.load_selected(i, use_cpc=use_cpc), manager) for i in range(112)]  # Read5,6
+    return [(i, UsPatent.load_selected(i, use_cpc=use_cpc), manager) for i in range(112)]  # R['us_patent'], Read5,6,7
 
 
 def main(use_cpc):

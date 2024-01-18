@@ -3,7 +3,7 @@ from lxml.etree import _Element as Element
 from lxml.etree import parse
 from multiprocessing import Pool
 from mypathlib import PathTemplate
-from . import START, STOP, Journal
+from . import START, STOP, Journal  # Does not read here
 from .parse import parse_journal
 from .merge_journals import merge
 

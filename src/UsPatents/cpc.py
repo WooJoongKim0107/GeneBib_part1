@@ -8,7 +8,8 @@ _R_FILE0 = PathTemplate('$data/cpc_updated_220525/cpc-section-${sec}_20220501.tx
 _R_FILE1 = PathTemplate('$data/cpc_updated_220525/cpc-level${i}-titles-filtered_220524.txt')
 
 _RW_FILES = {'tree': PathTemplate('$lite/us_patent/cpc_tree.pkl').substitute(),
-             'selected': PathTemplate('$lite/us_patent/cpc_selected.pkl').substitute()}
+             'cpc_selected': PathTemplate('$lite/us_patent/cpc_selected.pkl').substitute(),
+             'ipc_selected': PathTemplate('$lite/us_patent/ipc_selected.pkl').substitute(),}
 
 
 def read_cpc(f):
