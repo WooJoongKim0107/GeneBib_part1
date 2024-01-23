@@ -9,7 +9,7 @@ W_FILE = PathTemplate('$lite/cn_patent/granted.pkl').substitute()
 
 
 def do(index):
-    return {cn_pat.pub_number: cn_pat.is_granted for pubnum, cn_pat in CnPatent.load(index).items()}
+    return {cn_pat.pub_number: cn_pat.is_granted for pubnum, cn_pat in CnPatent.load(index).items()}  # Read
 
 
 def main():

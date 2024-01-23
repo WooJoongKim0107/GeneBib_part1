@@ -9,7 +9,7 @@ W_FILE = PathTemplate('$lite/ep_patent/granted.pkl').substitute()
 
 
 def do(index):
-    return {ep_pat.pub_number: ep_pat.is_granted for pubnum, ep_pat in EpPatent.load(index).items()}
+    return {ep_pat.pub_number: ep_pat.is_granted for pubnum, ep_pat in EpPatent.load(index).items()}  # Read
 
 
 def main():
