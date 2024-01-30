@@ -3,6 +3,7 @@ import pickle
 from textwrap import dedent
 from mypathlib import PathTemplate
 from myfunc.modtxt import capture
+from UsPatents.cpc import CPCTree, IPCTree
 
 
 class EpPatent:
@@ -34,14 +35,12 @@ class EpPatent:
 
     @classmethod
     def _load_cpc(cls):
-        if not cls._TREE_:
-            from UsPatents.cpc import CPCTree
+        if not cls._TREE_ or not isinstance(cls._TREE_, CPCTree):
             cls._TREE_ = CPCTree(load=True)
 
     @classmethod
     def _load_ipc(cls):
-        if not cls._TREE_:
-            from UsPatents.cpc import IPCTree
+        if not cls._TREE_ or not isinstance(cls._TREE_, IPCTree):
             cls._TREE_ = IPCTree(load=True)
 
     @classmethod
